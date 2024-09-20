@@ -29,31 +29,30 @@ const OtpScreen = ({navigation,route}) => {
     }
   };
 const ButtonClick = async () => {
-//   if (!otp ) {
-//     toast.show("Incomplete Details Plz fill Otp Details",{type: "danger",animationType:"zoom-in"}); 
-//     }  else{
-//       setLoading(true)
-//         try {
-//       const response = await axios.post(ApiUrl, {
-//         ...payloads
-//       });
-//       setLoading(true);
-//       if (response.data.status) {
-//           const { accessToken, user, } = response.data.data;
-//           await AsyncStorage.setItem('accessToken', accessToken);
-//           await AsyncStorage.setItem('Token',accessToken);
-//           await AsyncStorage.setItem('user', JSON.stringify(user));
-//           navigation.navigate('EnableLocation')
+  if (!otp ) {
+    toast.show("Incomplete Details Plz fill Otp Details",{type: "danger",animationType:"zoom-in"}); 
+    }  else{
+      setLoading(true)
+        try {
+      const response = await axios.post(ApiUrl, {
+        ...payloads
+      });
+      setLoading(true);
+      if (response.data.status) {
+          const { accessToken, user, } = response.data.data;
+          await AsyncStorage.setItem('accessToken', accessToken);
+          await AsyncStorage.setItem('Token',accessToken);
+          await AsyncStorage.setItem('user', JSON.stringify(user));
+          navigation.navigate('EnableLocation')
        
-//       }
-//     } 
-//     catch (error) {
-//       Alert.alert(error);  
-//     }finally{
-//       setLoading(false);
-//   }
-// }
-navigation.navigate('EnableLocation')
+      }
+    } 
+    catch (error) {
+      Alert.alert(error);  
+    }finally{
+      setLoading(false);
+  }
+}
 }
   return (
     <View style={styles.container}>

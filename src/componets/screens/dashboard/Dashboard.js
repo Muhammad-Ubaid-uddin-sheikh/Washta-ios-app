@@ -21,45 +21,45 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   const [name, setName] = useState('');
 
-//   const fetchUserData = async () => {
-//     try {
-//       const accessToken = await AsyncStorage.getItem('accessToken');
-//       const response = await axios.get(ApiUrl, {
-//         headers: {
-//           Authorization: `Bearer ${accessToken}`,
-//         },
-//       });
+  const fetchUserData = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      const response = await axios.get(ApiUrl, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-//       if (response.data.status) {
-//         setName(response.data.data || {});
-//       } else {
-//         Alert.alert('Failed to fetch user data');
-//       }
-//     } catch (error) {
-//       console.log('Error fetching user data:', error);
+      if (response.data.status) {
+        setName(response.data.data || {});
+      } else {
+        Alert.alert('Failed to fetch user data');
+      }
+    } catch (error) {
+      console.log('Error fetching user data:', error);
   
-//       if (error.response) {
-//         if (error.response.status === 401) {
-//           // Token is invalid or expired
-//           await AsyncStorage.clear(); // Clear all AsyncStorage data
-//           navigation.reset({
-//             index: 0,
-//             routes: [{ name: 'Home' }], // Reset navigation stack and navigate to Home
-//           });
-//         } else if (error.response.status === 500) {
-//           // Server error
-//           navigation.reset({
-//             index: 0,
-//             routes: [{ name: 'Home' }], // Navigate to Home page
-//           });
-//         }
-//       }
-//     }
-//   };
+      if (error.response) {
+        if (error.response.status === 401) {
+          // Token is invalid or expired
+          await AsyncStorage.clear(); // Clear all AsyncStorage data
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }], // Reset navigation stack and navigate to Home
+          });
+        } else if (error.response.status === 500) {
+          // Server error
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }], // Navigate to Home page
+          });
+        }
+      }
+    }
+  };
 
-//   useEffect(() => {
-//     fetchUserData();
-//   }, []);
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   const navigation = useNavigation();
 
@@ -133,6 +133,12 @@ function MyTabs() {
         name="Jobs"
         component={Jobs}
         options={{
+          headerStyle: {
+            backgroundColor: 'white', 
+            borderBottomWidth: 0, 
+            shadowOpacity: 0, 
+            elevation: 0, 
+          },
           headerLeft: () => (
             <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 13 }} onPress={() => navigation.navigate('DashboardMain')}>
               <BackIcon name="arrowleft" size={23} color="#747EEF" style={{ marginRight: 18 }} />
@@ -148,6 +154,12 @@ function MyTabs() {
         name="PlayerProfile"
         component={Profile}
         options={{
+          headerStyle: {
+            backgroundColor: 'white', 
+            borderBottomWidth: 0, 
+            shadowOpacity: 0, 
+            elevation: 0, 
+          },
           headerLeft: () => (
             <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 13 }} onPress={() => navigation.navigate('DashboardMain')}>
               <BackIcon name="arrowleft" size={23} color="#747EEF" style={{ marginRight: 18 }} />

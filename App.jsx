@@ -121,17 +121,20 @@ import Routes from './src/componets/routes/Routes';
 import { ToastProvider } from 'react-native-toast-notifications';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
-
+import store from './src/redux/store';
+import { Provider } from 'react-redux';
+// import {enableLatestRenderer} from 'react-native-maps';
 const App = () => {
+  // enableLatestRenderer();
+
   return (
    
     <NavigationContainer>
       <StatusBar barStyle="dark-content" translucent={true} backgroundColor={'transparent'}  />
       <ToastProvider>
-      {/* <Provider store={store}> */}
+      <Provider store={store}>
       <Routes/>
-      {/* </Provider> */}
+      </Provider>
       </ToastProvider>
     </NavigationContainer>
     
