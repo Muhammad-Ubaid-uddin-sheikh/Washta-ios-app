@@ -13,7 +13,7 @@ import SetPassword from '../screens/forget/SetPassword';
 import OtpScreen from '../screens/otpscreen/OtpScreen';
 import Forget from '../screens/forget/Forget';
 import EnableLocation from '../screens/locationEnable/LocationEnable';
-
+import Dashboard from '../screens/dashboard/HomeDashbaord'
 const Stack = createStackNavigator();
 
 const Routes = () => {
@@ -49,7 +49,7 @@ const Routes = () => {
         <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
         <Stack.Screen options={{ headerShown: false }} name="OtpScreen" component={OtpScreen} />
       <Stack.Screen options={{ headerShown: false }} name="EnableLocation" component={EnableLocation} />
-      {/* <Stack.Screen options={{ headerShown: false }} name="Dashbaord" component={Dashbaord} /> */}
+      <Stack.Screen options={{ headerShown: false }} name="Dashbaord" component={Dashboard} />
       {/* <Stack.Screen options={{ headerShown: false }} name="ParticularCarScreen" component={ParticularCarScreen} /> */}
       <Stack.Screen options={{ headerShown: false }} name="OtpForget" component={OtpForget} />
       <Stack.Screen options={{ headerShown: false }} name="setpassword" component={SetPassword} />
