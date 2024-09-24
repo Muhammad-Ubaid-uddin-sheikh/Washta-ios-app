@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: "flex-start",
     alignItems: "center",
-    width: 260,
+    width: 240,
   },
   infoText: {
     fontFamily: FontsGeneral.REGULARSANS,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   deleteButton: {
-    width: 70,
+    width: 90,
   },
 });
 

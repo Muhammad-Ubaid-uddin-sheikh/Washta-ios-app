@@ -1,67 +1,85 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import ToggleSwitch from 'toggle-switch-react-native'
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import ToggleSwitch from 'toggle-switch-react-native';
 import { FontsGeneral } from '../style';
-import Button from '../../allDynamicsComponets/Button'
-const Notifications = () => {
+import Button from '../../allDynamicsComponets/Button';
+
+// Get device dimensions
+const { width, height } = Dimensions.get('window');
+
+const Notifications = ({ navigation }) => {
     const [isActive, setIsActive] = useState(true);
-    const [sound, setsound] = useState(false);
-    const [isvibrate, setisvibrate] = useState(true);
+    const [sound, setSound] = useState(false);
+    const [isVibrate, setIsVibrate] = useState(true);
 
-  return (
-   <View style={styles.mainNotifcation}>
-    <ToggleSwitch
-  isOn={isActive}
-  onColor="#747EEF"
-  offColor="#cccccc"
-  label="General Notification"
-  labelStyle={{ color: "black",justifyContent:'space-between',flexDirection:'row',width:300,fontFamily:FontsGeneral.MEDIUMSANS,fontSize:15}}
-  size="medium"
-  onToggle={()=>setIsActive(!isActive)}
-  
-/>
-<View style={{marginTop:20}}>
-<ToggleSwitch
-  isOn={sound}
-  onColor="#747EEF"
-  offColor="#cccccc"
-  label="Sound"
-  labelStyle={{ color: "black",justifyContent:'space-between',flexDirection:'row',width:300,fontFamily:FontsGeneral.MEDIUMSANS,fontSize:15}}
-  size="medium"
-  onToggle={()=> setsound(!sound)}
-  
-/>
-</View>
+    return (
+        <View style={styles.mainNotifcation}>
+            <ToggleSwitch
+                isOn={isActive}
+                onColor="#747EEF"
+                offColor="#cccccc"
+                label="General Notification"
+                labelStyle={styles.labelStyle}
+                size="medium"
+                onToggle={() => setIsActive(!isActive)}
+            />
 
-<View style={{marginTop:20}}>
-<ToggleSwitch
-  isOn={isvibrate}
-  onColor="#747EEF"
-  offColor="#cccccc"
-  label="General Notification"
-  labelStyle={{ color: "black",justifyContent:'space-between',flexDirection:'row',width:300,fontFamily:FontsGeneral.MEDIUMSANS,fontSize:15}}
-  size="medium"
-  onToggle={()=>setisvibrate(!isvibrate)}
-  
-/>
-</View>
-<View style={styles.buttonContainer}>
-        <Button text="Save" Link={() => navigation.navigate('StepTwo')} />
-      </View>
-   </View>
-  )
-}
+            <View style={styles.toggleContainer}>
+                <ToggleSwitch
+                    isOn={sound}
+                    onColor="#747EEF"
+                    offColor="#cccccc"
+                    label="Sound"
+                    labelStyle={styles.labelStyle}
+                    size="medium"
+                    onToggle={() => setSound(!sound)}
+                />
+            </View>
+
+            <View style={styles.toggleContainer}>
+                <ToggleSwitch
+                    isOn={isVibrate}
+                    onColor="#747EEF"
+                    offColor="#cccccc"
+                    label="Vibrate"
+                    labelStyle={styles.labelStyle}
+                    size="medium"
+                    onToggle={() => setIsVibrate(!isVibrate)}
+                />
+            </View>
+
+            <View style={styles.buttonContainer}>
+                <Button text="Save" Link={() => navigation.navigate('StepTwo')} />
+            </View>
+        </View>
+    );
+};
+
 const styles = StyleSheet.create({
-    mainNotifcation:{
-        flex:1,
-        paddingHorizontal:15
+    mainNotifcation: {
+        flex: 1,
+        paddingLeft:10,
+        paddingRight:10
+       
+    },
+    labelStyle: {
+        color: 'black',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        width: width * 0.75, // Responsive width for label
+        fontFamily: FontsGeneral.MEDIUMSANS,
+        fontSize: width * 0.04, // Responsive font size
+    },
+    toggleContainer: {
+        marginTop: height * 0.03, // Responsive margin based on screen height
     },
     buttonContainer: {
         position: 'absolute',
-        bottom: 20,
+        bottom: height * 0.05, 
         left: 0,
         right: 0,
-        paddingHorizontal: 15,
-      }
-})
-export default Notifications
+        paddingHorizontal: width * 0.05, 
+    },
+});
+
+export default Notifications;

@@ -8,16 +8,40 @@ const HelpandSupport = ({navigation}) => {
     const [activeTopic, setActiveTopic] = useState(null);
   
   const data = [
-    { id: 1, title: 'How do I cancel an existing job request?', details: 'Types data we collect Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' },
-    { id: 2, title: 'Can I cancel my request after cancelation time has ended?', details: 'Types data we collect Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { id: 3, title: 'How do I cancel an existing job request?', details: 'Types data we collect Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { id: 4, title: 'Can I cancel my request after cancelation time has ended?', details: 'Types data we collect Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+    { id: 1, title: 'How do I cancel an existing job request?', details: 'To cancel an existing job request, go to your dashboard, select the job you want to cancel, and click the "Cancel Request" button. Please note that cancellations can only be made before the job is accepted by a provider. ' },
+    {
+      id: 2,
+      title: 'Can I cancel my request after cancellation time has ended?',
+      details: 'If the cancellation window has passed, you may not be able to cancel the job request directly from the app. However, you can contact customer support to review your request and assist with the cancellation process if applicable.'
+    },
+    {
+      id: 3,
+      title: 'What happens if I cancel a job request?',
+      details: 'When you cancel a job request, it will be removed from the provider’s queue, and no further action will be taken. Depending on the timing of the cancellation, you may be charged a cancellation fee.'
+    },
+    {
+      id: 4,
+      title: 'Is there a fee for canceling a job?',
+      details: 'In some cases, a cancellation fee may apply if the job has already been scheduled or if it is too close to the service date. The fee details can be found in the terms and conditions during the booking process.'
+    }
 
   ];
   const Topic = [
-    { id: 1, title: 'Job Cancellation', details: 'Types data we collect Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' },
-    { id: 2, title: 'Payment Issues', details: 'Types data we collect Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { id: 3, title: 'Job Cancellation', details: 'Types data we collect Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+    {
+      id: 5,
+      title: 'Why was my payment declined?',
+      details: 'Your payment may have been declined due to insufficient funds, an expired card, or an issue with your bank. Please check with your bank or try a different payment method to resolve the issue.'
+    },
+    {
+      id: 6,
+      title: 'How do I update my payment method?',
+      details: 'To update your payment method, go to your account settings, select "Payment Methods", and add or edit your preferred payment option. Make sure the new method is verified before booking any new jobs.'
+    },
+    {
+      id: 7,
+      title: 'Will I be charged if the job is not completed?',
+      details: 'No, you will not be charged if the job is not completed. Payments are only processed once the job has been successfully completed and approved by you. If you face any issues, please contact customer support.'
+    }
 
   ];
   const toggleDetails = (id) => {

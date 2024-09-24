@@ -63,6 +63,7 @@ const ParticularReview = ({ route }) => {
 
   // Handle adding new reviews
   const AddReviews = async () => {
+    console.log('hellp')
     setLoading(true);
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
@@ -212,7 +213,7 @@ const ParticularReview = ({ route }) => {
                 onChangeText={editReview ? setEditFeedback : setFeedback}
                 placeholderTextColor={'black'}
               />
-              <View style={{ width: '100%', marginTop: 30 }}>
+              <View style={{ width: '100%', marginTop: 50 }}>
                 <TouchableOpacity style={{ margin: 0, padding: 0 }} onPress={editReview ? handleEditReview : AddReviews}>
                   <Button loading={loading} text={editReview ? 'Update Review' : 'Submit Rating'} />
                 </TouchableOpacity>

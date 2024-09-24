@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Button from '../../allDynamicsComponets/Button';
 import { Fonts, FontsGeneral } from '../style';
 import { useToast } from 'react-native-toast-notifications';
@@ -53,6 +53,7 @@ const OtpForget = ({navigation,route}) => {
     }
   };
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       <View style={styles.topContent}>
         <Text style={styles.heading}>Enter your verification code</Text>
@@ -78,6 +79,7 @@ const OtpForget = ({navigation,route}) => {
         <Button loading={loading} text="Verify" Link={ButtonClick} />
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

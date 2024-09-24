@@ -52,7 +52,7 @@
 
 // export default Profile;
 import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, FlatList, RefreshControl } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, FlatList, RefreshControl, Alert, BackHandler } from 'react-native';
 import ImageEdit from '../../allDynamicsComponets/ImageAdd';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontsGeneral } from '../style';
@@ -61,6 +61,7 @@ import Dot from 'react-native-vector-icons/Entypo';
 import BokingCompleted from '../../allDynamicsComponets/BookingComplted';
 import axios from 'react-native-axios';
 import { useToast } from 'react-native-toast-notifications';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ApiUrl = 'https://backend.washta.com/api/customer/Selectcar';
 
@@ -87,6 +88,30 @@ const Profile = ({ navigation }) => {
       return null;
     }
   };
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert(
+          'Exit App',
+          'Are you sure you want to exit?',
+          [
+            { text: 'Cancel', onPress: () => null, style: 'cancel' },
+            { text: 'OK', onPress: () => BackHandler.exitApp() },
+          ],
+          { cancelable: false }
+        );
+        return true; // Prevent default behavior (going back)
+      };
+
+      // Add event listener for back button press
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      // Cleanup function to remove event listener
+      return () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
+    }, [])
+  );
   const fetchUserData = async () => {
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');

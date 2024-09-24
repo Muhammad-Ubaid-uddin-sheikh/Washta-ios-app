@@ -30,8 +30,8 @@ const ParticularCarScreen = ({ route }) => {
           style={styles.backgroundImage}
         />
         <View style={{ flexDirection: 'row', justifyContent: "space-between", padding: 16, width: '100%', alignItems: 'center', position: 'absolute', top: 25 }}>
-          <TouchableOpacity onPress={() => navigation.goBack()} >
-            <BackIcon name="arrowleft" size={23} color='#747EEF' style={{ backgroundColor: 'white', padding: 5, borderRadius: 50 }} />
+          <TouchableOpacity onPress={() => navigation.goBack()} style={{borderRadius:50,backgroundColor:'white'}} >
+            <BackIcon name="arrowleft" size={21} color='#747EEF' style={{  padding: 5, borderRadius: '100%' }} />
           </TouchableOpacity>
           <TouchableOpacity >
           </TouchableOpacity>
@@ -56,14 +56,7 @@ const ParticularCarScreen = ({ route }) => {
             <Text style={styles.textLocation}> Cost</Text>
             <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}>AED {item?.cost}</Text>
           </View>
-          {/* <View style={styles.RowMainParticular}>
-            <Text style={styles.textLocation}> Estimated Service Time</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {item.serviceTime || '30 minutues'}</Text>
-          </View>
-          <View style={styles.RowMainParticular}>
-            <Text style={styles.textLocation}> Distance from you</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {item.time || "5 mints away"}</Text>
-          </View> */}
+          
           <View style={styles.RowMainParticular}>
             <Text style={styles.textLocation}> Location</Text>
             <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {item?.shopName || 'Dubai Mall Parking B1'}</Text>

@@ -37,11 +37,16 @@
 	<string>We need camera access to take photos.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 <string>We need access to your location to provide location-based services.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-<string>We need your location while using the app to provide location-based services.</string>
+	<!-- <key>NSLocationWhenInUseUsageDescription</key>
+<string>We need your location while using the app to provide location-based services.</string> -->
 
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to choose photos.</string>
+	<!-- Example for accessing the photo library -->
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library to allow you to upload and share photos within the app.</string>
+
+<!-- Example for location access -->
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need your location to show nearby services and locations on the map.</string>
 	<key>UIAppFonts</key>
 	
 	<array>

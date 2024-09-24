@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import INputPasword from '../../allDynamicsComponets/InputPassowrd'
 import Button from '../../allDynamicsComponets/Button';
 import { Fonts, FontsGeneral } from '../style';
@@ -63,6 +63,8 @@ const ButtonClick = async () => {
     }
   };
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
     <View style={styles.container}>
       <View style={styles.topContent}>
         <Text style={styles.heading}>Forget Passowrd</Text>
@@ -76,6 +78,7 @@ const ButtonClick = async () => {
         <Button loading={loading} text="Sign In" Link={ButtonClick} />
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

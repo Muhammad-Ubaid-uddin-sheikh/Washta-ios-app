@@ -12,7 +12,7 @@ const ButtonClick = ()=>{
     <View style={styles.container}>
       <View style={styles.topContent}>
         <Text style={styles.heading}>Enable your location</Text>
-        <Text style={styles.paragraph}>Please enable your GPS location for us to {'\n'} give you the best user experience </Text>
+        <Text style={styles.paragraph}>To provide you with the best experience, please enable your GPS location. This will help us show you the best shops near you based on your current location. </Text>
         <View style={styles.inputContainer}>
         <Image style={styles.ImageLocation} source={require('../../../assets/EnableLocation.png')}  />
       </View>

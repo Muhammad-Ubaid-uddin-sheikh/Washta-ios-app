@@ -6,7 +6,7 @@ import { formatDate, formatTimeInTimezone } from '../../../../DaterightFunction'
 
 const Receipt = ({ route }) => {
   const { item } = route.params;
-console.log(item)
+console.log("eed",item)
   // Function to calculate duration
   const calculateDuration = (startDate, endDate) => {
     const start = new Date(startDate);
