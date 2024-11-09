@@ -117,7 +117,7 @@ function MyTabs() {
           headerTitleAlign: 'left',
           headerRight: () => (
             <View style={{ flexDirection: 'row', gap: -5 }}>
-              <TouchableOpacity onPress={() => navigation.navigate('')}>
+              <TouchableOpacity onPress={() => navigation.navigate('EditProfileInfor')}>
                 <Image source={require('../../../assets/Person.png')} style={{ width: 25, height: 25, objectFit: 'contain', marginRight: 18 }} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Notifcationscreen')}>

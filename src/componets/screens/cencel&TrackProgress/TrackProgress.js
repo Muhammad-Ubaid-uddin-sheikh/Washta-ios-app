@@ -2,14 +2,29 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import Vector from '../../../assets/Vector.png';
 import TracProgressBtn from '../../allDynamicsComponets/TrackProgessBtn';
-import Cartrack from '../../../assets/CarRecipt.png';
 import ProgessImage from '../../../assets/OrderProgress.png';
 import { Fonts, FontsGeneral } from '../style';
 import { formatDate, formatTimeInTimezone } from '../../../../DaterightFunction';
 
 const TrackProgress = ({ route }) => {
   const { item } = route.params;
-  console.log('itemitem',item)
+  console.log('itemitem', item);
+
+  // Calculate the discount and estimated total
+  const cost = parseFloat(item.cost);
+  let discountAmount = 0;
+  let estimatedTotal = cost;
+
+  if (item.promoCode && item.promoCode.Discounttype) {
+    if (item.promoCode.Discounttype === 'fixed') {
+      discountAmount = parseFloat(item.promoCode.discount);
+      estimatedTotal = cost - discountAmount; // Subtract fixed discount from cost
+    } else if (item.promoCode.Discounttype === 'percentage') {
+      discountAmount = (cost * parseFloat(item.promoCode.discount)) / 100; // Calculate percentage discount
+      estimatedTotal = cost - discountAmount; // Subtract percentage discount from cost
+    }
+  }
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -35,6 +50,10 @@ const TrackProgress = ({ route }) => {
           <Text style={[styles.textStyle, styles.orderDetailPrice]}>{item?.shopId?.shopName}</Text>
         </View>
         <View style={styles.row}>
+          <Text style={[styles.textStyle, styles.orderDetailItem]}>Location</Text>
+          <Text style={[styles.textStyle, styles.orderDetailPrice,{ textOverflow: 'ellipsis', whiteSpace: 'nowrap',width:'70%'}]} numberOfLines={1}>{item?.location?.text || 'No mention address'}</Text>
+        </View>
+        <View style={styles.row}>
           <Text style={[styles.textStyle, styles.orderDetailItem]}>Payment Status</Text>
           <Text style={[styles.textStyle, styles.orderDetailPrice]}>{item?.billingStatus}</Text>
         </View>
@@ -51,14 +70,18 @@ const TrackProgress = ({ route }) => {
           <Text style={[styles.textStyle, styles.orderDetailPrice]}>{item?.vehicleId?.vehicleType}</Text>
         </View>
         <View style={styles.row}>
+          <Text style={[styles.textStyle, styles.estimatedTotalTitle]}>Total Cost</Text>
+          <Text style={[styles.textStyle, styles.orderDetailPrice]}>AED {cost}</Text>
+        </View>
+        <View style={styles.row}>
           <Text style={[styles.textStyle, styles.orderDetailItem]}>Discount</Text>
-          <Text style={[styles.textStyle, styles.orderDetailPrice]}>AED {item?.discount?.price + ".00"}</Text>
+          <Text style={[styles.textStyle, styles.orderDetailPrice]}>AED {discountAmount.toFixed(2)}</Text>
         </View>
         <View style={styles.divider} />
 
         <View style={styles.row}>
           <Text style={[styles.textStyle, styles.estimatedTotalTitle]}>Estimated Total</Text>
-          <Text style={[styles.textStyle, styles.estimatedTotalAmount]}>AED {item?.cost}.00</Text>
+          <Text style={[styles.textStyle, styles.estimatedTotalAmount]}>AED {estimatedTotal.toFixed(2)}</Text>
         </View>
       </View>
     </ScrollView>

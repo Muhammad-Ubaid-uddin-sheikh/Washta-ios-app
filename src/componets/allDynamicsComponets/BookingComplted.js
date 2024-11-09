@@ -144,9 +144,9 @@ const Profile = ({ orders, showButton, ReviewBtn, TrackBtn, colorBtntext, transp
                     </View>
                     {showButton && (
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={ReviewBtn} style={styles.transparentButton}>
+                            {/* <TouchableOpacity onPress={ReviewBtn} style={styles.transparentButton}>
                                 <Text style={styles.transparentButtonText}>{transparentBtn}</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                             <TouchableOpacity onPress={TrackBtn} style={styles.trackButton}>
                                 <View style={styles.trackButtonContent}>
                                     <Text style={styles.trackButtonText}>{colorBtntext}</Text>
@@ -210,32 +210,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingTop: 15,
     },
-    transparentButton: {
-        flexDirection: 'row',
-        width: '48%',
-        justifyContent: 'space-between',
-        alignItems: "center",
-        backgroundColor: 'transparent',
-        paddingHorizontal: 6,
-        paddingVertical: 2,
-        borderRadius: 8,
-        borderWidth: 1,
-    },
-    transparentButtonText: {
-        textAlign: 'center',
-        fontFamily: FontsGeneral.MEDIUMSANS,
-        fontSize: 14,
-        color: 'black',
-        width: '100%',
-        paddingVertical: 7,
-    },
+    
+ 
     trackButton: {
         flexDirection: 'row',
-        width: '48%',
+        width: '100%',
         alignItems: "center",
         backgroundColor: '#747EEF',
         paddingHorizontal: 6,
-        paddingVertical: 2,
+        paddingVertical: 8,
         borderRadius: 8,
     },
     trackButtonContent: {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, View, ActivityIndicator } from 'react-native';
+import { Alert, ScrollView, StyleSheet, View, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 import InputFeilds from '../../allDynamicsComponets/inputFeilds';
 import Button from '../../allDynamicsComponets/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -84,6 +84,11 @@ const EditProfileInfor = ({ navigation }) => {
   }, []);
 
   return (
+    <KeyboardAvoidingView
+    style={styles.container}
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} // Adjust offset for iOS
+>
     <View style={styles.mainDivInf}>
       {loading ? (
         <View style={styles.spinnerContainer}>
@@ -91,7 +96,7 @@ const EditProfileInfor = ({ navigation }) => {
         </View>
       ) : (
         <>
-          <ScrollView>
+          <ScrollView contentContainerStyle={styles.scrollView}>
             <InputFeilds
               keyboardType='default'
               focus={true}
@@ -156,6 +161,7 @@ const EditProfileInfor = ({ navigation }) => {
         </>
       )}
     </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -175,7 +181,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     paddingHorizontal: 15,
-  }
+  },
+  container:{
+    flex:1
+  },
+  scrollView: {
+    paddingBottom: 100, // Add padding at the bottom to ensure the last input and button are visible
+  },
 });
 
 export default EditProfileInfor;

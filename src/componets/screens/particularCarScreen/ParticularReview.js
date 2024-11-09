@@ -63,7 +63,16 @@ const ParticularReview = ({ route }) => {
 
   // Handle adding new reviews
   const AddReviews = async () => {
-    console.log('hellp')
+    if (rating === 0 || feedback.trim() === '') {
+      toast.show('Please provide a rating and feedback', { 
+        type: "danger", 
+        position: 'top',  // Set the toast position to top
+        animationType: "zoom-in" 
+      });
+      bottomSheet.current.close();
+      return; // Exit early if validation fails
+     
+    }
     setLoading(true);
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
@@ -151,6 +160,7 @@ const ParticularReview = ({ route }) => {
   };
 
   return (
+    
     <View style={{ flex: 1 }}>
       {loading ? (
         <View style={styles.spinnerContainer}>
@@ -213,9 +223,9 @@ const ParticularReview = ({ route }) => {
                 onChangeText={editReview ? setEditFeedback : setFeedback}
                 placeholderTextColor={'black'}
               />
-              <View style={{ width: '100%', marginTop: 50 }}>
-                <TouchableOpacity style={{ margin: 0, padding: 0 }} onPress={editReview ? handleEditReview : AddReviews}>
-                  <Button loading={loading} text={editReview ? 'Update Review' : 'Submit Rating'} />
+              <View style={{ width: '100%', marginTop: 30 }}>
+                <TouchableOpacity style={[styles.cancelButton,{ margin: 0, padding: 0,backgroundColor:'#747EEF',borderWidth:0}]} onPress={editReview ? handleEditReview : AddReviews}>
+                  <Text style={[styles.cancelButtonText,{color:'white'}]}>Submit</Text>
                 </TouchableOpacity>
               </View>
               <TouchableOpacity onPress={() => {
@@ -288,6 +298,8 @@ const styles = StyleSheet.create({
     width: '100%',
     fontFamily: Fonts.BOLD,
     color: "black",
+    marginTop:20,
+    paddingBottom:10
   },
   cancelButton: {
     width: '100%',

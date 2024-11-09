@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import BackIcon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
@@ -8,8 +8,11 @@ import { Fonts, FontsGeneral } from '../style';
 const ParticularCarScreen = ({ route }) => {
   const { item } = route.params;
   const navigation = useNavigation();
-  console.log("feildDataasdasdad", item.reviewsSummary.averageRating);
-  function formatNumber(num) {
+  const [isExpanded, setIsExpanded] = useState(false); // State to manage expanded/collapsed state
+
+  const toggleLocation = () => {
+      setIsExpanded(!isExpanded); // Toggle the expanded state
+  };  function formatNumber(num) {
     if (num >= 1000000) {
       return (num / 1000000).toFixed(1) + 'M';
     } else if (num >= 1000) {
@@ -59,7 +62,24 @@ const ParticularCarScreen = ({ route }) => {
           
           <View style={styles.RowMainParticular}>
             <Text style={styles.textLocation}> Location</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {item?.shopName || 'Dubai Mall Parking B1'}</Text>
+    <TouchableOpacity onPress={toggleLocation} style={{paddingHorizontal:20,width:'90%'}}>
+                <Text
+                    numberOfLines={isExpanded ? undefined : 1} 
+                    style={[
+                        styles.textLocation,
+                        { 
+                            fontFamily: FontsGeneral.MEDIUMSANS,
+                            fontSize: 15,
+                            // width: '80%',
+                            textOverflow: 'ellipsis', 
+                            whiteSpace: 'nowrap' ,
+                            paddingLeft:25
+                        }
+                    ]}
+                >
+                    {item.location.text || 'NO address on this shop'}
+                </Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{ paddingHorizontal: 10, paddingRight: 15, borderBlockColor: '#747474', borderBottomWidth: 0.2, paddingBottom: 10, paddingTop: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>

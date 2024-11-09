@@ -1,14 +1,4 @@
-// import moment from "moment-timezone";
 
-//  export const formatDate = (timestamp) => {
-//     return moment(timestamp).format('MMM DD');
-//   };
-  
-// export const formatTimeInTimezone = (timestamp) => {
-//   // Automatically get the user's local timezone
-//   const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-//   return moment.utc(timestamp).tz(userTimezone).format('hh:mm A');
-// };
 import moment from "moment-timezone";
 
 // Format the date in 'MMM DD' format

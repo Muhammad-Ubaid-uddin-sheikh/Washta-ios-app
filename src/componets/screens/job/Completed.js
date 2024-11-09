@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'react-native-axios';
 import { useFocusEffect } from '@react-navigation/native';
 import { FontsGeneral } from '../style';
-import CompletedImg from '../../../assets/complted.png';
+import CompletedImg from '../../../assets/washtacomplted.png';
 
 const Completed = ({ navigation }) => {
   const toast = useToast();
@@ -72,7 +72,7 @@ const Completed = ({ navigation }) => {
               <BookingCompeleted
                 orders={data}
                 showButton={true}
-                ReviewBtn={() => console.log('Review Button Pressed')}
+               
                 TrackBtn={() => navigation.navigate('Receipt', { item })}
                 colorBtntext="E-Receipt"
                 transparentBtn="Review"

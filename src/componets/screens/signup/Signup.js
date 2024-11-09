@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Linking, Dimensions } from 'react-native';
 import InputFeilds from '../../allDynamicsComponets/inputFeilds';
 import Button from '../../allDynamicsComponets/Button';
@@ -16,6 +16,12 @@ const ApiUrl = 'https://backend.washta.com/api/auth/Signup';
 const SignUp = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [deviceid ,setDeviceid] =useState(null)
+  const getdeviceid = async ()=>{
+    const deviceid = await AsyncStorage.getItem('deviceid')
+    setDeviceid(deviceid)
+  }
+  useEffect(()=>{getdeviceid()},[])
   const toast = useToast();
   const handleCheckBoxToggle = () => {
     setIsChecked(!isChecked);
@@ -39,6 +45,7 @@ const SignUp = ({ navigation }) => {
     email: formData?.email,
     phone: formData?.number,
     role: 'customer',
+    deviceId: deviceid,
     car: {
       vehicleManufacturer: formData?.CarManufacturer,
       vehiclePlateNumber: formData?.carPlateNumber,
@@ -48,9 +55,15 @@ const SignUp = ({ navigation }) => {
   };
 
   const ButtonClick = async () => {
+  
     if (!formData.fullName || !formData.email || !formData.carName || !formData.password || !formData.carType || !formData.number || !formData.carPlateNumber) {
       toast.show('Incomplete Details. Please fill all details.', { type: 'danger', animationType: 'zoom-in' });
-    } else {
+    } 
+    if (!isChecked) {
+      toast.show('You must agree to the terms of service and privacy policy.', { type: 'danger', animationType: 'zoom-in' });
+      return; // Stop the function if the checkbox is not checked
+  }
+    else {
       setLoading(true);
       try {
         const response = await axios.post(ApiUrl, paylod);
@@ -64,7 +77,6 @@ const SignUp = ({ navigation }) => {
         setLoading(false);
       }
     }
-    // navigation.navigate('OtpScreen', { paylod });
   };
 
   return (

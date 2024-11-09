@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'react-native-axios';
 import { useFocusEffect } from '@react-navigation/native';
 import { FontsGeneral } from '../style';
-import Nobokking from '../../../assets/cencel.png';
+import Nobokking from '../../../assets/washtacencel.png';
 
 const Completed = () => {
   const toast = useToast();

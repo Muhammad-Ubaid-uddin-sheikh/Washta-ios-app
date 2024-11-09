@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import {  useNavigation } from '@react-navigation/native';
+import {  useNavigation ,useRoute} from '@react-navigation/native';
 import Home from '../screens/home/Home';
+import SettingIcon from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from '../screens/splash/Splash';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import BackIcon from 'react-native-vector-icons/AntDesign';
@@ -34,10 +35,14 @@ import HireNowStepOne from '../screens/particularCarScreen/HireNowStepOne';
 import HireNowStepTwo from '../screens/particularCarScreen/HireNowStepTwo';
 import HireNowStepThree from '../screens/particularCarScreen/HireNowStepThree';
 import ParticularReview from '../screens/particularCarScreen/ParticularReview';
+import Chat from '../screens/setting/chats/Chats';
+import { useSocket } from '../../../Socket';
 const Stack = createStackNavigator();
 
-const Routes = () => {
+const Routes = ({route}) => {
     const navigation = useNavigation();
+    const socket = useSocket();
+
   return (
      <Stack.Navigator
       initialRouteName='SplashScreen'
@@ -235,6 +240,13 @@ const Routes = () => {
             </TouchableOpacity>
           ),
           title: null,
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', gap: -5 }}>
+              <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
+                <SettingIcon name="chat" size={23} color="black" style={{ marginRight: 18 }} />
+              </TouchableOpacity>
+            </View>
+          ),
         }}
       />
       <Stack.Screen
@@ -251,6 +263,25 @@ const Routes = () => {
             <TouchableOpacity style={{ flexDirection: "row", marginLeft: 13 }} onPress={() => navigation.goBack()}>
               <BackIcon name="arrowleft" size={23} color='#747EEF' style={{ marginRight: 18 }} />
               <Text style={[styles.backicontext, { marginLeft: -10 }]}>Password</Text>
+            </TouchableOpacity>
+          ),
+          title: null,
+        }}
+      />
+      <Stack.Screen
+        name="Chat"
+        component={Chat}
+        options={{
+          headerStyle: {
+            backgroundColor: 'white', 
+            borderBottomWidth: 0, 
+            shadowOpacity: 0, 
+            elevation: 0, 
+          },
+          headerLeft: () => (
+            <TouchableOpacity style={{ flexDirection: "row", marginLeft: 13 }} onPress={() => navigation.goBack()}>
+              <BackIcon name="arrowleft" size={23} color='#747EEF' style={{ marginRight: 18 }} />
+              <Text style={[styles.backicontext, { marginLeft: -10 }]}>Chat</Text>
             </TouchableOpacity>
           ),
           title: null,
@@ -292,23 +323,42 @@ const Routes = () => {
         }}
       
       name="Notifcationscreen" component={NotificationsScreen} />
-       <Stack.Screen options={{
-        headerStyle: {
-          backgroundColor: 'white', 
-          borderBottomWidth: 0, 
-          shadowOpacity: 0, 
-          elevation: 0, 
-        },
-          headerLeft: () => (
-            <TouchableOpacity style={{ flexDirection: "row", marginLeft: 13 }} onPress={() => navigation.goBack()}>
-              <BackIcon name="arrowleft" size={23} color='#747EEF' style={{ marginRight: 18 }} />
-              <Text style={[styles.backicontext, { marginLeft: -10 }]}>Chats</Text>
-            </TouchableOpacity>
-          ),
-          title: null,
+   <Stack.Screen
+  options={({ navigation, route }) => ({
+    headerStyle: {
+      backgroundColor: 'white',
+      borderBottomWidth: 0,
+      shadowOpacity: 0,
+      elevation: 0,
+    },
+    headerLeft: () => (
+      <TouchableOpacity
+        style={{ flexDirection: 'row', marginLeft: 13 }}
+        onPress={() => {
+          const chatRoomId = route?.params?.chatRoomId;  // Access chatRoomId properly from route params
+          console.log("Back button pressed, chatRoomId:", chatRoomId);
+
+          if (chatRoomId && socket) {
+            socket.emit('leave', { ticketId: chatRoomId });
+            console.log(`Left chat for ticketId: ${chatRoomId}`);
+          } else {
+            console.log("chatRoomId not found or socket is not defined");
+          }
+
+          navigation.goBack();
         }}
-      
-      name="chat-screen" component={ChatScreen} />
+      >
+        <BackIcon name="arrowleft" size={23} color="#747EEF" style={{ marginRight: 18 }} />
+        <Text style={[styles.backicontext, { marginLeft: -10 }]}>Chats</Text>
+      </TouchableOpacity>
+    ),
+    title: null,
+  })}
+  name="chat-screen"
+  component={ChatScreen}
+/>
+
+
        <Stack.Screen
         name="TrackProgess"
         component={TrackProgress}

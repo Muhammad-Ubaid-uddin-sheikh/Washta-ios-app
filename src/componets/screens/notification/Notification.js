@@ -228,7 +228,7 @@ const NotificationsScreen = ({ navigation }) => {
 
   const renderItem = ({ item }) => (
     <View style={styles.notificationContainer}>
-      <Image style={styles.notificationImage} source={require('../../../assets/app.logo.jpeg')} />
+      <Image  style={[styles.notificationImage,{ width: 43, height: 45, borderRadius: 8,borderWidth:1,borderColor:'#777'}]}source={require('../../../assets/app.logo.jpeg')} />
       <View style={styles.notificationTextContainer}>
         <View style={styles.notificationHeader}>
           <Text style={styles.title}>{item.notification.title}</Text>

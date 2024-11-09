@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, Animated, Dimensions, Platform } from 'react-native';
-import { FontsGeneral } from '../screens/style'; // Assuming you're using this font file
+import { View, TextInput, Text, StyleSheet, Animated, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Fonts } from '../screens/style';
 
-const { width, height } = Dimensions.get('window'); // Get device width and height
-
-const App = ({ labelName, value, onChangeText, focus, maxLength, keyboardType, errorMessage }) => {
+const InputField = ({ labelName, value, onChangeText, focus, maxLength, keyboardType, errorMessage,borderWidth }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(false);
 
@@ -33,73 +31,72 @@ const App = ({ labelName, value, onChangeText, focus, maxLength, keyboardType, e
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={[
-          styles.input, 
-          { borderBottomColor: isFocused ? '#aaa' : '#000' } // Border color logic
-        ]}
-        placeholder=" "
-        value={value}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onChangeText={onChangeText}
-        secureTextEntry={secureTextEntry}
-        editable={focus}
-        maxLength={maxLength}
-        keyboardType={keyboardType}
-      />
-      <Animated.Text
-        style={[
-          styles.label,
-          {
-            top: animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [27, 10], // Floating label positioning
-            }),
-            fontSize: animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [15, 13], // Adjusted font size
-            }),
-            color: animatedValue.interpolate({
-              inputRange: [0, 5],
-              outputRange: ['#aaa', '#000'], // Text color change
-            }),
-          },
-        ]}
-      >
-        {labelName}
-      </Animated.Text>
-      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <TextInput
+          style={[styles.input, { borderBottomColor: isFocused ? '#aaa' : '#aaa',borderBottomWidth: borderWidth ? borderWidth : 1 }]}
+          placeholder=" "
+          value={value}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry}
+          editable={focus}
+          maxLength={maxLength}
+        />
+        <Animated.Text
+          style={[
+            styles.label,
+            {
+              top: animatedValue.interpolate({
+                inputRange: [0, 1.2],
+                outputRange: [25, 2],
+              }),
+              fontSize: animatedValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [15, 13],
+              }),
+              color: animatedValue.interpolate({
+                inputRange: [0, 5],
+                outputRange: ['#aaa', '#000000'],
+              }),
+            },
+          ]}
+        >
+          {labelName}
+        </Animated.Text>
+        {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 2, // Same margin style as in previous component
+    marginTop: 2,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginHorizontal: 10,
   },
   input: {
-    borderBottomWidth: 1, // Consistent border for input
-    borderColor: '#000', // Default border color
-    color: '#000', // Black text
-    paddingBottom: 4, // Padding similar to previous component
-    fontSize: 13, // Matching font size
-    marginHorizontal: 10, // Horizontal margin
-    fontFamily: FontsGeneral.MEDIUMSANS, // Use of the same font family
-    paddingTop: 20, // Padding for top space
-    height: 60, // Adjusted height to maintain layout
+    borderBottomWidth: 1,
+    borderColor: '#000',
+    color: '#000',
+    paddingBottom: 0,
+    fontSize: 13,
+    marginHorizontal: 10,
+    paddingLeft:2,
+    fontFamily: Fonts.MEDIUM,
+    paddingTop: 20,
+    height: 52,
   },
   label: {
     position: 'absolute',
-    left: 12, // Label position
-    fontFamily: FontsGeneral.MEDIUMSANS, // Same font family for label
-  },
-  errorText: {
-    color: 'red', // Error message color
-    fontSize: 12, // Smaller font size for error message
-    marginHorizontal: 10, // Consistent horizontal margin for error text
+    left: 12,
+    fontFamily: Fonts.MEDIUM,
   },
 });
 
-export default App;
+export default InputField;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 import { Fonts, FontsGeneral } from '../style';
 import InputFeild from '../../allDynamicsComponets/inputFeilds';
 import Button from '../../allDynamicsComponets/Button';
@@ -18,14 +18,12 @@ const HireNowStepOne = ({ navigation, route }) => {
     const [seletedata, setseletedata] = useState('');
     const [location, setlocation] = useState('');
     const [promocode, setPromocode] = useState('');
-    // const [promoApplied, setPromoApplied] = useState(false);
-    // const [promoDiscount, setPromoDiscount] = useState(null);
     const [discountedCost, setDiscountedCost] = useState(item?.cost); // Initial cost
     const [discountAmount, setDiscountAmount] = useState(0); // Total di
     const dispatch = useDispatch();
     const toast = useToast();
     const appliedPromo = useSelector((state) => state.promoCode.appliedPromo); // Get applied promo from Redux
-console.log('redux',appliedPromo)
+console.log('redux',item.location.text)
 
 useEffect(() => {
     if (appliedPromo) {
@@ -67,7 +65,13 @@ useEffect(() => {
         }
     };
 
+    
     const applyPromoCode = async () => {
+        if (!promocode || promocode === '0') {
+            toast.show('Please add a promo code', { type: 'danger', animationType: 'zoom-in' });
+            return; // Exit early if no promo code is provided
+        }
+    
         try {
             const accessToken = await AsyncStorage.getItem('accessToken');
             const response = await axios.get(`https://backend.washta.com/api/customer/promoCode?promoCode=${promocode}`, {
@@ -75,20 +79,35 @@ useEffect(() => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-
-            if (response.data.status) {
+    
+            console.log('Full response:', response.data); // Log full response for debugging
+    
+            if (response.data?.status) {  // Assuming the response has a status property
                 toast.show('Promo code applied successfully!', { type: 'success', animationType: 'zoom-in' });
-
-                dispatch(setPromoCode(response.data.data));
-
+                dispatch(setPromoCode(response.data.data)); // Set the promo code in your store
             } else {
+                console.log('Response data on failure:', response);
                 toast.show('Invalid promo code', { type: 'danger', animationType: 'zoom-in' });
             }
         } catch (error) {
-            const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-            toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+            console.log('Error object:', error); // Log full error object for debugging
+    
+            if (error.response) {
+                const status = error.response.status;
+                const errorMessage = error.response.data?.message || 'An error occurred. Please try again.';
+    console.log('error.response',error.response.data.error)
+                // Handle specific status codes
+                if (status === 400) {
+                    toast.show('Invalid Promo Code', { type: 'danger', animationType: 'zoom-in' });
+                } else {
+                    toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+                }
+            } else {
+                toast.show('Network error: Please check your internet connection.', { type: 'danger', animationType: 'zoom-in' });
+            }
         }
     };
+    
 
     const removePromoCode = () => {
         setDiscountAmount('0')
@@ -109,6 +128,11 @@ useEffect(() => {
     }
 
     return (
+        <KeyboardAvoidingView
+    style={styles.container}
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} // Adjust offset for iOS
+>
         <View style={styles.container}>
             <ScrollView style={{ flex: 1 }}>
                 <View style={styles.progressContainer}>
@@ -188,8 +212,9 @@ useEffect(() => {
                         </View>
                     ) : (
                                                 <View style={styles.promoInputContainer}>
-                                                    <View style={{width:'80%'}}>
+                                                    <View style={{width:'80%',borderColor:'white'}}>
                                                     <InputFeild
+                                                   borderWidth='0'
                                                     bordercolorVal={'white'}
                                                         keyboardType='default'
                                                         labelName='Promo Code'
@@ -210,6 +235,7 @@ useEffect(() => {
                 />
             </View>
         </View>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -311,7 +337,8 @@ fontSize:12
         left: 0,
         right: 0,
         paddingHorizontal: 15,
-    }
+    },
+    container:{flex:1}
 });
 
 export default HireNowStepOne;

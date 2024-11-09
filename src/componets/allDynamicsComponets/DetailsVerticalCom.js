@@ -14,7 +14,9 @@ const SliderItem = ({ imageUrl, name, km, rating, reviews,time,margin }) => {
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{name}</Text>
         <View style={{flexDirection:"row",alignItems:'center'}}>
-            <Text style={styles.time}> {km}km </Text>
+            <Text style={[styles.time,{ overflow: 'hidden',width:'80%', padding:0,marginLeft:0,
+    textOverflow: 'ellipsis', 
+    whiteSpace: 'nowrap'}]} numberOfLines={1}>{km} </Text>
             <Ionicons name="stopwatch-outline" size={13} color={'#747EEF'} />
             <Text style={styles.time}> {time} </Text>
         </View>

@@ -1,32 +1,165 @@
-import React, { useState, useRef } from 'react';
-import { View, TextInput, TouchableOpacity, Text, FlatList, Image, StyleSheet } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, TextInput, TouchableOpacity, Text, FlatList, Image, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import PlusIcon from "react-native-vector-icons/AntDesign";
 import Send from 'react-native-vector-icons/FontAwesome';
+import axios from 'react-native-axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSocket } from '../../../../../Socket';
+import { formatDate, formatTimeInTimezone } from '../../../../../DaterightFunction';
 import { Fonts, FontsGeneral } from '../../style';
 
-const ChatScreen = () => {
-  const [messages, setMessages] = useState([
-    { text: 'Hi there!', type: 'text', fromMe: false, time: '09:00 AM' },
-    { text: 'How are you?', type: 'text', fromMe: false, time: '09:02 AM' },
-    { text: 'Are you free today?', type: 'text', fromMe: false, time: '09:05 AM' },
-    { text: 'Let\'s meet at 5.asdasdasdas asdhags asdta sfdj', type: 'text', fromMe: false, time: '09:10 AM' },
-  ]);
+const ApiUrl = 'https://backend.washta.com/api/customer/support';
 
+const ChatScreen = ({ route }) => {
+  const { data } = route?.params;
+  const socket = useSocket(); // Accessing the socket from the SocketProvider
+  const [user, setUser] = useState({});
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const flatListRef = useRef(null); // Create a ref for FlatList
+  const flatListRef = useRef(null); // Reference for FlatList
 
-  const handleSend = () => {
-    if (input) {
-      const newMessage = {
-        text: input,
-        type: 'text',
-        fromMe: true,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      };
-      setMessages([...messages, newMessage]);
-      setInput('');
-      flatListRef.current.scrollToEnd({ animated: true }); // Scroll to the bottom after sending a message
+  // Fetch the user data on component mount
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('user');
+        if (userData) {
+          setUser(JSON.parse(userData)); // Parse user data and set it to state
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    getUserData();
+  }, []);
+
+  // Fetch chat history based on ticketId
+  useEffect(() => {
+    const fetchChatHistory = async () => {
+      const accessToken = await AsyncStorage.getItem('accessToken');
+
+      try {
+        const ticketId = data?._id;
+        const response = await axios.get(`https://backend.washta.com/api/customer/chat/?ticketId=${ticketId}&skip=0`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.data) {
+          // Map the response to the messages format
+          const chatMessages = response?.data?.data?.reverse().map((msg) => ({
+            text: msg.message,
+            type: 'text',
+            fromMe: msg.sender.role === 'customer', // Customer's messages are fromMe
+            time: msg.createdAt,
+          }));
+
+          setMessages(chatMessages);
+        }
+      } catch (error) {
+        console.error('Error fetching chat history:', error);
+      }
+    };
+
+    fetchChatHistory();
+  }, [data]);
+
+  // Listen for messages from the agent
+  useEffect(() => {
+    if (socket) {
+      // Listen for messages from the agent
+      socket.on('message-receive-from-agent', (messageData) => {
+        console.log('messageData', messageData); // Logging received message data
+        const receivedMessage = {
+          text: messageData.message,
+          type: 'text',
+          fromMe: false, // Agent's message is not from the user
+          time: new Date(messageData.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        };
+        setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+        flatListRef.current?.scrollToEnd({ animated: true }); 
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.off('message-receive-from-agent'); // Clean up listener when component unmounts
+      }
+    };
+  }, [socket]);
+
+  // Handle sending a message
+  const handleSend = async () => {
+    if (!input) {
+      // toast.error('Please enter a message to send');
+      return;
+    }
+
+    const newMessage = {
+      text: input,
+      type: 'text',
+      fromMe: true, // This message is from the user
+      time: new Date(),
+        };
+
+    // Optimistically update UI
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setInput(''); // Clear input
+    flatListRef.current.scrollToEnd({ animated: true }); // Scroll to the bottom
+
+    const payload = {
+      title: input,
+      user: {
+        id: user?.id, // Customer ID 
+        username: user?.username,
+        role: 'customer',
+      },
+    };
+
+    try {
+      const accessToken = await AsyncStorage.getItem('accessToken');
+
+      // Check if data is passed via route params
+      if (data) {
+        // Use socket to send message if data exists
+        const socketPayload = {
+          ticketId: data._id,
+          message: input,
+          createdAt: new Date().toISOString(),
+          receiver: {
+            id: data?.connectedWith?.id, // Replace with actual receiver ID
+            role: 'agent',
+            username: data?.connectedWith?.username,
+          },
+          sender: {
+            id: data?.user?.id,
+            username: data?.user?.username,
+            role: 'customer',
+          },
+        };
+
+        socket.emit('send-message-to-agent', socketPayload); // Emit the message to the agent
+      } else {
+        // Send message to API
+        const response = await axios.post(ApiUrl, payload, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.data.success) {
+          console.log('Message sent:', response.data); // Log response if needed
+        } else {
+          console.log('response', response.data);
+        }
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
     }
   };
 
@@ -44,10 +177,10 @@ const ChatScreen = () => {
         const newMessage = {
           source: { uri: response.assets[0].uri },
           type: 'image',
-          fromMe: true,
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          fromMe: true, // Assuming this message is sent by the current user
+          time: new Date().toLocaleTimeString(), // Format time
         };
-        setMessages([...messages, newMessage]);
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
         flatListRef.current.scrollToEnd({ animated: true }); // Scroll to the bottom after sending an image
       }
     });
@@ -56,7 +189,6 @@ const ChatScreen = () => {
   const renderMessage = ({ item }) => {
     const isTextMessage = item.type === 'text';
     const isFromMe = item.fromMe;
-
     return (
       <View
         style={[
@@ -76,12 +208,17 @@ const ChatScreen = () => {
         ) : (
           <Image source={item.source} style={styles.imageMessage} />
         )}
-        <Text style={styles.timestamp}>{item.time}</Text>
+        <Text style={styles.timestamp}>{formatDate(item.time)} {formatTimeInTimezone(item.time)}</Text>
       </View>
     );
   };
 
   return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} // Adjust offset for iOS
+    >
     <View style={styles.container}>
       <FlatList
         ref={flatListRef} // Attach the ref to FlatList
@@ -118,6 +255,7 @@ const ChatScreen = () => {
         </View>
       </View>
     </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -144,82 +282,85 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 15,
     backgroundColor: '#fff',
-    paddingRight: 40,
-    color: 'black',
-    fontFamily: FontsGeneral.MEDIUMSANS,
-  },
-  plusButton: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#747EEF',
-    borderRadius: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 45,
-    width: 50,
-    justifyContent: 'center',
-  },
-  plusIcon: {
-    color: '#747EEF',
-    fontSize: 18,
+    height: 50,
   },
   sendButton: {
     position: 'absolute',
-    right: 15,
-    top: 13,
+    right: 10,
+    top: 8,
   },
   sendIcon: {
+    fontSize: 22,
     color: '#747EEF',
-    fontSize: 18,
+  },
+  plusButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#747EEF',
+    borderRadius: 10,
+    height: 45,
+    width: 45,
+  },
+  plusIcon: {
+    fontSize: 25,
+    color: '#747EEF',
   },
   chatList: {
-    borderWidth: 0.5,
-    marginHorizontal: 16,
-    marginTop: 4,
-    borderColor: '#777',
-    borderRadius: 15,
-    paddingHorizontal: 6,
+    flexGrow: 1,
+    borderWidth:1.5,
+    marginHorizontal:20,
+    borderRadius:10,
+    borderColor:'#747EEF'
   },
   messageContainer: {
-    maxWidth: '70%',
-    marginBottom: 10,
+    marginVertical: 5,
+    // maxWidth: '80%',
     padding: 10,
     borderRadius: 10,
     borderWidth: 0.5,
-    borderColor: '#747EEF',
-    elevation: 2,
-  },
-  leftMessage: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#f7f7f7',
+    position: 'relative',
+    width:'48%'
   },
   rightMessage: {
+    paddingVertical:15,
     alignSelf: 'flex-end',
-    backgroundColor: '#747EEF',
+    fontFamily:Fonts.MEDIUM,
+    backgroundColor: '#747EEF', // Light green for user's messages
+  },
+  leftMessage: {
+    fontFamily:Fonts.MEDIUM,
+    paddingVertical:15,
+    alignSelf: 'flex-start',
+    backgroundColor: '#F2F2F3', // Light gray for agent's messages
   },
   messageText: {
-    fontSize: 14,
-  },
-  leftMessageText: {
-    color: '#000',
-    fontFamily: FontsGeneral.MEDIUMSANS,
+    fontSize: 16,
+    lineHeight: 20,
+    paddingBottom:10
   },
   rightMessageText: {
-    color: '#fff',
-    fontFamily: FontsGeneral.MEDIUMSANS,
+    color: 'white', // Dark text for user's messages
   },
-  imageMessage: {
-    width: 200,
-    height: 200,
-    borderRadius: 10,
+  leftMessageText: {
+    color: 'black', // Dark text for agent's messages
   },
   timestamp: {
-    fontSize: 10,
+    fontSize: 11,
     color: '#333',
-    marginTop: 5,
-    alignSelf: 'flex-end',
-    fontFamily: Fonts.REGULAR,
+    position: 'absolute',
+    bottom: 4,
+    left: 10,
+    paddingTop:10,
+    // top:30,
+    fontFamily:FontsGeneral.MEDIUMSANS
+  },
+  imageMessage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
   },
 });
 
 export default ChatScreen;
+

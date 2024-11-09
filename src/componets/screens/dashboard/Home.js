@@ -434,6 +434,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     if (areaName) {
       dispatch(addLocation(areaName));
+      AsyncStorage.setItem('currentlocationlat',JSON.stringify(currentLocation))
     }
   }, [areaName]);
   
@@ -550,7 +551,7 @@ const Home = ({ navigation }) => {
         name={item.shopName}
         time={item.estimatedServiceTime}
         reviews={item.cost}
-        km={item.location.String}
+        km={item.location?.text || "Unknown"}
         margin={false}
       />
     </TouchableOpacity>
@@ -709,15 +710,7 @@ const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.contentParahgrph}>
-        {/* <View style={styles.locationInfoContainer}>
-          <Text style={styles.areaNameText}>{areaName}</Text>
-          <TouchableOpacity
-            onPress={requestLocationPermission}
-            style={styles.refreshButton}
-          >
-            <Ionicons name="refresh" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View> */}
+     
              <View style={styles.topBar}>
        <Text style={styles.MainHeading}>Hi there, {name?.username}</Text>
          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>

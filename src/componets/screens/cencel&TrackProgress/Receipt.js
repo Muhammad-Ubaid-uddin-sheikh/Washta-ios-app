@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Fonts, FontsGeneral } from '../style';
 import Button from '../../allDynamicsComponets/Button';
@@ -6,8 +6,7 @@ import { formatDate, formatTimeInTimezone } from '../../../../DaterightFunction'
 
 const Receipt = ({ route }) => {
   const { item } = route.params;
-console.log("eed",item)
-  // Function to calculate duration
+  const viewRef = useRef();
   const calculateDuration = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -21,11 +20,25 @@ console.log("eed",item)
       return `${hours} hr${minutes > 0 ? ` ${minutes} min` : ''}`;
     }
   };
+ 
 
   const duration = calculateDuration(item.orderAcceptedAt, item.orderCompleteAt);
 console.log(duration)
+const cost = parseFloat(item.cost);
+let discountAmount = 0;
+let estimatedTotal = cost;
+
+if (item.promoCode && item.promoCode.Discounttype) {
+  if (item.promoCode.Discounttype === 'fixed') {
+    discountAmount = parseFloat(item.promoCode.discount);
+    estimatedTotal = cost - discountAmount; // Subtract fixed discount from cost
+  } else if (item.promoCode.Discounttype === 'percentage') {
+    discountAmount = (cost * parseFloat(item.promoCode.discount)) / 100; // Calculate percentage discount
+    estimatedTotal = cost - discountAmount; // Subtract percentage discount from cost
+  }
+}
   return (
-    <View style={{ paddingHorizontal: 15, flex: 1 }} backgroundColor={'white'}>
+    <View ref={viewRef} style={{ paddingHorizontal: 15, flex: 1 }} backgroundColor={'white'}>
       <View style={{ flex: 1 }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Booking Date</Text>
@@ -63,27 +76,34 @@ console.log(duration)
             {duration}
           </Text>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 10 }}>
-          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Shop Name</Text>
-          <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>
-            {item.shopId?.shopName}
-          </Text>
-        </View>
+     
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Location</Text>
           <Text numberOfLines={1} ellipsizeMode="tail" style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10, width: '60%' }]}>
             {item.location?.text}
           </Text>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Estimated Total</Text>
-          <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 17, paddingTop: 10 }]}>
-            AED {item.cost}.00
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
+          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Shop Name</Text>
+          <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>
+            {item.shopId?.shopName}
           </Text>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 10 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
+          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Total Cost</Text>
+          <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>AED {cost}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
+          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Discount</Text>
+          <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>AED {discountAmount.toFixed(2)}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
+          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Estimated Total</Text>
+          <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>AED {estimatedTotal.toFixed(2)}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Payment</Text>
-          <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>
+          <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop:10 }]}>
             **** **** **** {item.paymentId.slice(10)}
           </Text>
         </View>
@@ -95,9 +115,9 @@ console.log(duration)
         </View>
       </View>
 
-      <View style={{ width: '100%', bottom: 20 }}>
-        <Button text='Download E-Receipt' Link={''} />
-      </View>
+      {/* <View style={{ width: '100%', bottom: 20 }}>
+        <Button text='Download E-Receipt' Link={handleDownloadReceipt} />
+      </View> */}
     </View>
   );
 };

@@ -20,7 +20,7 @@ prepare_react_native_project!
 
 # ⬇️ uncomment wanted permissions
 setup_permissions([
-  # 'AppTrackingTransparency',
+  'AppTrackingTransparency',
   # 'Bluetooth',
   # 'Calendars',
   # 'CalendarsWriteOnly',
@@ -43,6 +43,7 @@ setup_permissions([
 ])
 
 
+use_frameworks! :linkage => :static
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
@@ -52,10 +53,20 @@ end
 
 target 'Washta' do
   config = use_native_modules!
+  pod 'Firebase/Core'
+  pod 'Firebase/Firestore'  # Optional, for Firestore usage
+  pod 'Firebase/Database'   # Optional, for Realtime Database usage
+  pod 'Firebase/Messaging'
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
+  $RNFirebaseAsStaticFramework = true
+  # use_frameworks! :linkage => :static
+  pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app', :modular_headers => true
+pod 'RNFBMessaging', :path => '../node_modules/@react-native-firebase/messaging', :modular_headers => true
   use_react_native!(
     :path => config[:reactNativePath],
+    # :hermes_enabled => true,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )

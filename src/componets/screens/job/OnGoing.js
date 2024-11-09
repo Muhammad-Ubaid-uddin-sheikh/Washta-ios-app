@@ -7,7 +7,7 @@ import { useToast } from 'react-native-toast-notifications';
 import { useFocusEffect } from '@react-navigation/native';
 import { FontsGeneral } from '../style';
 import { formatDate, formatTimeInTimezone } from '../../../../DaterightFunction';
-import Nobokking from '../../../assets/nobokking.png'
+import Nobokking from '../../../assets/washtaongoing.png'
 const Profile = ({ navigation }) => {
   const toast = useToast();
   const [loading, setLoading] = useState(true);
