@@ -23,6 +23,7 @@ import { Fonts } from '../style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Skeleton from "@thevsstech/react-native-skeleton";
 import { useSelector } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ApiUrl  = 'https://backend.washta.com/api/customer/shop';
 const NearbyApiUrl = 'https://backend.washta.com/api/customer/NearShop?';
@@ -151,13 +152,15 @@ const Explore = ({ navigation }) => {
     setRefreshing(true);
     fetchNearbyShops().then(() => setRefreshing(false));
   }, []);
-
-  useEffect(() => {
-    requestLocationPermission();
-    fetchNearbyShops();
-    fetchUserData()
-    fetchLocationLat()
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      // Code to run when the screen is focused
+      requestLocationPermission();
+      fetchNearbyShops();
+      fetchUserData();
+      fetchLocationLat();
+    }, []) // Dependencies for the callback (leave empty if no dependencies)
+  );
 
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => navigation.navigate('ParticularCarScreen', { item })}>

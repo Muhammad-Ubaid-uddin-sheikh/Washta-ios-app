@@ -307,7 +307,7 @@ const LoginScreen = ({ navigation }) => {
               focus={true} 
               labelName="Email" 
               value={email} 
-              onChangeText={(text) => setEmail(text)} 
+              onChangeText={(text) => setEmail(text.toLowerCase())}
             />
             <INputPasword 
               focus={true} 

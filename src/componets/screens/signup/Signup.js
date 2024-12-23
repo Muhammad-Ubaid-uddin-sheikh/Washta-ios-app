@@ -40,6 +40,7 @@ const SignUp = ({ navigation }) => {
 
   const paylod = {
     username: formData?.fullName,
+    fullName: formData?.fullName,
     password: formData?.password,
     name: formData?.fullName,
     email: formData?.email,
@@ -100,10 +101,14 @@ const SignUp = ({ navigation }) => {
               onChangeText={(value) => setFormData({ ...formData, fullName: value })}
             />
             <InputFeilds
+            textTransform='lowercase'
               keyboardType="email-address"
               labelName="Email"
               value={formData.email}
-              onChangeText={(value) => setFormData({ ...formData, email: value })}
+              onChangeText={(value) =>
+                setFormData({ ...formData, email: value.toLowerCase() }) // Convert to lowercase here
+              }
+              // onChangeText={(value) => setFormData({ ...formData, email: value })}
             />
             <InputFeilds
               keyboardType="numeric"

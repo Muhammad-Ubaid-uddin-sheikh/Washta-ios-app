@@ -104,7 +104,7 @@ if (item.promoCode && item.promoCode.Discounttype) {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Payment</Text>
           <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop:10 }]}>
-            **** **** **** {item.paymentId.slice(10)}
+            **** **** **** {item.paymentId.slice(30)}
           </Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>

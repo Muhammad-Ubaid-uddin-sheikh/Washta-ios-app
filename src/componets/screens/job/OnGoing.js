@@ -15,7 +15,7 @@ const Profile = ({ navigation }) => {
   const [ongoingData, setOngoingData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const isFetched = useRef(false);
-
+console.log('ongoingData',ongoingData)
   const cancelButton = async (item) => {
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
@@ -90,34 +90,34 @@ const Profile = ({ navigation }) => {
   return (
     <View style={styles.MainContainer}>
       {loading ? (
-        <View style={styles.spinnerContainer}>
-          <ActivityIndicator size="large" color="#747EEF" />
-        </View>
-      ) : onProgressData.length === 0 && ongoingData.length === 0 ? (
-        <View style={styles.noDataContainer}>
-          <Image
-            style={styles.imageWidthongoing}
-            source={Nobokking}
-          />
-          <Text style={styles.noDataText}>No On-Going Booking</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={[...onProgressData, ...ongoingData]}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <BookingComp
+      <View style={styles.spinnerContainer}>
+        <ActivityIndicator size="large" color="#747EEF" />
+      </View>
+    ) : onProgressData.concat(ongoingData.filter(item => item.billingStatus !== "non-paid")).length === 0 ? (
+      <View style={styles.noDataContainer}>
+        <Image
+          style={styles.imageWidthongoing}
+          source={Nobokking} // Ensure the path is correct
+        />
+        <Text style={styles.noDataText}>No On-Going Booking</Text>
+      </View>
+    ) : (
+      <FlatList
+        data={[...onProgressData, ...ongoingData.filter(item => item.billingStatus !== "non-paid")]}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <BookingComp
             date={formatDate(item?.date)}
             time={formatTimeInTimezone(item?.date)}
-              colorBtntext="Track Progress"
-              transparentBtn="Cancel"
-              CencelBtn={() => cancelButton(item)}
-              TrackBtn={() => navigation.navigate('TrackProgess', { item })}
-              data={item}
-              showCancelBtn={item.status === 'ongoing'}
-              showTimer={item.status === 'ongoing'}
-            />
-          )}
+            colorBtntext="Track Progress"
+            transparentBtn="Cancel"
+            CencelBtn={() => cancelButton(item)}
+            TrackBtn={() => navigation.navigate('TrackProgess', { item })}
+            data={item}
+            showCancelBtn={item.status === 'ongoing'}
+            showTimer={item.status === 'ongoing'}
+          />
+        )}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#747EEF']} />
           }

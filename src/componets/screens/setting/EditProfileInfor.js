@@ -15,6 +15,7 @@ const EditProfileInfor = ({ navigation }) => {
     fullName: '',
     username: '',
     phone: '',
+    email:"",
     car: {
       _id: '',
       vehicleManufacturer: '',
@@ -33,12 +34,13 @@ const EditProfileInfor = ({ navigation }) => {
           Authorization: `Bearer ${accessToken}`
         }
       });
-
+console.log('response.datanewaaaa',response.data)
       if (response.data.status) {
         setFormData({
           fullName: response.data.data.username,
           username: response.data.data.username,
           phone: response.data.data.phone,
+          email:response.data.data.email,
           car: {
             _id: response.data.data.car._id,
             vehicleManufacturer: response.data.data.car.vehicleManufacturer,
@@ -67,7 +69,7 @@ const EditProfileInfor = ({ navigation }) => {
           Authorization: `Bearer ${accessToken}`
         }
       });
-
+console.log(formData,'response.data',response.data)
       if (response.data.status) {
         toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" });
         navigation.navigate('Setting');
@@ -106,9 +108,16 @@ const EditProfileInfor = ({ navigation }) => {
             />
             <InputFeilds
               keyboardType='default'
-              focus={true}
+              focus={false}
               labelName='Username'
               value={formData.username}
+              onChangeText={(value) => setFormData({ ...formData, username: value })}
+            />
+            <InputFeilds
+              keyboardType='default'
+              focus={false}
+              labelName='Email'
+              value={formData.email}
               onChangeText={(value) => setFormData({ ...formData, username: value })}
             />
             <InputFeilds
@@ -120,7 +129,7 @@ const EditProfileInfor = ({ navigation }) => {
             />
             <InputFeilds
               keyboardType='default'
-              focus={true}
+              focus={false}
               labelName='Car Manufacturer'
               value={formData.car.vehicleManufacturer}
               onChangeText={(value) =>
@@ -129,7 +138,8 @@ const EditProfileInfor = ({ navigation }) => {
             />
             <InputFeilds
               keyboardType='default'
-              focus={true}
+              
+              focus={false}
               labelName='Car Plate Number'
               value={formData.car.vehiclePlateNumber}
               onChangeText={(value) =>
@@ -138,7 +148,7 @@ const EditProfileInfor = ({ navigation }) => {
             />
             <InputFeilds
               keyboardType='default'
-              focus={true}
+              focus={false}
               labelName='Car Name'
               value={formData.car.vehicleName}
               onChangeText={(value) =>
@@ -147,7 +157,7 @@ const EditProfileInfor = ({ navigation }) => {
             />
             <InputFeilds
               keyboardType='default'
-              focus={true}
+              focus={false}
               labelName='Car Type'
               value={formData.car.vehicleType}
               onChangeText={(value) =>

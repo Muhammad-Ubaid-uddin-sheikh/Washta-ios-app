@@ -1,58 +1,5 @@
-// import React from 'react';
-// import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
-
-// const Profile = () => {
-//   // Sample data for explore items
-  
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.header}>Jobs</Text>
-      
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     paddingHorizontal: 20,
-//     paddingTop: 40,
-//   },
-//   header: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     color: '#333',
-//     marginBottom: 20,
-//     textAlign: 'center',
-//   },
-//   list: {
-//     paddingBottom: 20,
-//   },
-//   card: {
-//     backgroundColor: '#f8f8f8',
-//     borderRadius: 10,
-//     marginBottom: 20,
-//     overflow: 'hidden',
-//     elevation: 2, // For Android shadow effect
-//   },
-//   cardImage: {
-//     width: '100%',
-//     height: 200,
-//     resizeMode: 'cover',
-//   },
-//   cardText: {
-//     fontSize: 18,
-//     color: '#333',
-//     padding: 10,
-//     textAlign: 'center',
-//   },
-// });
-
-// export default Profile;
 import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, FlatList, RefreshControl, Alert, BackHandler } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, FlatList, RefreshControl, Alert, BackHandler, Image } from 'react-native';
 import ImageEdit from '../../allDynamicsComponets/ImageAdd';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontsGeneral } from '../style';
@@ -62,7 +9,8 @@ import BokingCompleted from '../../allDynamicsComponets/BookingComplted';
 import axios from 'react-native-axios';
 import { useToast } from 'react-native-toast-notifications';
 import { useFocusEffect } from '@react-navigation/native';
-
+import BookingCompeleted from  '../../allDynamicsComponets/BookingComplted'
+import CompletedImg from  '../../../assets/washtacomplted.png'
 const ApiUrl = 'https://backend.washta.com/api/customer/Selectcar';
 
 const Profile = ({ navigation }) => {
@@ -71,7 +19,39 @@ const Profile = ({ navigation }) => {
   const [seletedata, setseletedata] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const toast = useToast();
+  const [data, setData] = useState([]);
+  const fetchUserDataa = async () => {
+    setLoading(true);
+    setRefreshing(true);
+    try {
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      const response = await axios.get('https://backend.washta.com/api/customer/bookingbyStatus?status=completed', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
 
+      if (response.data.status) {
+        setData(response.data.data.reverse());
+        console.log('asdasd',response.data.data)
+      } else {
+        toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in' });
+        setData([]);
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
+      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserDataa();
+    }, [])
+  );
   const getUserFromStorage = async () => {
     try {
       const userString = await AsyncStorage.getItem('user');
@@ -137,6 +117,7 @@ const Profile = ({ navigation }) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+    fetchUserDataa()
     fetchUserData().finally(() => setRefreshing(false));
   }, []);
 
@@ -223,9 +204,37 @@ const Profile = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={[styles.secondDivTitle, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',backgroundColor:'white' }]}>
-        <Text style={styles.textPoints}>Job Bookings </Text>
-        <Text style={styles.ViewallText}>view all </Text>
+      <View style={[styles.secondDivTitle, {backgroundColor:'white' }]}>
+        <Text style={styles.textPoints}>Completed Bookings </Text>
+        {loading ? (
+        <View style={styles.spinnerContainer}>
+          <ActivityIndicator size="large" color="#747EEF" />
+        </View>
+      ) : data.length === 0 ? (
+        <View style={styles.noDataContainer}>
+          <Image  style={{objectFit:'contain',width:'100%',height:200,justifyContent:'center',textAlign:'center'}} source={CompletedImg} />
+          <Text style={[styles.noDataText,{textAlign:'center',}]}>No Bookings</Text>
+        </View>
+      ) : (
+        <FlatList
+          style={{ marginTop: 10, paddingBottom: 10 }}
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.itemContainer}>
+              <BookingCompeleted
+                orders={data}
+                showButton={true}
+               
+                TrackBtn={() => navigation.navigate('Receipt', { item })}
+                colorBtntext="E-Receipt"
+                transparentBtn="Review"
+              />
+            </View>
+          )}
+
+        />
+      )}
       </View>
     </View>
   );

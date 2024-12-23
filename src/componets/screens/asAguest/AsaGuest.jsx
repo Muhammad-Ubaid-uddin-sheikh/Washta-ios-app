@@ -1,25 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Platform, Alert, BackHandler, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Platform, Alert, BackHandler } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Circle } from 'react-native-maps';
 import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geocoder from 'react-native-geocoding';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Fonts } from '../style';
 import axios from 'react-native-axios';
-import DetailSlider from '../../allDynamicsComponets/DetailsVerticalCom';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Geolocation from '@react-native-community/geolocation';
 import Skeleton from "@thevsstech/react-native-skeleton";
-import CustomMarker from './CustomMarker';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+import { Fonts } from '../style';
 import { addLocation } from '../../../redux/locationSlice';
+import DetailSlider from '../../allDynamicsComponets/DetailsVerticalCom';
+
 
 Geocoder.init('AIzaSyB_nNvYWSCB2haI7DCgR6chQmsg-T4oj8s');
 const ApiUrl = 'https://backend.washta.com/api/customer/shop';
 
-const Home = ({ navigation }) => {
-  const [name, setName] = useState('');
+const AsaGuest = ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState({ latitude: 37.78825,
     longitude: -122.4324,
     latitudeDelta: 0.0922,
@@ -28,7 +27,7 @@ const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [mapReady, setMapReady] = useState(false);
-
+console.log('data',data)
   const dispatch = useDispatch();
   useEffect(() => {
     if (areaName) {
@@ -62,22 +61,7 @@ const Home = ({ navigation }) => {
     }, [])
   );
 
-  const getUserFromStorage = async () => {
-    try {
-      const userString = await AsyncStorage.getItem('user');
-      if (userString) {
-        const user = JSON.parse(userString);
-        setName(user);
-        return user;
-      } else {
-        console.log('No user data found');
-        return null;
-      }
-    } catch (error) {
-      console.error('Error parsing user data:', error);
-      return null;
-    }
-  };
+  
 
   const reverseGeocode = async (latitude, longitude) => {
     try {
@@ -107,31 +91,21 @@ const Home = ({ navigation }) => {
     setLoading(true);
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
-      const response = await axios.get(ApiUrl,
-      );
-  console.log('reasdasd',response.data.data?.[1].location)
+      const response = await axios.get(ApiUrl, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+  
       if (response.data.status) {
-        setData(response.data.data)
+        setData(response.data.data);
+        console.log('rasdasdasd',response.data)
       } else {
         console.log('Failed to fetch data');
       }
     } catch (error) {
       console.log('Error fetching user data:', error);
-  
-      if (error.response) {
-        if (error.response.status === 401) {
-          await AsyncStorage.clear(); 
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Home' }], 
-          });
-        } else if (error.response.status === 500) {
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Home' }],
-          });
-        }
-      }
+
     } finally {
       setLoading(false);
     }
@@ -250,14 +224,8 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     requestLocationPermission();
-    getUserFromStorage();
+    fetchUserData();
   }, []);
-  useFocusEffect(
-    useCallback(() => {
-      fetchUserData();
-    }, [])
-  );
-
 
   return (
     <View style={styles.container}>
@@ -314,7 +282,6 @@ const Home = ({ navigation }) => {
         <View style={styles.contentParahgrph}>
      
              <View style={styles.topBar}>
-       <Text style={styles.MainHeading}>Hi there, {name?.username}</Text>
          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
            <Ionicons name="location-sharp" color={'#747EEF'} size={20} />
            <Text numberOfLines={1} ellipsizeMode="tail" style={[styles.LocationSubHeading,{width:'90%'}]}>{areaName}</Text>
@@ -322,25 +289,18 @@ const Home = ({ navigation }) => {
        </View>
       {/* <Text style={styles.dataHeading}>Nearby Shops</Text> */}
       {loading ? (
-  renderSkeleton()
-) : data.length === 0 ? (
-  <View style={styles.noDataContainer}>
-    <Image
-     style={{objectFit:'contain',width:'100%',height:80,justifyContent:'center',textAlign:'center'}}
-      source={require('../../../assets/nodataShop.jpg')} // Replace with your image path
-    />
-    <Text style={[styles.noDataText,{textAlign:'center',paddingBottom:10}]}>No Shop Available</Text>
-  </View>
-) : (
-  <FlatList
-    data={data}
-    horizontal
-    showsHorizontalScrollIndicator={false}
-    renderItem={renderItem}
-    keyExtractor={(item, index) => index.toString()}
-    contentContainerStyle={{ paddingHorizontal: 10 }}
-  />
-)}
+        renderSkeleton()
+      ) : (
+        <FlatList
+          data={data}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={{ paddingHorizontal: 10 }}
+       
+        />
+      )}
       </View>
     </View>
   );
@@ -422,4 +382,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default AsaGuest;

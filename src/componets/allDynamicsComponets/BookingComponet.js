@@ -72,7 +72,7 @@ const BookingComp = ({ data, CencelBtn, TrackBtn, colorBtntext, transparentBtn, 
     // While seconds is still null and showTimer is true, you can show a loading state or spinner
     return null; // Or return a loading component
   }
-
+  console.log('datasda',data)
   return (
     <View style={styles.MainContainer}>
       <View style={styles.secondDivTitle}>
@@ -86,18 +86,18 @@ const BookingComp = ({ data, CencelBtn, TrackBtn, colorBtntext, transparentBtn, 
         <View style={styles.mainBoxCarNameSelect}>
           <View>
             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-            <Text style={styles.carHubName}>{data.Name || 'John Doe Car Hub'}</Text>
+            <Text style={styles.carHubName}>{data?.shopId?.shopName || 'Washta'}</Text>
             <Text style={[styles.carHubName,{fontSize:12}]}>{date || '02 Sep '} | {time || '02:15 AM'}</Text>
             </View>
             
             <View style={styles.detailsContainer}>
               <View style={styles.detail}>
                 <Text style={styles.label}>Order ID:</Text>
-                <Text style={styles.value}>WS-{data.customerId._id.slice(20)}</Text>
+                <Text style={styles.value}>{`WS-${data?._id.slice(0, 4)}${data?._id.slice(-4)}`}</Text>
               </View>
               <View style={styles.detail}>
                 <Text style={styles.label}>Order Date:</Text>
-                <Text style={styles.value}>203</Text>
+                <Text style={styles.value}>{date || 'No Date'}</Text>
               </View>
               <View style={styles.detail}>
                 <Text style={styles.label}>Cost:</Text>

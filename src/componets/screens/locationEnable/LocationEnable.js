@@ -19,7 +19,7 @@ const ButtonClick = ()=>{
       </View>
       
       <View style={styles.bottomContent}>
-        <Button text="Enable Location" Link={ButtonClick} />
+        <Button text="Continue" Link={ButtonClick} />
       </View>
     </View>
   );

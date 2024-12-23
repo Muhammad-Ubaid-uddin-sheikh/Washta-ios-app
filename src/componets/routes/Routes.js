@@ -37,6 +37,7 @@ import HireNowStepThree from '../screens/particularCarScreen/HireNowStepThree';
 import ParticularReview from '../screens/particularCarScreen/ParticularReview';
 import Chat from '../screens/setting/chats/Chats';
 import { useSocket } from '../../../Socket';
+import AsaGuest from '../screens/asAguest/AsaGuest';
 const Stack = createStackNavigator();
 
 const Routes = ({route}) => {
@@ -72,6 +73,8 @@ const Routes = ({route}) => {
     >
         <Stack.Screen options={{ headerShown: false }}  name="SplashScreen" component={SplashScreen} />
         <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+        <Stack.Screen options={{ headerShown: false }} name="Asaguest" component={AsaGuest} />
+
         <Stack.Screen options={{ headerShown: false }} name="OtpScreen" component={OtpScreen} />
       <Stack.Screen options={{ headerShown: false }} name="EnableLocation" component={EnableLocation} />
       <Stack.Screen options={{ headerShown: false }} name="Dashbaord" component={Dashboard} />

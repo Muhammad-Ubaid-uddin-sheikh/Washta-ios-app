@@ -334,7 +334,7 @@ const payload = {
         // }
       } 
       catch (error) {
-        console.log(error);
+        console.log(payload,"asdasdaaaaa",error.response);
           const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
           toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
       }finally{

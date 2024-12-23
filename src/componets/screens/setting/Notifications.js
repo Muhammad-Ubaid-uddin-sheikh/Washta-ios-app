@@ -49,7 +49,7 @@ const Notifications = ({ navigation }) => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <Button text="Save" Link={() => navigation.navigate('StepTwo')} />
+                <Button text="Save" Link={() => navigation.goBack()} />
             </View>
         </View>
     );

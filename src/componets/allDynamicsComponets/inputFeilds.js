@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, StyleSheet, Animated, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Fonts } from '../screens/style';
 
-const InputField = ({ labelName, value, onChangeText, focus, maxLength, keyboardType, errorMessage,borderWidth }) => {
+const InputField = ({ labelName, value, onChangeText, focus, maxLength, keyboardType, errorMessage,borderWidth,textTransform}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(false);
 
@@ -34,7 +34,7 @@ const InputField = ({ labelName, value, onChangeText, focus, maxLength, keyboard
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <TextInput
-          style={[styles.input, { borderBottomColor: isFocused ? '#aaa' : '#aaa',borderBottomWidth: borderWidth ? borderWidth : 1 }]}
+          style={[styles.input, { borderBottomColor: isFocused ? '#aaa' : '#aaa',borderBottomWidth: borderWidth ? borderWidth : 1, textTransform: textTransform  }]}
           placeholder=" "
           value={value}
           onFocus={handleFocus}

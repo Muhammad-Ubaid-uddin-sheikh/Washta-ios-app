@@ -23,8 +23,6 @@ const HireNowStepOne = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const toast = useToast();
     const appliedPromo = useSelector((state) => state.promoCode.appliedPromo); // Get applied promo from Redux
-console.log('redux',item.location.text)
-
 useEffect(() => {
     if (appliedPromo) {
         const { Discounttype, discount } = appliedPromo; // Destructure discount data

@@ -211,7 +211,7 @@ const NotificationsScreen = ({ navigation }) => {
 
       if (response.ok) {
         const responseData = await response.json();
-        setNotifications(responseData.data.reverse());
+        setNotifications(responseData.data);
       } else {
         console.error('API Error:', response.statusText);
       }

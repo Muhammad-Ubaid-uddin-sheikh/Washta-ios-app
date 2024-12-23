@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import { Fonts } from '../style';
 import Button from '../../allDynamicsComponets/Button';
 
@@ -24,9 +24,17 @@ const Home = ({ navigation }) => {
           <Button text="Sign In" Link={() => navigation.navigate('Login')} />
         </View>
 
-        <View style={[styles.SubContainerButton, { paddingBottom: 30, paddingTop: 5 }]}>
+        <View style={[styles.SubContainerButton, { paddingBottom: 10, paddingTop: 5 }]}>
           <Button text="Sign Up" Link={() => navigation.navigate('SignUp')} />
         </View>
+       
+              <TouchableOpacity style={{paddingBottom:20}} onPress={() => navigation.navigate('Asaguest')}>
+                <Text style={{fontFamily:Fonts.MEDIUM,fontSize:15,color:'#747EEF'}}>Continue As Guest</Text>
+              </TouchableOpacity>
+              
+       
+        
+        
       </View>
     </ScrollView>
   );

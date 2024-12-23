@@ -5,11 +5,13 @@ import { useNavigation } from '@react-navigation/native';
 import Button from '../../allDynamicsComponets/Button';
 import StarIcons from 'react-native-vector-icons/Entypo';
 import { Fonts, FontsGeneral } from '../style';
+import { useToast } from 'react-native-toast-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const ParticularCarScreen = ({ route }) => {
   const { item } = route.params;
   const navigation = useNavigation();
   const [isExpanded, setIsExpanded] = useState(false); // State to manage expanded/collapsed state
-
+const toast = useToast()
   const toggleLocation = () => {
       setIsExpanded(!isExpanded); // Toggle the expanded state
   };  function formatNumber(num) {
@@ -22,6 +24,46 @@ const ParticularCarScreen = ({ route }) => {
         num);
     }
   }
+  const handleNavigationWithAuthCheck = async (item) => {
+    console.log('hire',item.item)
+
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
+      if (token) {
+        // Navigate to the StepOne screen with item data if authenticated
+        navigation.navigate('StepOne', { item:item?.item });
+      } else {
+        // Show a toast message if not authenticated
+        toast.show(
+          'Please Register. You need to sign in to access this feature.'
+        ); // Pass the message as a string directly
+        // Navigate to the Home screen
+        navigation.navigate('Home');
+      }
+    } catch (error) {
+      console.error('Error retrieving access token:', error);
+    }
+  };
+  const handleNavigationWithAuthCheckReviewId = async (item) => {
+    console.log('itemads',item.item._id)
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
+      if (token) {
+        // Navigate to the StepOne screen with item data if authenticated
+        navigation.navigate('ParticularReview', { item:item?.item?._id });
+      } else {
+        // Show a toast message if not authenticated
+        toast.show(
+          'Please Register. You need to sign in to access this feature.'
+        ); // Pass the message as a string directly
+        // Navigate to the Home screen
+        navigation.navigate('Home');
+      }
+    } catch (error) {
+      console.error('Error retrieving access token:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={{ flex: 1 }}>
@@ -84,13 +126,13 @@ const ParticularCarScreen = ({ route }) => {
         </View>
         <View style={{ paddingHorizontal: 10, paddingRight: 15, borderBlockColor: '#747474', borderBottomWidth: 0.2, paddingBottom: 10, paddingTop: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text style={styles.textGroundTitle}> Check Reviews</Text>
-          <TouchableOpacity onPress={()=>navigation.navigate('ParticularReview',{item:item._id})} >
+          <TouchableOpacity onPress={()=> handleNavigationWithAuthCheckReviewId({item})} >
             <BackIcon name="arrowright" size={26} color='#747EEF' style={{ backgroundColor: 'white', padding: 5, borderRadius: 50 }} />
           </TouchableOpacity>
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <Button text="Hire Now" Link={()=>navigation.navigate('StepOne',{item})} />
+        <Button text="Hire Now" Link={()=>handleNavigationWithAuthCheck({item})} />
       </View>
     </View>
   )
