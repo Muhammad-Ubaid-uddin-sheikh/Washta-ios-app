@@ -354,12 +354,7 @@ const payload = {
         <View style={[styles.step,{backgroundColor:'#747EEF',borderColor:'#747EEF',borderWidth:1}]}>
           <Text style={[styles.stepText,{color:'white'}]}>2</Text>
         </View>
-        {/* <View style={[styles.line,{backgroundColor:'#747EEF'}]} /> */}
         <View style={[styles.line]} />
-
-        {/* <View style={[styles.step,{backgroundColor:'#747EEF',borderColor:'#747EEF',borderWidth:1}]}>
-          <Text style={[styles.stepText,{color:'white'}]}>3</Text>
-        </View> */}
         <View style={[styles.step, { backgroundColor: 'white', borderColor: '#a6a6a6', borderWidth: 1 }]}>
           <Text style={[styles.stepText, { color: '#a6a6a6' }]}>3</Text>
         </View>
@@ -372,38 +367,38 @@ const payload = {
       
       <View style={{width:'80%'}}>
       <Text style={{fontFamily:FontsGeneral.MEDIUMSANS,color:'black',fontSize:18,width:'80%',paddingLeft:10}}> {item?.shopName} </Text>
-      <Text style={{fontFamily:FontsGeneral.MEDIUMSANS,paddingLeft:12,fontSize:13,color:'black'}}> 8 min away </Text>
+      {/* <Text style={{fontFamily:FontsGeneral.MEDIUMSANS,paddingLeft:12,fontSize:13,color:'black'}}> 8 min away </Text> */}
         </View>
       </View>
       <Text style={styles.textGroundTitle} > Summary</Text>
       <View style={{ paddingHorizontal: 10, paddingRight: 15, borderBlockColor: '#747474', borderBottomWidth: 0.2, paddingBottom: 30 }}>
           <View style={styles.RowMainParticular}>
             <Text style={styles.textLocation}> Booking Date</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {formatDate(getCurrentDateTime())} | {formatTimeInTimezone(new Date())} </Text>
+            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {formatDate(getCurrentDateTime())} | {formatTimeInTimezone(new Date())} </Text>
           </View>
           <View style={styles.RowMainParticular}>
             <Text style={styles.textLocation}> Car Plate Number</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {carId?.vehiclePlateNumber} </Text>
+            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {carId?.vehiclePlateNumber} </Text>
           </View>
           <View style={styles.RowMainParticular}>
             <Text style={styles.textLocation}> Car Type</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {carId?.vehicleType} </Text>
+            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {carId?.vehicleType} </Text>
           </View>
           <View style={styles.RowMainParticular}>
             <Text style={styles.textLocation}> Service</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> Car Wash & Full Cleaning </Text>
+            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> Car Wash & Full Cleaning </Text>
           </View>
           <View style={styles.RowMainParticular}>
             <Text style={styles.textLocation}> Estimated Duration</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> 1hr</Text>
+            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> 1hr</Text>
           </View>
           <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Cost</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> AED {item?.cost + ".00"}</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> AED {item?.cost + ".00"}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Discount</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}>
     {appliedPromo ? (
         <>
             {appliedPromo.discount} {appliedPromo.Discounttype === 'fixed' ? 'AED' : '%'}
@@ -415,7 +410,7 @@ const payload = {
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Estimated Discount </Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {" AED " + discountAmount + ".00"}</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {" AED " + discountAmount + ".00"}</Text>
                     </View>
                  
         </View>

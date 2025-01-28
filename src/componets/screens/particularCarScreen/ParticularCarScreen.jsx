@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   },
   textLocation: {
-    fontSize: 14,
+    fontSize: 15,
     fontFamily: Fonts.REGULAR,
     color: 'black',
     alignItems: 'center',

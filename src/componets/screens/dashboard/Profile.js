@@ -175,11 +175,11 @@ const Profile = ({ navigation }) => {
               {seletedata?.vehicleManufacturer} {seletedata?.vehicleName}
             </Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Text style={{ fontFamily: FontsGeneral.REGULARSANS, fontSize: 13, color: 'black' }}>
+              <Text style={{ fontFamily: FontsGeneral.REGULARSANS, fontSize: 14, color: 'black' }}>
                 {seletedata?.vehicleType}
               </Text>
               <Dot name="dot-single" size={20} color={'black'} />
-              <Text style={{ fontFamily: FontsGeneral.REGULARSANS, fontSize: 13, color: 'black' }}>
+              <Text style={{ fontFamily: FontsGeneral.REGULARSANS, fontSize: 14, color: 'black' }}>
                 {seletedata?.vehiclePlateNumber}
               </Text>
             </View>
@@ -195,6 +195,7 @@ const Profile = ({ navigation }) => {
                 paddingHorizontal: 6,
                 paddingVertical: 3,
                 borderRadius: 8,
+                paddingLeft:13
               }}
             >
               <Text style={{ fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 13, color: 'white' }}>Change</Text>
@@ -312,7 +313,7 @@ const styles = StyleSheet.create({
     backgroundColor:'white'
   },
   textPoints: {
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: 24,
     color: '#000',
     fontFamily: FontsGeneral.MEDIUMSANS,

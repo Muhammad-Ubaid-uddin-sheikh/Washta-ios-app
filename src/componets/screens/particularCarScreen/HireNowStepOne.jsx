@@ -161,23 +161,23 @@ useEffect(() => {
                 <View style={{ paddingHorizontal: 10, paddingRight: 15, paddingBottom: 30 }}>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Estimated Service Time</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {item.serviceTime || '30 minutes'}</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {item.serviceTime || '30 minutes'}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Distance from you</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {item.time || "5 mins away"}</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {item.time || "5 mins away"}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Location</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {item.Location || 'Dubai Mall Parking B1'}</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {item.Location || 'Dubai Mall Parking B1'}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Cost</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> AED {item?.cost + ".00"}</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> AED {item?.cost + ".00"}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Discount</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}>
     {appliedPromo ? (
         <>
             {appliedPromo.discount} {appliedPromo.Discounttype === 'fixed' ? 'AED' : '%'}
@@ -189,11 +189,11 @@ useEffect(() => {
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Estimated Discount </Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> {" AED " + discountAmount + ".00"}</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {" AED " + discountAmount + ".00"}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Estimated Total</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}> AED {discountedCost || item?.cost}.00</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> AED {discountedCost || item?.cost}.00</Text>
                     </View>
                 </View>
                 <View style={[styles.summaryContainer, { paddingBottom: 40 }]}>

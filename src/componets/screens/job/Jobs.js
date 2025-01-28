@@ -14,7 +14,7 @@ function MyTabs() {
         tabBarActiveTintColor: "#747EEF",
         tabBarInactiveTintColor: "black",
         tabBarPressOpacity: 0,
-        tabBarLabelStyle: { textTransform: 'capitalize', ...styles.tabBarLabel },
+        tabBarLabelStyle: { textTransform: 'capitalize', ...styles.tabBarLabel,fontSize:15 },
         tabBarIndicatorStyle: { backgroundColor: "#747EEF" },
         tabBarStyle: { borderTopWidth: 0 },
        

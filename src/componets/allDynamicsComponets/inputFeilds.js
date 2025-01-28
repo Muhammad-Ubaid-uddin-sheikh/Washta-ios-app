@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     color: '#000',
     paddingBottom: 0,
-    fontSize: 13,
+    fontSize: 14,
     marginHorizontal: 10,
     paddingLeft:2,
     fontFamily: Fonts.MEDIUM,

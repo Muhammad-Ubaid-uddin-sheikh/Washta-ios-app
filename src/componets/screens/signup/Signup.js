@@ -240,13 +240,13 @@ const styles = StyleSheet.create({
   },
   paragraphText: {
     fontFamily: Fonts.REGULAR,
-    fontSize: width * 0.03,
+    fontSize: width * 0.04,
     color: 'black',
   },
   linkText: {
     color: '#747EEF',
     textDecorationLine: 'underline',
-    fontSize: width * 0.03,
+    fontSize: width * 0.04,
   },
   bottomContent: {
     paddingHorizontal: width * 0.05,

@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontFamily: Fonts.MEDIUM,
-    fontSize: 13,
+    fontSize: 14,
     color: 'black',
     paddingTop: 20,
   }

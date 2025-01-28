@@ -142,7 +142,7 @@ function MyTabs() {
           headerLeft: () => (
             <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 13 }} onPress={() => navigation.navigate('DashboardMain')}>
               <BackIcon name="arrowleft" size={23} color="#747EEF" style={{ marginRight: 18 }} />
-              <Text style={[styles.backicontext, { marginLeft: -10 }]}>Job Bookings</Text>
+              <Text style={[styles.backicontext, { marginLeft: -10,fontSize:17 }]}>Job Bookings</Text>
             </TouchableOpacity>
           ),
           title: null,
@@ -163,7 +163,7 @@ function MyTabs() {
           headerLeft: () => (
             <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 13 }} onPress={() => navigation.navigate('DashboardMain')}>
               <BackIcon name="arrowleft" size={23} color="#747EEF" style={{ marginRight: 18 }} />
-              <Text style={[styles.backicontext, { marginLeft: -10 }]}>Your Profile</Text>
+              <Text style={[styles.backicontext, { marginLeft: -10,fontSize:17 }]}>Your Profile</Text>
             </TouchableOpacity>
           ),
           title: null,

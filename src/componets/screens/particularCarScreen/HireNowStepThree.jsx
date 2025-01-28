@@ -90,58 +90,23 @@ const HireNowStepTwo = ({ navigation, route }) => {
     </View>
   );
 
-  const renderHeader = () => (
-    <View>
-      <View style={[styles.progressContainer, { paddingHorizontal: 10 }]}>
-        <View style={styles.completedStep}>
-          <Text style={styles.stepText}>1</Text>
-        </View>
-        <View style={[styles.line, { backgroundColor: '#747EEF' }]} />
-        <View style={[styles.step, { backgroundColor: '#747EEF', borderColor: '#747EEF', borderWidth: 1 }]}>
-          <Text style={[styles.stepText, { color: 'white' }]}>2</Text>
-        </View>
-        <View style={[styles.line, { backgroundColor: '#747EEF' }]} />
-        <View style={[styles.step, { backgroundColor: '#747EEF', borderColor: '#747EEF', borderWidth: 1 }]}>
-          <Text style={[styles.stepText, { color: 'white' }]}>3</Text>
-        </View>
-      </View>
-      {/* <Text style={{ fontFamily: FontsGeneral.MEDIUMSANS, color: 'black', fontSize: 18, textAlign: 'left', paddingTop: 20 }}>
-        Please select a payment method
-      </Text>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10 }}>
-        <Text style={{ color: 'black', fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 13, width: '50%' }}>Credit/Debit Card</Text>
-        <View style={{ width: '50%' }}>
-          <Image source={require('../../../assets/cardimg.png')} style={{ width: '100%', height: 20 }} />
-        </View>
-      </View>
-      <Text style={{ color: 'black', fontFamily: FontsGeneral.REGULARSANS, fontSize: 12, paddingTop: 5, paddingBottom: 10 }}>
-        We accept Visa, MasterCard and American Express
-      </Text> */}
-    </View>
-  );
-
   return (
   
       <View style={styles.container}>
-        {/* <FlatList
-          data={cards}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={renderItem}
-          ListHeaderComponent={renderHeader}
-        /> */}
-        <View style={[styles.progressContainer, { paddingHorizontal: 10 }]}>
-        <View style={styles.completedStep}>
-          <Text style={styles.stepText}>1</Text>
-        </View>
-        <View style={[styles.line, { backgroundColor: '#747EEF' }]} />
-        <View style={[styles.step, { backgroundColor: '#747EEF', borderColor: '#747EEF', borderWidth: 1 }]}>
-          <Text style={[styles.stepText, { color: 'white' }]}>2</Text>
-        </View>
-        <View style={[styles.line, { backgroundColor: '#747EEF' }]} />
-        <View style={[styles.step, { backgroundColor: '#747EEF', borderColor: '#747EEF', borderWidth: 1 }]}>
-          <Text style={[styles.stepText, { color: 'white' }]}>3</Text>
-        </View>
-      </View>
+       
+       <View style={styles.progressContainer}>
+                    <View style={styles.completedStep}>
+                        <Text style={styles.stepText}>1</Text>
+                    </View>
+                    <View style={[styles.line, { backgroundColor: '#747EEF' }]} />
+                    <View style={[styles.step, { backgroundColor: '#747EEF', borderColor: '#747EEF', borderWidth: 1 }]}>
+                        <Text style={[styles.stepText, { color: 'white' }]}>2</Text>
+                    </View>
+                    <View style={[styles.line, { backgroundColor: '#747EEF' }]} />
+                    <View style={[styles.step, { backgroundColor: '#747EEF', borderColor: '#747EEF', borderWidth: 1 }]}>
+                        <Text style={[styles.stepText, { color: 'white' }]}>3</Text>
+                    </View>
+                </View>
         
               <PaymnetNavigation  text="Confirmar Retiro" Link={() => Handlepress()} Paymnet={Paymnet} />
 
@@ -160,7 +125,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    textAlign: 'left',
+    // textAlign: 'left',
     paddingHorizontal: 20,
   },
   progressContainer: {
@@ -185,7 +150,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   line: {
-    width: '28%',
+    width: '30.5%',
     height: 1.5,
     marginHorizontal: 10,
     backgroundColor: '#a6a6a6',

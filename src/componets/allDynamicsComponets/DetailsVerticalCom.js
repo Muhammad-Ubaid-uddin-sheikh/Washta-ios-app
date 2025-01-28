@@ -16,14 +16,14 @@ const SliderItem = ({ imageUrl, name, km, rating, reviews,time,margin }) => {
         <View style={{flexDirection:"row",alignItems:'center'}}>
             <Text style={[styles.time,{ overflow: 'hidden',width:'80%', padding:0,marginLeft:0,
     textOverflow: 'ellipsis', 
-    whiteSpace: 'nowrap'}]} numberOfLines={1}>{km} </Text>
+    whiteSpace: 'nowrap',fontSize:13}]} numberOfLines={1}>{km} </Text>
             <Ionicons name="stopwatch-outline" size={13} color={'#747EEF'} />
             <Text style={styles.time}> {time} </Text>
         </View>
       </View>
       <View style={styles.ratingContainer}>
      
-        <Text style={styles.reviews}>AED {reviews}</Text>
+        <Text style={[styles.reviews,{fontSize:14}]}>AED {reviews}</Text>
       </View>
     </View>
   );
@@ -40,8 +40,9 @@ const styles = StyleSheet.create({
     },
     name: {
     fontFamily:Fonts.BOLD,
-    fontSize:14,
-    color:"black"
+    fontSize:15,
+    color:"black",
+    paddingBottom:6
     },
     time:{
         fontFamily:Fonts.REGULAR,
@@ -57,7 +58,8 @@ const styles = StyleSheet.create({
     reviews:{
         fontFamily:Fonts.BOLD,
     fontSize:12,
-    color:"black"
+    color:"black",
+    paddingTop:4
     },
     rating:{
         color:'black',

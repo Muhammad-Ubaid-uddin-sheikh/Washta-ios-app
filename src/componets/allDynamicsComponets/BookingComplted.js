@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     },
     detailLabel: {
         fontFamily: FontsGeneral.REGULARSANS,
-        fontSize: 12,
+        fontSize: 14,
         color: 'black',
     },
     detailValue: {

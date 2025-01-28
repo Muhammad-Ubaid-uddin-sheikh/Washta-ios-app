@@ -286,7 +286,7 @@ const Explore = ({ navigation }) => {
       Array.isArray(filteredData) && filteredData.length === 0 ? (
         <View style={{textAlign:'center'}}>
  <Image source={require('../../../assets/nodataShop.jpg')} style={{objectFit:'contain',width:'100%',height:100,justifyContent:'center',textAlign:'center'}}/>
- <Text style={[styles.noDataText, { paddingTop: 20,paddingLeft:15,textAlign:'center'}]}>No shops available at the moment.</Text>
+ <Text style={[styles.noDataText, { paddingTop: 20,paddingLeft:15,textAlign:'center',fontSize:15}]}>No shops available at the moment.</Text>
         </View>
        
       ) : (
@@ -311,7 +311,7 @@ const Explore = ({ navigation }) => {
       Array.isArray(data) && data.length === 0 ? (
         <View style={{textAlign:'center'}}>
  <Image source={require('../../../assets/nodataShop.jpg')} style={{objectFit:'contain',width:'100%',height:100,justifyContent:'center',textAlign:'center'}}/>
- <Text style={[styles.noDataText, { paddingTop: 20,paddingLeft:15,textAlign:'center'}]}>No shops available at your location.</Text>
+ <Text style={[styles.noDataText, { paddingTop: 20,paddingLeft:15,textAlign:'center',fontSize:15}]}>No shops available at your location.</Text>
         </View>
        
       ) : (
