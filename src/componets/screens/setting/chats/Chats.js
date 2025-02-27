@@ -146,7 +146,7 @@ const Chat = ({ navigation }) => {
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => handleChatRoomClick(item._id,item)}>
               <View style={styles.notificationContainer}>
-                <Image style={{ width: 43, height: 45, borderRadius: 8, borderWidth: 1, borderColor: '#777' }} source={require('../../../../assets/app.logo.jpeg')} />
+                <Image style={{ width: 43, height: 45, borderRadius: 8, borderWidth: 0, borderColor: '#777' }} source={require('../../../../assets/PurpleIcon.png')} />
                 <View style={styles.notificationTextContainer}>
                   <View style={styles.notificationHeader}>
                     <Text style={styles.title}>{item.user?.username}</Text>

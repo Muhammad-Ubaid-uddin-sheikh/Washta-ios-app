@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { Fonts } from '../screens/style';
 import { useToast } from 'react-native-toast-notifications';
-import ImageLogo from '../../assets/app.logo.jpeg'
+import ImageLogo from '../../assets/PurpleIcon.png'
 const ImageUploadImg = 'https://backend.washta.com/api/customer/uplaodAvatar';
 const GetProfile = 'https://backend.washta.com/api/Customer/Profile';
 

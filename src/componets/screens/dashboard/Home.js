@@ -434,7 +434,7 @@ import MapView, { Marker, PROVIDER_GOOGLE, Circle } from 'react-native-maps';
 import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geocoder from 'react-native-geocoding';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Parking from 'react-native-vector-icons/FontAwesome5';
+import Parking from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../style';
 import axios from 'react-native-axios';
 import DetailSlider from '../../allDynamicsComponets/DetailsVerticalCom';
@@ -820,7 +820,7 @@ const Home = ({ navigation }) => {
   followsUserLocation={true}
   onMapReady={() => setMapReady(true)}
 >
-  {mapReady && currentLocation && (
+  {/* {mapReady && currentLocation && (
     <>
       <Circle
         center={{
@@ -839,18 +839,70 @@ const Home = ({ navigation }) => {
       >
         <Ionicons name="location-sharp" size={50} color="#0080FF" />
       </Marker>
-      {/* Render parking markers */}
       {ParkingData.map(parking => (
         <Marker
           key={parking.id}
           coordinate={{ latitude: parking.latitude, longitude: parking.longitude }}
           title={parking.title}
+          
         >
-          <Parking name="parking" size={22} style={{backgroundColor:'white',padding:3,borderRadius:'10%'}} color="#747EEF" />
+          <Parking name="parking" size={22} style={{backgroundColor:'white',padding:7 ,borderRadius:100}} color="#747EEF" />
         </Marker>
       ))}
     </>
-  )}
+  )} */}
+  {mapReady && currentLocation && (
+  <>
+    <Circle
+      center={{
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
+      }}
+      radius={1000}
+      strokeWidth={2}
+      strokeColor="rgba(74,144,226,1)"
+      fillColor="rgba(74,144,226,0.2)"
+    />
+    <Marker
+      coordinate={currentLocation}
+      title={'Current Location'}
+      description={areaName}
+    >
+      <Ionicons name="location-sharp" size={50} color="#0080FF" />
+    </Marker>
+    {/* Render parking markers */}
+    {ParkingData.map(parking => (
+      <Marker
+        key={parking.id}
+        coordinate={{ latitude: parking.latitude, longitude: parking.longitude }}
+        title={parking.title}
+      >
+        {/* Custom parking marker */}
+        <View
+          style={{
+            width: 30,
+            height: 30,
+            backgroundColor: '#747EEF', // Circle background color
+            borderRadius: 20, // To make it round
+            borderWidth: 2, // Border thickness
+            borderColor: 'white', // Border color
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 1, // To create padding for the inner content
+          }}
+        >
+          <Parking
+            name="parking"
+            size={16}
+            color="white"
+            style={{ color:'white' ,padding: 3, borderRadius: 20}}
+          />
+        </View>
+      </Marker>
+    ))}
+  </>
+)}
+
 </MapView>
         </View>
          <View style={styles.locationInfoContainer}>

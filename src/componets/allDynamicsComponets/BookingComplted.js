@@ -134,7 +134,7 @@ const Profile = ({ orders, showButton, ReviewBtn, TrackBtn, colorBtntext, transp
                                     </Text>
                                 </View>
                                 <View style={styles.orderDetail}>
-                                    <Text style={styles.detailLabel}>Cost:</Text>
+                                    <Text style={styles.detailLabel}>Price:</Text>
                                     <Text style={styles.detailValue}>
                                         AED {order.cost}
                                     </Text>

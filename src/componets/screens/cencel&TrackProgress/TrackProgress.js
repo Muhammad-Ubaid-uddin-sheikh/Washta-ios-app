@@ -39,7 +39,7 @@ const TrackProgress = ({ route }) => {
             <TracProgressBtn time={formatTimeInTimezone(item?.orderAcceptedAt)} date={formatDate(item?.orderAcceptedAt)} Name="Order in Progress" Imagess={ProgessImage} />
           </>
         ) : (
-          <Text style={styles.pendingText}>Your request is pending...</Text>
+          <Text style={[styles.pendingText,{color:'#747EEF'}]}>Your request is pending...</Text>
         )}
 
         <View style={styles.divider} />
@@ -49,9 +49,9 @@ const TrackProgress = ({ route }) => {
           <Text style={[styles.textStyle, styles.orderDetailItem]}>Shop Name</Text>
           <Text style={[styles.textStyle, styles.orderDetailPrice]}>{item?.shopId?.shopName}</Text>
         </View>
-        <View style={styles.row}>
+        <View style={[styles.row,{paddingTop:0}]}>
           <Text style={[styles.textStyle, styles.orderDetailItem]}>Location</Text>
-          <Text style={[styles.textStyle, styles.orderDetailPrice,{ textOverflow: 'ellipsis', whiteSpace: 'nowrap',width:'70%'}]} numberOfLines={1}>{item?.location?.text || 'No mention address'}</Text>
+          <Text style={[styles.textStyle, styles.orderDetailPrice,item?.location?.text ? {  textOverflow: 'ellipsis', whiteSpace: 'nowrap',width:'70%'} : ""]} numberOfLines={1}>{item?.location?.text || 'No address mention'}</Text>
         </View>
         <View style={styles.row}>
           <Text style={[styles.textStyle, styles.orderDetailItem]}>Payment Status</Text>
@@ -70,7 +70,7 @@ const TrackProgress = ({ route }) => {
           <Text style={[styles.textStyle, styles.orderDetailPrice]}>{item?.vehicleId?.vehicleType}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.textStyle, styles.estimatedTotalTitle]}>Total Cost</Text>
+          <Text style={[styles.textStyle, styles.estimatedTotalTitle]}>Price</Text>
           <Text style={[styles.textStyle, styles.orderDetailPrice]}>AED {cost}</Text>
         </View>
         <View style={styles.row}>
@@ -80,7 +80,7 @@ const TrackProgress = ({ route }) => {
         <View style={styles.divider} />
 
         <View style={styles.row}>
-          <Text style={[styles.textStyle, styles.estimatedTotalTitle]}>Estimated Total</Text>
+          <Text style={[styles.textStyle, styles.estimatedTotalTitle]}>Total Price</Text>
           <Text style={[styles.textStyle, styles.estimatedTotalAmount]}>AED {estimatedTotal.toFixed(2)}</Text>
         </View>
       </View>

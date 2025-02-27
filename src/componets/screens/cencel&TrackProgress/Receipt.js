@@ -77,11 +77,15 @@ if (item.promoCode && item.promoCode.Discounttype) {
           </Text>
         </View>
      
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Location</Text>
           <Text numberOfLines={1} ellipsizeMode="tail" style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10, width: '60%' }]}>
             {item.location?.text}
           </Text>
+        </View> */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Text style={[styles.textStyle, styles.orderDetailItem]}>Location</Text>
+          <Text style={[styles.textStyle, styles.orderDetailPrice,item?.location?.text ? {  textOverflow: 'ellipsis', whiteSpace: 'nowrap',width:'70%'} : ""]} numberOfLines={1}>{item?.location?.text || 'No address mention'}</Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Shop Name</Text>
@@ -90,7 +94,7 @@ if (item.promoCode && item.promoCode.Discounttype) {
           </Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
-          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Total Cost</Text>
+          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Price</Text>
           <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>AED {cost}</Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
@@ -98,7 +102,7 @@ if (item.promoCode && item.promoCode.Discounttype) {
           <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>AED {discountAmount.toFixed(2)}</Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
-          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Estimated Total</Text>
+          <Text style={[styles.textStyle, { paddingTop: 10 }]}>Total Price</Text>
           <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>AED {estimatedTotal.toFixed(2)}</Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>

@@ -100,7 +100,7 @@ const BookingComp = ({ data, CencelBtn, TrackBtn, colorBtntext, transparentBtn, 
                 <Text style={styles.value}>{date || 'No Date'}</Text>
               </View>
               <View style={styles.detail}>
-                <Text style={styles.label}>Cost:</Text>
+                <Text style={styles.label}>Price:</Text>
                 <Text style={styles.value}>AED {data.cost}</Text>
               </View>
             </View>
