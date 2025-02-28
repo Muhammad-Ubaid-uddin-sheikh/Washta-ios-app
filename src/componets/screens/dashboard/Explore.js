@@ -139,7 +139,8 @@ const Explore = ({ navigation }) => {
     setSearchQuery(query);
     if (query.trim()) {
       const filtered = allshop.filter(shop =>
-        shop.shopName.toLowerCase().includes(query.toLowerCase())
+        shop.shopName.toLowerCase().includes(query.toLowerCase()) ||
+        shop.location.text.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredData(filtered);
     } else {
