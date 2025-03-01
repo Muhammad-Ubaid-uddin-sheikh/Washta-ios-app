@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import RatingSummary from './Rating';
 import ReviewItem from './ReviewItem';
 import Button from '../../allDynamicsComponets/Button';
@@ -27,7 +27,8 @@ const ParticularReview = ({ route }) => {
   const [editReview, setEditReview] = useState(null); // State for the review being edited
   const [editFeedback, setEditFeedback] = useState(''); // State for feedback while editing
   const [editRating, setEditRating] = useState(0); // State for rating while editing
-  // Fetch reviews and user data
+
+  
   const fetchData = async () => {
     const accessToken = await AsyncStorage.getItem('accessToken');
     try {
@@ -222,6 +223,7 @@ const ParticularReview = ({ route }) => {
                 value={editReview ? editFeedback : feedback}
                 onChangeText={editReview ? setEditFeedback : setFeedback}
                 placeholderTextColor={'black'}
+                multiline
               />
               <View style={{ width: '100%', marginTop: 30 }}>
                 <TouchableOpacity style={[styles.cancelButton,{ margin: 0, padding: 0,backgroundColor:'#747EEF',borderWidth:0}]} onPress={editReview ? handleEditReview : AddReviews}>

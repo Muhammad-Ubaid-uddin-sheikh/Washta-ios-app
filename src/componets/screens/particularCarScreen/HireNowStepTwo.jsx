@@ -393,7 +393,7 @@ const payload = {
             <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> 1hr</Text>
           </View>
           <View style={styles.RowMainParticular}>
-                        <Text style={styles.textLocation}> Cost</Text>
+                        <Text style={styles.textLocation}> Price</Text>
                         <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> AED {item?.cost + ".00"}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
@@ -416,7 +416,7 @@ const payload = {
         </View>
         
         <View style={[styles.RowMainParticular,{paddingHorizontal:10}]}>
-            <Text style={styles.textLocation}> Estimated Total</Text>
+            <Text style={styles.textLocation}>Total Price</Text>
             <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 17 }]}> AED {discountedCost || item?.cost}.00</Text>
           </View>
           <Popup 

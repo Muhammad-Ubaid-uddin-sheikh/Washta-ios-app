@@ -632,7 +632,7 @@ const HireNowStepOne = ({ navigation, route }) => {
                         <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {item.Location || 'Dubai Mall Parking B1'}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
-                        <Text style={styles.textLocation}> Cost</Text>
+                        <Text style={styles.textLocation}> Price</Text>
                         <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> AED {item?.cost + ".00"}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
@@ -652,7 +652,7 @@ const HireNowStepOne = ({ navigation, route }) => {
                         <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {" AED " + discountAmount + ".00"}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
-                        <Text style={styles.textLocation}> Estimated Total</Text>
+                        <Text style={styles.textLocation}> Total Price</Text>
                         <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> AED {discountedCost || item?.cost}.00</Text>
                     </View>
                 </View>

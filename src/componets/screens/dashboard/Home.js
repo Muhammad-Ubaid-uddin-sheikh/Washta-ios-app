@@ -301,12 +301,13 @@ const Home = ({ navigation }) => {
   }
 
   useEffect(() => {
-    requestLocationPermission();
     getUserFromStorage();
   }, []);
   useFocusEffect(
+    
     useCallback(() => {
       fetchUserData();
+      requestLocationPermission()
     }, [])
   );
 

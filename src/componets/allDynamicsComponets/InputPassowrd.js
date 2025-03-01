@@ -1,12 +1,12 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, TextInput, Text, StyleSheet, Animated, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Fonts } from '../screens/style';
 
 const App = ({ labelName, value, onChangeText, focus, maxLength, keyboardType, errorMessage }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(false);
-
+  const inputRef = useRef(null);
   useEffect(() => {
     setSecureTextEntry(labelName.toLowerCase().includes('password'));
   }, [labelName]);
@@ -32,9 +32,10 @@ const App = ({ labelName, value, onChangeText, focus, maxLength, keyboardType, e
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={() => inputRef.current.focus()}>
       <View style={styles.container}>
         <TextInput
+        ref={inputRef}
           style={[styles.input, { borderBottomColor: isFocused ? '#aaa' : '#aaa' }]}
           placeholder=" "
           value={value}
