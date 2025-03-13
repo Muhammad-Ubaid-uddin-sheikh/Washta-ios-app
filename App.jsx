@@ -44,21 +44,36 @@ async function requestPermissionForiOS() {
 }
 
 // Get FCM token
-async function getFCMToken() {
+// async function getFCMToken() {
+//   try {
+//     const fcmToken = await messaging().getToken();
+//     if (fcmToken) {
+//       console.log('FCM Token:', fcmToken);
+//       AsyncStorage.setItem('deviceid',fcmToken)
+//       // You can store the FCM token to send notifications later
+//     } else {
+//       console.log('Failed to get FCM token');
+//     }
+//   } catch (error) {
+//     console.log('Error getting FCM token:', error);
+//   }
+// }
+export const getFCMToken = async () => {
   try {
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
       console.log('FCM Token:', fcmToken);
-      AsyncStorage.setItem('deviceid',fcmToken)
-      // You can store the FCM token to send notifications later
+      await AsyncStorage.setItem('deviceid', fcmToken);
+      return fcmToken;
     } else {
       console.log('Failed to get FCM token');
+      return null;
     }
   } catch (error) {
     console.log('Error getting FCM token:', error);
+    return null;
   }
-}
-
+};
 // Display notification
 async function onDisplayNotification(title, body) {
   // Create a channel (required for Android)

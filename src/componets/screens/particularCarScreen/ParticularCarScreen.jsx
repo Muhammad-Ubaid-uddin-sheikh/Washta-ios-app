@@ -124,12 +124,12 @@ const toast = useToast()
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ paddingHorizontal: 10, paddingRight: 15, borderBlockColor: '#747474', borderBottomWidth: 0.2, paddingBottom: 10, paddingTop: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* <View style={{ paddingHorizontal: 10, paddingRight: 15, borderBlockColor: '#747474', borderBottomWidth: 0.2, paddingBottom: 10, paddingTop: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text style={styles.textGroundTitle}> Check Reviews</Text>
           <TouchableOpacity onPress={()=> handleNavigationWithAuthCheckReviewId({item})} >
             <BackIcon name="arrowright" size={26} color='#747EEF' style={{ backgroundColor: 'white', padding: 5, borderRadius: 50 }} />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </ScrollView>
       <View style={styles.buttonContainer}>
         <Button text="Hire Now" Link={()=>handleNavigationWithAuthCheck({item})} />

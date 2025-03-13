@@ -8,6 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useToast } from 'react-native-toast-notifications';
 import axios from 'react-native-axios';
 import InputFeilds from '../../allDynamicsComponets/inputFeilds';
+import { getFCMToken } from '../../../../App';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ApiUrl = 'https://backend.washta.com/api/auth/login';
 
@@ -16,6 +18,8 @@ const LoginScreen = ({ navigation }) => {
   const [Feildpassword, setFeildpassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [deviceid ,setDeviceid] =useState(null)
+  console.log('deviceid',deviceid)
+  
   const toast = useToast();
   const ButtonClick = async () => {
     if (!email || !Feildpassword) {
@@ -29,7 +33,7 @@ const LoginScreen = ({ navigation }) => {
         identifier: email,
         password: Feildpassword,
         role: 'customer',
-        deviceId: deviceid
+      deviceId: deviceid | "123456321123"
       });
 
       if (response.data.status) {
@@ -51,7 +55,23 @@ const LoginScreen = ({ navigation }) => {
     const deviceid = await AsyncStorage.getItem('deviceid')
     setDeviceid(deviceid)
   }
-  useEffect(()=>{getdeviceid()},[])
+  // getFCMToken()
+  // useEffect(()=>{getdeviceid()},[])
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        await getFCMToken();      // ✅ First call
+        getdeviceid();            // ✅ Then call this after
+      };
+  
+      fetchData();
+  
+      // Optional: cleanup function if you need it
+      return () => {
+        // Clean up here if necessary
+      };
+    }, [])
+  );
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>

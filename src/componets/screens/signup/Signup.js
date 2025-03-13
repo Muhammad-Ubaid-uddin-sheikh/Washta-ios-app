@@ -8,8 +8,11 @@ import { useToast } from 'react-native-toast-notifications';
 import Spinner from 'react-native-loading-spinner-overlay';
 import axios from 'react-native-axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import { getFCMToken } from '../../../../App';
 
-const { width, height } = Dimensions.get('window'); // Get device width and height
+const { width, height } = Dimensions.get('window');
 
 const ApiUrl = 'https://backend.washta.com/api/auth/Signup';
 
@@ -21,7 +24,22 @@ const SignUp = ({ navigation }) => {
     const deviceid = await AsyncStorage.getItem('deviceid')
     setDeviceid(deviceid)
   }
-  useEffect(()=>{getdeviceid()},[])
+  console.log('deviceid',deviceid)
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        await getFCMToken();      // ✅ First call
+        getdeviceid();            // ✅ Then call this after
+      };
+  
+      fetchData();
+  
+      // Optional: cleanup function if you need it
+      return () => {
+        // Clean up here if necessary
+      };
+    }, [])
+  );
   const toast = useToast();
   const handleCheckBoxToggle = () => {
     setIsChecked(!isChecked);
@@ -46,7 +64,7 @@ const SignUp = ({ navigation }) => {
     email: formData?.email,
     phone: formData?.number,
     role: 'customer',
-    deviceId: deviceid,
+    deviceId: deviceid | "123456321123" ,
     car: {
       vehicleManufacturer: formData?.CarManufacturer,
       vehiclePlateNumber: formData?.carPlateNumber,
