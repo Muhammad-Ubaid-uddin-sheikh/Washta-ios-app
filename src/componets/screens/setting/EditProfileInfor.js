@@ -25,7 +25,7 @@ const EditProfileInfor = ({ navigation }) => {
     }
   });
   const [loading, setLoading] = useState(true);
-
+console.log('formData',formData)
   const fetchUserData = async () => {
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
@@ -34,10 +34,10 @@ const EditProfileInfor = ({ navigation }) => {
           Authorization: `Bearer ${accessToken}`
         }
       });
-console.log('response.datanewaaaa',response.data)
+console.log('response.datanewaaaa',response.data.data)
       if (response.data.status) {
         setFormData({
-          fullName: response.data.data.username,
+          fullName: response.data.data.fullName,
           username: response.data.data.username,
           phone: response.data.data.phone,
           email:response.data.data.email,
@@ -69,7 +69,7 @@ console.log('response.datanewaaaa',response.data)
           Authorization: `Bearer ${accessToken}`
         }
       });
-console.log(formData,'response.data',response.data)
+console.log(formData,'response.data',response.data.data)
       if (response.data.status) {
         toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" });
         navigation.navigate('Setting');

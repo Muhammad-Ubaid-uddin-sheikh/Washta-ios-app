@@ -91,10 +91,11 @@ const NotificationsScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
+    flex: 1, // Title occupies all available space
     fontFamily: Fonts.MEDIUM,
     color: 'black',
-    paddingBottom: 5,
-    fontSize: width > 400 ? 16 : 14, // Adjust size based on screen width
+    fontSize: width > 400 ? 16 : 13,
+    paddingRight: 5, // Add some spacing between title and date
   },
   body: {
     fontFamily: Fonts.REGULAR,
@@ -120,17 +121,21 @@ const styles = StyleSheet.create({
   },
   notificationTextContainer: {
     flex: 1,
+    overflow:'hidden'
   },
   notificationHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    // alignItems: 'center',
     width: '100%',
+    marginBottom: 5,
   },
   dateText: {
-    fontSize: 10,
-    padding: 0,
-    margin: 0,
+    flexShrink: 0, // Prevent shrinking
+    flexGrow: 0, // Don't grow unnecessarily
     textAlign: 'right',
+    fontSize: width > 400 ? 12 : 10,
+    color: 'black',
   },
   scrollcontainer: {
     flexGrow: 1,

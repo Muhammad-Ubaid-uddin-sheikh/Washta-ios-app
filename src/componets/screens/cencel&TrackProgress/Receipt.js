@@ -5,7 +5,7 @@ import Button from '../../allDynamicsComponets/Button';
 import { formatDate, formatTimeInTimezone } from '../../../../DaterightFunction';
 
 const Receipt = ({ route }) => {
-  const { item } = route.params;
+  const { item } = route?.params;
   const viewRef = useRef();
   const calculateDuration = (startDate, endDate) => {
     const start = new Date(startDate);

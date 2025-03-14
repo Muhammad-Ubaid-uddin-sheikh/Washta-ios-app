@@ -15,7 +15,7 @@ const Profile = ({ navigation }) => {
   const [ongoingData, setOngoingData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const isFetched = useRef(false);
-console.log('ongoingData',ongoingData)
+console.log('ongoingData',onProgressData)
   const cancelButton = async (item) => {
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
@@ -57,7 +57,8 @@ console.log('ongoingData',ongoingData)
       ]);
 
       if (onProgressResponse.data.status) {
-        setOnProgressData(onProgressResponse.data.data.reverse());
+        console.log('onProgressResponse.data.data',onProgressResponse.data.data)
+        setOnProgressData(onProgressResponse.data.data);
       } else {
         setOnProgressData([]);
       }
@@ -93,7 +94,7 @@ console.log('ongoingData',ongoingData)
       <View style={styles.spinnerContainer}>
         <ActivityIndicator size="large" color="#747EEF" />
       </View>
-    ) : onProgressData.concat(ongoingData.filter(item => item.billingStatus !== "non-paid")).length === 0 ? (
+    ) : [...onProgressData, ...ongoingData].filter(item => item.billingStatus === "paid").length === 0  ? (
       <View style={styles.noDataContainer}>
         <Image
           style={styles.imageWidthongoing}
@@ -103,7 +104,8 @@ console.log('ongoingData',ongoingData)
       </View>
     ) : (
       <FlatList
-        data={[...onProgressData, ...ongoingData.filter(item => item.billingStatus !== "non-paid")]}
+        data={[...onProgressData.filter(item => item.billingStatus === "paid"), ...ongoingData.filter(item => item.billingStatus === "paid")]
+        }
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <BookingComp

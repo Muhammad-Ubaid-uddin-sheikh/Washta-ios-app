@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {  useState, useCallback } from 'react';
 import { FlatList, Image, RefreshControl, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import BookingCompeleted from '../../allDynamicsComponets/BookingComplted';
 import { useToast } from 'react-native-toast-notifications';
@@ -14,6 +14,8 @@ const Completed = () => {
   const [data, setData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
+  console.log('datacencel', data);
+
   const fetchUserData = async () => {
     setLoading(true);
     setRefreshing(true);
@@ -27,7 +29,6 @@ const Completed = () => {
 
       if (response.data.status) {
         setData(response.data.data.reverse());
-
       } else {
         toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in' });
         setData([]);
@@ -51,25 +52,30 @@ const Completed = () => {
     fetchUserData();
   };
 
+  // ✅ Filtered Data Example (in case you need to filter specific conditions)
+  const filteredData = [
+    ...data.filter(item => item.billingStatus !== "non-paid") // optional filter, based on requirement
+  ];
+
   return (
     <View style={styles.MainContainer}>
       {loading ? (
         <View style={styles.spinnerContainer}>
           <ActivityIndicator size="large" color="#747EEF" />
         </View>
-      ) : data.length === 0 ? (
+      ) : filteredData.length === 0 ? (
         <View style={styles.noDataContainer}>
           <Image style={styles.imageWidthongoing} source={Nobokking} />
           <Text style={styles.noDataText}>No Cancelled Booking</Text>
         </View>
       ) : (
         <FlatList
-          data={data}
+          data={filteredData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
               <BookingCompeleted
-                orders={data}
+                orders={filteredData}
                 showButton={false}
                 ReviewBtn={() => console.log('Review Button Pressed')}
               />
@@ -116,7 +122,9 @@ const styles = StyleSheet.create({
     height: 300,
     objectFit: 'contain',
   },
-
+  itemContainer: {
+    marginBottom: 10, // optional: adds spacing between list items
+  },
 });
 
 export default Completed;

@@ -64,7 +64,7 @@ const SignUp = ({ navigation }) => {
     email: formData?.email,
     phone: formData?.number,
     role: 'customer',
-    deviceId: deviceid | "123456321123" ,
+    deviceId: deviceid ,
     car: {
       vehicleManufacturer: formData?.CarManufacturer,
       vehiclePlateNumber: formData?.carPlateNumber,

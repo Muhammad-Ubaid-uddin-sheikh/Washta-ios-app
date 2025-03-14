@@ -44,6 +44,8 @@ const OtpScreen = ({navigation, route}) => {
           await AsyncStorage.setItem('accessToken', accessToken);
           await AsyncStorage.setItem('Token', accessToken);
           await AsyncStorage.setItem('user', JSON.stringify(user));
+          await AsyncStorage.setItem('notification', true);
+
           navigation.navigate('EnableLocation');
         }
       } catch (error) {

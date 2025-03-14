@@ -265,9 +265,11 @@ const Explore = ({ navigation }) => {
                 onChangeText={onSearch}
               />
             </View>
-            <View style={{  flexDirection: 'row', justifyContent: 'center', alignItems: 'center',borderWidth:1,borderColor: '#b3b3b3',padding: 10,borderRadius: 100,marginRight:4  }}>
+            <TouchableOpacity onPress={()=>navigation.navigate("OnGoing")}>
+            <View  style={{  flexDirection: 'row', justifyContent: 'center', alignItems: 'center',borderWidth:1,borderColor: '#b3b3b3',padding: 10,borderRadius: 100,marginRight:4  }}>
               <Map name="map-marked-alt" size={22} color={'black'}  />
             </View> 
+            </TouchableOpacity>
           </View>
         </View>
         
