@@ -9,8 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const ApiUrl = 'https://backend.washta.com/api/otp/verifiction';
 
 const OtpScreen = ({navigation, route}) => {
-  const {paylod} = route.params;
-  console.log('payloasdasd', paylod.email);
+  const {paylod} = route?.params;
+  console.log('payloasdasd', paylod?.email);
   const [otp, setOTP] = useState(['', '', '', '']);
   const inputs = useRef([]);
   const [loading, setLoading] = useState(false);
@@ -44,8 +44,7 @@ const OtpScreen = ({navigation, route}) => {
           await AsyncStorage.setItem('accessToken', accessToken);
           await AsyncStorage.setItem('Token', accessToken);
           await AsyncStorage.setItem('user', JSON.stringify(user));
-          await AsyncStorage.setItem('notification', true);
-
+          await AsyncStorage.setItem('notification', 'true');
           navigation.navigate('EnableLocation');
         }
       } catch (error) {

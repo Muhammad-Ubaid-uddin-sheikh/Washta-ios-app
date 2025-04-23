@@ -10,7 +10,6 @@ const PaymnetNavigation = ({ Paymnet}) => {
   const navigation = useNavigation();
   const [paymentStatus, setPaymentStatus] = useState('');
   const [popupVisible, setPopupVisible] = useState(false);
-console.log('paymentStatus',paymentStatus)
   useEffect(() => {
     const socket = io('https://backend.washta.com/');
     socket.on('payment.complete', (status) => {
@@ -52,7 +51,7 @@ console.log('paymentStatus',paymentStatus)
           <Popup 
         visible={popupVisible} 
         onClose={hidePopup} 
-        message="Please wait for John Doe to accept your hiring request" 
+        message='Please wait for the car washing company to review and accept your hiring request.'
       />
       </View>
     </View>

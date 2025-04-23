@@ -26,6 +26,7 @@ const Home = ({ navigation }) => {
   //   latitudeDelta: 0.0922, 
   //   longitudeDelta: 0.0421, 
   // });
+  console.log('name',name)
   const [currentLocation, setCurrentLocation] = useState({ 
     latitude: 24.4539,  // Abu Dhabi Latitude
     longitude: 54.3773, // Abu Dhabi Longitude
@@ -478,7 +479,7 @@ const Home = ({ navigation }) => {
         <View style={styles.contentParahgrph}>
      
              <View style={styles.topBar}>
-       <Text style={styles.MainHeading}>Hi there, {name?.username}</Text>
+       <Text style={styles.MainHeading}>Hi there, {name?.fullName || name?.username}</Text>
          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
            <Ionicons name="location-sharp" color={'#747EEF'} size={20} />
            <Text numberOfLines={1} ellipsizeMode="tail" style={[styles.LocationSubHeading,{width:'90%'}]}>{areaName}</Text>

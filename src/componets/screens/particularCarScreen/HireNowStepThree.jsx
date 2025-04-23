@@ -11,10 +11,9 @@ import PaymnetNavigation from '../../allDynamicsComponets/Paymnet';
 const HireNowStepTwo = ({ navigation, route }) => {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
-  const { payload, Link } = route.params;
+  const { payload, Link, } = route.params;
   
   const Paymnet = Link;
-  console.log('Paymnet', Paymnet);
 
   const Handlepress = () => {
     Alert.alert('Pago exitosa', 'Transición exitosa');
@@ -108,7 +107,7 @@ const HireNowStepTwo = ({ navigation, route }) => {
                     </View>
                 </View>
         
-              <PaymnetNavigation  text="Confirmar Retiro" Link={() => Handlepress()} Paymnet={Paymnet} />
+              <PaymnetNavigation   text="Confirmar Retiro" Link={() => Handlepress()} Paymnet={Paymnet} />
 
       </View>
   

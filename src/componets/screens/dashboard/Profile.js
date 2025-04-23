@@ -159,7 +159,7 @@ const Profile = ({ navigation }) => {
         </View>
         <View style={[styles.ShoeConText, { width: '75%', marginBottom: 10 }]}>
           <Text style={[styles.textPoints, { width: 230 }]} numberOfLines={1} ellipsizeMode="tail">
-            {name?.username}
+            {name?.fullName||name?.username}
           </Text>
           <Text style={[styles.paragraph, { width: 230 }]} numberOfLines={1} ellipsizeMode="tail">
             {name?.email}

@@ -20,7 +20,6 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   const [name, setName] = useState('');
-
   const fetchUserData = async () => {
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
@@ -99,7 +98,7 @@ function MyTabs() {
         name="Explore"
         component={Explore}
         options={{
-          title: `Hi, ${name?.username}`,
+          title: `Hi, ${name?.fullName || name?.username}`,
           headerStyle: {
             backgroundColor: 'white',
             shadowColor: 'white',

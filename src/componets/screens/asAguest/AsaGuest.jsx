@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { Fonts } from '../style';
 import { addLocation } from '../../../redux/locationSlice';
 import DetailSlider from '../../allDynamicsComponets/DetailsVerticalCom';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 
 
 Geocoder.init('AIzaSyB_nNvYWSCB2haI7DCgR6chQmsg-T4oj8s');
@@ -277,6 +278,14 @@ console.log('data',data)
             style={styles.refreshButton}
           >
             <Ionicons name="refresh" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.locationInfoContainer,{left:0}]}>
+          <TouchableOpacity
+            onPress={()=>navigation.goBack()}
+            style={styles.refreshButton}
+          >
+            <BackIcon name="arrowleft" size={23} color='white'/>
           </TouchableOpacity>
         </View>
         <View style={styles.contentParahgrph}>
