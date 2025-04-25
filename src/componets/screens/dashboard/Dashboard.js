@@ -28,7 +28,7 @@ function MyTabs() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
+console.log('response.data.data',response.data.data)
       if (response.data.status) {
         setName(response.data.data || {});
       } else {

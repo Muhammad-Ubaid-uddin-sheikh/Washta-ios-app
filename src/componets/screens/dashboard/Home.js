@@ -26,7 +26,7 @@ const Home = ({ navigation }) => {
   //   latitudeDelta: 0.0922, 
   //   longitudeDelta: 0.0421, 
   // });
-  console.log('name',name)
+  console.log('nameaa',name)
   const [currentLocation, setCurrentLocation] = useState({ 
     latitude: 24.4539,  // Abu Dhabi Latitude
     longitude: 54.3773, // Abu Dhabi Longitude
@@ -110,20 +110,55 @@ console.log('selectd  data das',data)
     }, [])
   );
 
+  // const getUserFromStorage = async () => {
+  //   try {
+  //     const userString = await AsyncStorage.getItem('user');
+  //     if (userString) {
+  //       const user = JSON.parse(userString);
+  //       setName(user);
+  //       return user;
+  //     } else {
+  //       console.log('No user data found');
+  //       return null;
+  //     }
+  //   } catch (error) {
+  //     console.error('Error parsing user data:', error);
+  //     return null;
+  //   }
+  // };
   const getUserFromStorage = async () => {
     try {
-      const userString = await AsyncStorage.getItem('user');
-      if (userString) {
-        const user = JSON.parse(userString);
-        setName(user);
-        return user;
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      const response = await axios.get('https://backend.washta.com/api/Customer/Profile', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+console.log('response.data.data',response.data.data)
+      if (response.data.status) {
+        setName(response.data.data || {});
       } else {
-        console.log('No user data found');
-        return null;
+        Alert.alert('Failed to fetch user data');
       }
     } catch (error) {
-      console.error('Error parsing user data:', error);
-      return null;
+      console.log('Error fetching user data:', error);
+  
+      if (error.response) {
+        if (error.response.status === 401) {
+          // Token is invalid or expired
+          await AsyncStorage.clear(); // Clear all AsyncStorage data
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }], // Reset navigation stack and navigate to Home
+          });
+        } else if (error.response.status === 500) {
+          // Server error
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }], // Navigate to Home page
+          });
+        }
+      }
     }
   };
 
@@ -151,29 +186,60 @@ console.log('selectd  data das',data)
   };
   
 
-  const fetchUserData = async () => {
+  // const fetchUserData = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const accessToken = await AsyncStorage.getItem('accessToken');
+  //     const response = await axios.get(`https://backend.washta.com/api/customer/NearShop?long=${currentLocation?.latitude}&lat=${currentLocation?.longitude}&radius=2000`,
+  //     );
+  // setData(response.data.data)
+
+  //     if (response.data.status) {
+  //       setData(response.data.data)
+  //     } else {
+  //       console.log('Failed to fetch data');
+  //     }
+  //   } catch (error) {
+  //     console.log('Error fetching user data:', error);
+  
+  //     if (error.response) {
+  //       if (error.response.status === 401) {
+  //         await AsyncStorage.clear(); 
+  //         navigation.reset({
+  //           index: 0,
+  //           routes: [{ name: 'Home' }], 
+  //         });
+  //       } else if (error.response.status === 500) {
+  //         navigation.reset({
+  //           index: 0,
+  //           routes: [{ name: 'Home' }],
+  //         });
+  //       }
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const fetchUserData = async (location) => {
     setLoading(true);
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
-      const response = await axios.get(`https://backend.washta.com/api/customer/NearShop?long=${currentLocation?.latitude}&lat=${currentLocation?.longitude}&radius=2000`,
+      const response = await axios.get(
+        `https://backend.washta.com/api/customer/NearShop?long=${location.latitude}&lat=${location.longitude}&radius=50`
       );
-  setData(response.data.data)
+  
       if (response.data.status) {
-        setData(response.data.data)
+        setData(response.data.data);
+        console.log('Fetched shop data:', response.data.data);
       } else {
-        console.log('Failed to fetch data');
+        console.log('Failed to fetch shop data');
       }
     } catch (error) {
       console.log('Error fetching user data:', error);
   
       if (error.response) {
-        if (error.response.status === 401) {
-          await AsyncStorage.clear(); 
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Home' }], 
-          });
-        } else if (error.response.status === 500) {
+        if (error.response.status === 401 || error.response.status === 500) {
+          await AsyncStorage.clear();
           navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }],
@@ -184,7 +250,22 @@ console.log('selectd  data das',data)
       setLoading(false);
     }
   };
-
+  
+  const loadLocationAndFetchData = async () => {
+    try {
+      const storedLocation = await AsyncStorage.getItem('currentlocationlat');
+      if (storedLocation) {
+        const location = JSON.parse(storedLocation);
+        setCurrentLocation(location); // optional: update state if needed
+        fetchUserData(location); // use stored location
+      } else {
+        console.log('No stored location found');
+      }
+    } catch (error) {
+      console.log('Error loading stored location:', error);
+    }
+  };
+  
   const renderItem = ({ item }) => (
     <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('ParticularCarScreen', { item })}>
       <DetailSlider
@@ -262,22 +343,50 @@ console.log('selectd  data das',data)
   );
 
 
+  // const getCurrentLocation = () => {
+  //   Geolocation.getCurrentPosition(
+  //     async position => {
+  //       const { latitude, longitude } = position.coords;
+  //       console.log('Current location:', latitude, longitude);
+  //       setCurrentLocation({ latitude, longitude });
+  //       reverseGeocode(latitude, longitude);
+  
+  //       // Fetch parking data
+  //       const parkingData = await fetchParkingData(latitude, longitude);
+  //       setParkingData(parkingData); // Assuming you have a state for parkingData
+  //     },
+  //     error => console.log('Error getting current location:', error.message),
+  //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+  //   );
+  // };
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
       async position => {
         const { latitude, longitude } = position.coords;
         console.log('Current location:', latitude, longitude);
-        setCurrentLocation({ latitude, longitude });
+  
+        const location = { latitude, longitude };
+        setCurrentLocation(location);
+  
+        // Save to AsyncStorage
+        try {
+          await AsyncStorage.setItem('currentlocationlat', JSON.stringify(location));
+          console.log('Location saved to AsyncStorage');
+        } catch (e) {
+          console.log('Failed to save location:', e.message);
+        }
+  
         reverseGeocode(latitude, longitude);
   
         // Fetch parking data
         const parkingData = await fetchParkingData(latitude, longitude);
-        setParkingData(parkingData); // Assuming you have a state for parkingData
+        setParkingData(parkingData);
       },
       error => console.log('Error getting current location:', error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   };
+  
 
   const requestLocationPermission = async () => {
     fetchUserData()
@@ -304,11 +413,18 @@ console.log('selectd  data das',data)
   useEffect(() => {
     getUserFromStorage();
   }, []);
-  useFocusEffect(
+  // useFocusEffect(
     
+  //   useCallback(() => {
+  //     fetchUserData();
+  //     requestLocationPermission()
+  //   }, [])
+  // );
+  useFocusEffect(
     useCallback(() => {
-      fetchUserData();
+      getUserFromStorage();
       requestLocationPermission()
+      loadLocationAndFetchData(); // fetch data using stored location
     }, [])
   );
 
@@ -488,7 +604,7 @@ console.log('selectd  data das',data)
       {/* <Text style={styles.dataHeading}>Nearby Shops</Text> */}
       {loading ? (
   renderSkeleton()
-) : data.length === 0 ? (
+) : data?.length === 0 ? (
   <View style={styles.noDataContainer}>
     <Image
      style={{objectFit:'contain',width:'100%',height:80,justifyContent:'center',textAlign:'center'}}

@@ -197,6 +197,7 @@ console.log('deviceid',deviceid)
         const notificationStatus = user.notification ? 'true' : 'false'; 
         await AsyncStorage.setItem('notification', notificationStatus);
         navigation.navigate('Dashbaord');
+        console.log('accessToken, user',accessToken, user)
       }
     } catch (error) {
       console.log(JSON.stringify(error.response));

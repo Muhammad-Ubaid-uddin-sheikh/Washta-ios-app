@@ -39,6 +39,7 @@ const Explore = ({ navigation }) => {
   const inputRef = useRef(null);
   const location = useSelector((state) => state.locations.location);
   const [locationData, setLocationData] = useState(null); // To store the full location data
+ console.log('data',data)
   const fetchLocationLat = async () => {
     try {
       const locationJson = await AsyncStorage.getItem('currentlocationlat');
@@ -82,32 +83,68 @@ const Explore = ({ navigation }) => {
     }
   };
 
-  const fetchNearbyShops = async () => {
+  // const fetchNearbyShops = async () => {
+  //   const accessToken = await AsyncStorage.getItem('accessToken');
+  //   setLoading(true);
+  //   try {
+  //     const lat = locationData?.latitude || 24.959507;
+  //     const long = locationData?.longitude || 67.099260;
+  //     const radius = 2000;
+
+  //     const response = await axios.get(`${NearbyApiUrl}long=${long}&lat=${lat}&radius=${radius}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`, // Correctly formatted Bearer token
+  //       },
+  //     });
+  //     if (response.data.status) {
+  //       setData(response.data.data);
+        
+  //     } else {
+  //       toast.show('Failed to fetch nearby shops', { type: 'danger', animationType: 'zoom-in' });
+  //     }
+  //   } catch (error) {
+  //     const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
+  //     toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const fetchNearbyShops = async (locationData) => {
     const accessToken = await AsyncStorage.getItem('accessToken');
     setLoading(true);
     try {
-      const lat = locationData?.latitude || 24.959507;
+      const lat = locationData?.latitude || 24.959507; // fallback: Abu Dhabi
       const long = locationData?.longitude || 67.099260;
-      const radius = 2000;
-
-      const response = await axios.get(`${NearbyApiUrl}long=${long}&lat=${lat}&radius=${radius}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`, // Correctly formatted Bearer token
-        },
-      });
+      const radius = 50;
+  
+      const response = await axios.get(
+        `${NearbyApiUrl}long=${lat}&lat=${long}&radius=${radius}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setData(response.data.data);
       if (response.data.status) {
         setData(response.data.data);
-        
       } else {
-        toast.show('Failed to fetch nearby shops', { type: 'danger', animationType: 'zoom-in' });
+        toast.show('Failed to fetch nearby shops', {
+          type: 'danger',
+          animationType: 'zoom-in',
+        });
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+      toast.show(errorMessage, {
+        type: 'danger',
+        animationType: 'zoom-in',
+      });
     } finally {
       setLoading(false);
     }
   };
+  
   const fetchUserData = async () => {
     setLoading(true); // Start loading
     try {
@@ -151,16 +188,32 @@ const Explore = ({ navigation }) => {
   const handleMapIconClick = () => {
     inputRef.current.focus(); // Focus the TextInput when the map icon is clicked
   };
-
+  const loadLocationAndFetchShops = async () => {
+    try {
+      const storedLocation = await AsyncStorage.getItem('currentlocationlat');
+      if (storedLocation) {
+        const parsedLocation = JSON.parse(storedLocation);
+        fetchNearbyShops(parsedLocation);
+      } else {
+        // fallback to Abu Dhabi if no stored location
+        fetchNearbyShops({ latitude: 24.959507, longitude: 67.099260 });
+      }
+    } catch (error) {
+      console.log('Error loading location:', error);
+      // fallback to Abu Dhabi in case of error too
+      fetchNearbyShops({ latitude: 24.959507, longitude: 67.099260 });
+    }
+  };
+  
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    fetchNearbyShops().then(() => setRefreshing(false));
+    loadLocationAndFetchShops().then(() => setRefreshing(false));
   }, []);
   useFocusEffect(
     useCallback(() => {
       // Code to run when the screen is focused
       requestLocationPermission();
-      fetchNearbyShops();
+      loadLocationAndFetchShops();
       fetchUserData();
       fetchLocationLat();
     }, []) // Dependencies for the callback (leave empty if no dependencies)

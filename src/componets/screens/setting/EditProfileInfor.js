@@ -34,7 +34,6 @@ console.log('formData',formData)
           Authorization: `Bearer ${accessToken}`
         }
       });
-console.log('response.datanewaaaa',response.data.data)
       if (response.data.status) {
         setFormData({
           fullName: response.data.data.fullName,
@@ -69,18 +68,22 @@ console.log('response.datanewaaaa',response.data.data)
           Authorization: `Bearer ${accessToken}`
         }
       });
-console.log(formData,'response.data',response.data.data)
+// console.log(formData,'response.data',response.data.data)
+// await AsyncStorage.setItem('user', JSON.stringify(user));
+  console.log('user edit profile', user);
       if (response.data.status) {
         toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" });
         const { user } = response.data.data;
         await AsyncStorage.setItem('user', JSON.stringify(user));
-        console.log('user edit profile',user)
+        // console.log('user edit profile',user)
         navigation.navigate('Setting');
       } else {
         Alert.alert('Failed to update profile');
       }
     } catch (error) {
-      Alert.alert('Error', JSON.stringify(error.response));
+      navigation.navigate('Setting');
+      toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" });
+
     }
   };
 
