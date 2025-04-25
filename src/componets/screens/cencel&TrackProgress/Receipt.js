@@ -6,6 +6,7 @@ import { formatDate, formatTimeInTimezone } from '../../../../DaterightFunction'
 
 const Receipt = ({ route }) => {
   const { item } = route?.params;
+  console.log('receptu',item)
   const viewRef = useRef();
   const calculateDuration = (startDate, endDate) => {
     const start = new Date(startDate);
@@ -114,7 +115,7 @@ if (item.promoCode && item.promoCode.Discounttype) {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Order ID</Text>
           <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>
-            {item.customerId?._id}
+            {item?._id}
           </Text>
         </View>
       </View>

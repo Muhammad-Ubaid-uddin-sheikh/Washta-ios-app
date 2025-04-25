@@ -102,64 +102,116 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Arrow from 'react-native-vector-icons/MaterialIcons';
 import { FontsGeneral } from '../screens/style';
 
-const Profile = ({ orders, showButton, ReviewBtn, TrackBtn, colorBtntext, transparentBtn }) => {
+// const Profile = ({ orders, showButton, ReviewBtn, TrackBtn, colorBtntext, transparentBtn }) => {
 
+//     const formatDate = (dateString) => {
+//         const date = new Date(dateString);
+//         const day = date.getDate();
+//         const month = date.toLocaleString('en-US', { month: 'short' });
+//         return `${day} ${month}`;
+//     };
+//     console.log('orders',orders)
+
+//     return (
+//         <View style={styles.MainContainer}>
+//             {orders?.map((order, index) => (
+//                 <View key={index} style={styles.secondDivTitle}>
+//                     <View style={styles.mainBoxCarNameSelect}>
+//                         <View>
+//                             <Text style={styles.carName}>
+//                                 {order?.shopId?.shopName|| 'John Doe Car Hub'}
+//                             </Text>
+//                             <View style={styles.orderDetails}>
+//                                 <View style={styles.orderDetail}>
+//                                     <Text style={styles.detailLabel}>Order ID:</Text>
+//                                     <Text style={styles.detailValue}>
+//                                         WS-{order?._id.slice(20)}
+//                                     </Text>
+//                                 </View>
+//                                 <View style={styles.orderDetail}>
+//                                     <Text style={styles.detailLabel}>Order Date:</Text>
+//                                     <Text style={styles.detailValue}>
+//                                         {formatDate(order.date)}
+//                                     </Text>
+//                                 </View>
+//                                 <View style={styles.orderDetail}>
+//                                     <Text style={styles.detailLabel}>Price:</Text>
+//                                     <Text style={styles.detailValue}>
+//                                         AED {order.cost}
+//                                     </Text>
+//                                 </View>
+//                             </View>
+//                         </View>
+//                     </View>
+//                     {showButton && (
+//                         <View style={styles.buttonContainer}>
+//                             {/* <TouchableOpacity onPress={ReviewBtn} style={styles.transparentButton}>
+//                                 <Text style={styles.transparentButtonText}>{transparentBtn}</Text>
+//                             </TouchableOpacity> */}
+//                             <TouchableOpacity onPress={TrackBtn} style={styles.trackButton}>
+//                                 <View style={styles.trackButtonContent}>
+//                                     <Text style={styles.trackButtonText}>{colorBtntext}</Text>
+//                                     <Arrow name='keyboard-arrow-right' size={24} color={'white'} />
+//                                 </View>
+//                             </TouchableOpacity>
+//                         </View>
+//                     )}
+//                 </View>
+//             ))}
+//         </View>
+//     );
+// };
+const Profile = ({ order, showButton, ReviewBtn, TrackBtn, colorBtntext, transparentBtn }) => {
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = date.toLocaleString('en-US', { month: 'short' });
-        return `${day} ${month}`;
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.toLocaleString('en-US', { month: 'short' });
+      return `${day} ${month}`;
     };
-
+  console.log('order',order)
     return (
-        <View style={styles.MainContainer}>
-            {orders?.map((order, index) => (
-                <View key={index} style={styles.secondDivTitle}>
-                    <View style={styles.mainBoxCarNameSelect}>
-                        <View>
-                            <Text style={styles.carName}>
-                                {order?.shopId?.shopName|| 'John Doe Car Hub'}
-                            </Text>
-                            <View style={styles.orderDetails}>
-                                <View style={styles.orderDetail}>
-                                    <Text style={styles.detailLabel}>Order ID:</Text>
-                                    <Text style={styles.detailValue}>
-                                        WS-{order.customerId._id.slice(20)}
-                                    </Text>
-                                </View>
-                                <View style={styles.orderDetail}>
-                                    <Text style={styles.detailLabel}>Order Date:</Text>
-                                    <Text style={styles.detailValue}>
-                                        {formatDate(order.date)}
-                                    </Text>
-                                </View>
-                                <View style={styles.orderDetail}>
-                                    <Text style={styles.detailLabel}>Price:</Text>
-                                    <Text style={styles.detailValue}>
-                                        AED {order.cost}
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    {showButton && (
-                        <View style={styles.buttonContainer}>
-                            {/* <TouchableOpacity onPress={ReviewBtn} style={styles.transparentButton}>
-                                <Text style={styles.transparentButtonText}>{transparentBtn}</Text>
-                            </TouchableOpacity> */}
-                            <TouchableOpacity onPress={TrackBtn} style={styles.trackButton}>
-                                <View style={styles.trackButtonContent}>
-                                    <Text style={styles.trackButtonText}>{colorBtntext}</Text>
-                                    <Arrow name='keyboard-arrow-right' size={24} color={'white'} />
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                </View>
-            ))}
+      <View style={styles.secondDivTitle}>
+        <View style={styles.mainBoxCarNameSelect}>
+          <View>
+            <Text style={styles.carName}>
+              {order?.shopId?.shopName || 'John Doe Car Hub'}
+            </Text>
+            <View style={styles.orderDetails}>
+              <View style={styles.orderDetail}>
+                <Text style={styles.detailLabel}>Order ID:</Text>
+                <Text style={styles.detailValue}>
+                  WS-{order?._id.slice(20)}
+                </Text>
+              </View>
+              <View style={styles.orderDetail}>
+                <Text style={styles.detailLabel}>Order Date:</Text>
+                <Text style={styles.detailValue}>
+                  {formatDate(order?.date)}
+                </Text>
+              </View>
+              <View style={styles.orderDetail}>
+                <Text style={styles.detailLabel}>Price:</Text>
+                <Text style={styles.detailValue}>
+                  AED {order?.cost}
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
+        {showButton && (
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={TrackBtn} style={styles.trackButton}>
+              <View style={styles.trackButtonContent}>
+                <Text style={styles.trackButtonText}>{colorBtntext}</Text>
+                <Arrow name='keyboard-arrow-right' size={24} color={'white'} />
+              </View>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
     );
-};
+  };
+  
 
 const styles = StyleSheet.create({
     MainContainer: {

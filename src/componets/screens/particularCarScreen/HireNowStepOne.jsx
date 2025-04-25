@@ -220,10 +220,10 @@ const HireNowStepOne = ({ navigation, route }) => {
                     <Text style={styles.textGroundTitle}> Your Car</Text>
                 
                                        <View style={{ paddingHorizontal: 10 }}>
-                       <InputFeild keyboardType='default' focus={true} labelName='Car Manufacturer*' value={seletedata?.vehicleManufacturer} onChangeText={(value) => setFormData({ ...formData, carManufactor: value })} />
-                       <InputFeild keyboardType='default' focus={true} labelName='Car Name*' value={seletedata?.vehicleName} onChangeText={(value) => setFormData({ ...formData, carname: value })} />
-                       <InputFeild keyboardType='numeric' focus={true} labelName='Car Plate Number' value={seletedata?.vehiclePlateNumber} onChangeText={(value) => setFormData({ ...formData, carPlateNo: value })} />
-                       <InputFeild keyboardType='default' focus={true} labelName='Car Type' value={seletedata?.vehicleType} onChangeText={(value) => setFormData({ ...formData, carType: value })} />
+                       <InputFeild keyboardType='default' focus={false} labelName='Car Manufacturer*' value={seletedata?.vehicleManufacturer} onChangeText={(value) => setFormData({ ...formData, carManufactor: value })} />
+                       <InputFeild keyboardType='default' focus={false} labelName='Car Name*' value={seletedata?.vehicleName} onChangeText={(value) => setFormData({ ...formData, carname: value })} />
+                       <InputFeild keyboardType='numeric' focus={false} labelName='Car Plate Number' value={seletedata?.vehiclePlateNumber} onChangeText={(value) => setFormData({ ...formData, carPlateNo: value })} />
+                       <InputFeild keyboardType='default' focus={false} labelName='Car Type' value={seletedata?.vehicleType} onChangeText={(value) => setFormData({ ...formData, carType: value })} />
                        <InputFeild keyboardType='default'  labelName='Car Parked Location ' value={location} onChangeText={(text) => setlocation(text)}  />
                    </View>
                 </View>

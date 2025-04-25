@@ -18,7 +18,6 @@ const ChatScreen = ({ route }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const flatListRef = useRef(null); // Reference for FlatList
-
   // Fetch the user data on component mount
   useEffect(() => {
     const getUserData = async () => {
@@ -220,6 +219,7 @@ const ChatScreen = ({ route }) => {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} // Adjust offset for iOS
     >
     <View style={styles.container}>
+      <Text numberOfLines={2} style={{paddingHorizontal: 20,paddingBottom:10,fontFamily:Fonts.MEDIUM,fontSize:17}}>{data?.title || "Subject"} </Text>
       <FlatList
         ref={flatListRef} // Attach the ref to FlatList
         data={messages}

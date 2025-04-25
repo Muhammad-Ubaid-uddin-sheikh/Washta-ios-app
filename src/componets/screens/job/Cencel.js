@@ -75,7 +75,7 @@ const Completed = () => {
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
               <BookingCompeleted
-                orders={filteredData}
+                order={item}
                 showButton={false}
                 ReviewBtn={() => console.log('Review Button Pressed')}
               />

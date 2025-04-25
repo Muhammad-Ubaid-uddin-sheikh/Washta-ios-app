@@ -72,6 +72,9 @@ console.log('response.datanewaaaa',response.data.data)
 console.log(formData,'response.data',response.data.data)
       if (response.data.status) {
         toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" });
+        const { user } = response.data.data;
+        await AsyncStorage.setItem('user', JSON.stringify(user));
+        console.log('user edit profile',user)
         navigation.navigate('Setting');
       } else {
         Alert.alert('Failed to update profile');

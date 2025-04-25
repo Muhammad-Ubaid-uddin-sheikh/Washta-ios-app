@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { 
   Text, 
   View, 
@@ -36,6 +36,7 @@ const Explore = ({ navigation }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const inputRef = useRef(null);
   const location = useSelector((state) => state.locations.location);
   const [locationData, setLocationData] = useState(null); // To store the full location data
   const fetchLocationLat = async () => {
@@ -147,7 +148,9 @@ const Explore = ({ navigation }) => {
       setFilteredData(data); // Reset to full list when query is empty
     }
   }, [searchQuery]);
-  
+  const handleMapIconClick = () => {
+    inputRef.current.focus(); // Focus the TextInput when the map icon is clicked
+  };
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -258,6 +261,7 @@ const Explore = ({ navigation }) => {
             <View style={styles.searchbarContainer}>
               <Search name='search' style={styles.Searchicon} size={30} />
               <TextInput
+               ref={inputRef}
                 style={styles.input}
                 placeholder="Search Shop"
                 placeholderTextColor="rgba(33, 33, 33, 0.60)"
@@ -265,7 +269,7 @@ const Explore = ({ navigation }) => {
                 onChangeText={onSearch}
               />
             </View>
-            <TouchableOpacity onPress={()=>navigation.navigate("OnGoing")}>
+            <TouchableOpacity onPress={handleMapIconClick} >
             <View  style={{  flexDirection: 'row', justifyContent: 'center', alignItems: 'center',borderWidth:1,borderColor: '#b3b3b3',padding: 10,borderRadius: 100,marginRight:4  }}>
               <Map name="map-marked-alt" size={22} color={'black'}  />
             </View> 

@@ -16,8 +16,8 @@ import { useDispatch } from 'react-redux';
 import { addLocation } from '../../../redux/locationSlice';
 
 Geocoder.init('AIzaSyB_nNvYWSCB2haI7DCgR6chQmsg-T4oj8s');
-const ApiUrl = 'https://backend.washta.com/api/customer/shop';
-
+// const ApiUrl = 'https://backend.washta.com/api/customer/shop';
+const ApiUrl ="https://backend.washta.com/api/customer/NearShop?long=24.959507&lat=67.099260&radius=2000"
 const Home = ({ navigation }) => {
   const [name, setName] = useState('');
   // const [currentLocation, setCurrentLocation] = useState({ 
@@ -33,7 +33,7 @@ const Home = ({ navigation }) => {
     latitudeDelta: 0.0922, 
     longitudeDelta: 0.0421, 
   });
-  
+  console.log('currentLocation',currentLocation)
   const [ParkingData,setParkingData] = useState([])
   const fetchParkingData = async (latitude, longitude) => {
     const apiKey = 'AIzaSyB_nNvYWSCB2haI7DCgR6chQmsg-T4oj8s';
@@ -76,7 +76,7 @@ const Home = ({ navigation }) => {
   const [mapReady, setMapReady] = useState(false);
 
  
-
+console.log('selectd  data das',data)
   const dispatch = useDispatch();
   useEffect(() => {
     if (areaName) {
@@ -155,9 +155,9 @@ const Home = ({ navigation }) => {
     setLoading(true);
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
-      const response = await axios.get(ApiUrl,
+      const response = await axios.get(`https://backend.washta.com/api/customer/NearShop?long=${currentLocation?.latitude}&lat=${currentLocation?.longitude}&radius=2000`,
       );
-  console.log('reasdasd',response.data.data?.[1].location)
+  setData(response.data.data)
       if (response.data.status) {
         setData(response.data.data)
       } else {

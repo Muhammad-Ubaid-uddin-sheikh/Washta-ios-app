@@ -224,7 +224,7 @@ const Profile = ({ navigation }) => {
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
               <BookingCompeleted
-                orders={data}
+                order={item}
                 showButton={true}
                
                 TrackBtn={() => navigation.navigate('Receipt', { item })}
@@ -260,7 +260,7 @@ const Profile = ({ navigation }) => {
       data={[{ type: 'header' }, ...bookingData]} // Prepend a header item
       keyExtractor={(item, index) => index.toString()}
       ListHeaderComponent={renderHeader}
-      renderItem={renderItem}
+      // renderItem={renderItem}
       style={{backgroundColor:'white',paddingHorizontal:18}}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     />

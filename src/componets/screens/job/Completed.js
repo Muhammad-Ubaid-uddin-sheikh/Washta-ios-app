@@ -13,7 +13,7 @@ const Completed = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-
+console.log('data check',data.length)
   const fetchUserData = async () => {
     setLoading(true);
     setRefreshing(true);
@@ -52,43 +52,43 @@ const Completed = ({ navigation }) => {
 
   return (
     <View style={styles.MainContainer}>
-      {loading ? (
-        <View style={styles.spinnerContainer}>
-          <ActivityIndicator size="large" color="#747EEF" />
-        </View>
-      ) : data.length === 0 ? (
-        <View style={styles.noDataContainer}>
-          <Image style={styles.imageWidthongoing} source={CompletedImg} />
-          <Text style={styles.noDataText}>No Completed</Text>
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#747EEF']} />
-        </View>
-      ) : (
-        <FlatList
-          style={{ marginTop: 10, paddingBottom: 10 }}
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.itemContainer}>
-              <BookingCompeleted
-                orders={data}
-                showButton={true}
-               
-                TrackBtn={() => navigation.navigate('Receipt', { item })}
-                colorBtntext="E-Receipt"
-                transparentBtn="Review"
-              />
-            </View>
-          )}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              colors={['#747EEF']}
-            />
-          }
-        />
-      )}
+  {loading ? (
+    <View style={styles.spinnerContainer}>
+      <ActivityIndicator size="large" color="#747EEF" />
     </View>
+  ) : data.length === 0 ? (
+    <View style={styles.noDataContainer}>
+      <Image style={styles.imageWidthongoing} source={CompletedImg} />
+      <Text style={styles.noDataText}>No Completed</Text>
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#747EEF']} />
+    </View>
+  ) : (
+    <FlatList
+      style={{ marginTop: 10, paddingBottom: 10 }}
+      data={data}
+      keyExtractor={(item) => item._id}  
+      renderItem={({ item }) => (
+        <View style={styles.itemContainer}>
+          <BookingCompeleted
+            order={item}
+            showButton={true}
+            TrackBtn={() => navigation.navigate('Receipt', { item })}
+            colorBtntext="E-Receipt"
+            transparentBtn="Review"
+          />
+        </View>
+      )}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          colors={['#747EEF']}
+        />
+      }
+    />
+  )}
+</View>
+
   );
 };
 

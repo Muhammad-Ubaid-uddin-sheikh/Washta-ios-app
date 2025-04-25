@@ -98,7 +98,7 @@ const toast = useToast()
         <View style={{ paddingHorizontal: 10, paddingRight: 15, borderBlockColor: '#747474', borderBottomWidth: 0.2, paddingBottom: 30 }}>
           <Text style={styles.textGroundTitle}> Job Information</Text>
           <View style={styles.RowMainParticular}>
-            <Text style={styles.textLocation}> Cost</Text>
+            <Text style={styles.textLocation}> Price</Text>
             <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }]}>AED {item?.cost}</Text>
           </View>
           
