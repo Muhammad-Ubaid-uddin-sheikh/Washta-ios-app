@@ -65,12 +65,12 @@ if (item.promoCode && item.promoCode.Discounttype) {
             {item?.vehicleId?.vehicleType}
           </Text>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Service</Text>
           <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>
             Car Wash & Full Cleaning
           </Text>
-        </View>
+        </View> */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Duration</Text>
           <Text style={[styles.textStyle, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15, paddingTop: 10 }]}>
@@ -86,7 +86,7 @@ if (item.promoCode && item.promoCode.Discounttype) {
         </View> */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={[styles.textStyle, styles.orderDetailItem]}>Location</Text>
-          <Text style={[styles.textStyle, styles.orderDetailPrice,item?.location?.text ? {  textOverflow: 'ellipsis', whiteSpace: 'nowrap',width:'70%'} : ""]} numberOfLines={1}>{item?.location?.text || 'No address mention'}</Text>
+          <Text style={[styles.textStyle, styles.orderDetailPrice,item?.location?.text ? {  textOverflow: 'ellipsis', whiteSpace: 'nowrap',width:'70%'} : ""]} numberOfLines={1}>{item?.shopId?.location?.text || 'No address mention'}</Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 0 }}>
           <Text style={[styles.textStyle, { paddingTop: 10 }]}>Shop Name</Text>

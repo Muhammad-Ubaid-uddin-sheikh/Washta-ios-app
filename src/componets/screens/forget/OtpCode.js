@@ -29,7 +29,7 @@ const OtpForget = ({navigation,route}) => {
   };
   const ButtonClick = async () => {
     if (!otp) {
-      toast.show("Incomplete Details. Please fill OTP details", { type: "danger", animationType: "zoom-in" });
+      toast.show("Incomplete Details. Please fill OTP details", { type: "danger", animationType: "zoom-in",duration: 2000 });
     } else {
       setLoading(true);
       try {
@@ -41,12 +41,12 @@ const OtpForget = ({navigation,route}) => {
           navigation.navigate('setpassword');
           console.log(response.data.data);
         } else {
-          toast.show("OTP validation failed. Please try again.", { type: "danger", animationType: "zoom-in" });
+          toast.show("OTP validation failed. Please try again.", { type: "danger", animationType: "zoom-in",duration: 2000 });
         }
       } catch (error) {
         console.log(JSON.stringify(error.response));
         const errorMessage = error.response?.data?.error || "An error occurred. Please try again.";
-        toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+        toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
       } finally {
         setLoading(false);
       }

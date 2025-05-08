@@ -8,7 +8,6 @@ import { formatDate, formatTimeInTimezone } from '../../../../DaterightFunction'
 
 const TrackProgress = ({ route }) => {
   const { item } = route.params;
-  console.log('itemitem', item);
 
   // Calculate the discount and estimated total
   const cost = parseFloat(item.cost);
@@ -51,7 +50,7 @@ const TrackProgress = ({ route }) => {
         </View>
         <View style={[styles.row,{paddingTop:0}]}>
           <Text style={[styles.textStyle, styles.orderDetailItem]}>Location</Text>
-          <Text style={[styles.textStyle, styles.orderDetailPrice,item?.location?.text ? {  textOverflow: 'ellipsis', whiteSpace: 'nowrap',width:'70%'} : ""]} numberOfLines={1}>{item?.location?.text || 'No address mention'}</Text>
+          <Text style={[styles.textStyle, styles.orderDetailPrice,item?.location?.text ? {  textOverflow: 'ellipsis', whiteSpace: 'nowrap',width:'70%'} : ""]} numberOfLines={1}>{item?.shopId?.location?.text || 'No address mention'}</Text>
         </View>
         <View style={styles.row}>
           <Text style={[styles.textStyle, styles.orderDetailItem]}>Payment Status</Text>

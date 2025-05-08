@@ -21,6 +21,7 @@
     "@react-navigation/stack": "^6.4.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@thevsstech/react-native-skeleton": "^2.0.11",
+    "geolib": "^3.3.4",
     "install": "^0.13.0",
     "moment-timezone": "^0.5.45",
     "npm": "^10.9.0",

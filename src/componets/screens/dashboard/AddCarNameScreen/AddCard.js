@@ -35,7 +35,7 @@
 //           });
 //       setLoading(true);
 //       if (response) {
-//         toast.show('user car successfully added', { type: "success", animationType: "zoom-in" });
+//         toast.show('user car successfully added', { type: "success", animationType: "zoom-in" ,duration: 2000 });
 //     setCarName('');
 //     setCarPlate('');
 //     setCars('');
@@ -140,7 +140,7 @@ const AddCarScreen = () => {
 
   const ButtonClick = async () => {
     if (!carName || !carPlate || !cars || !Manufacturer) {
-      toast.show("Incomplete Details. Please fill all details", { type: "danger", animationType: "zoom-in" });
+      toast.show("Incomplete Details. Please fill all details", { type: "danger", animationType: "zoom-in",duration: 2000 });
     } else {
       setLoading(true);
       try {
@@ -151,7 +151,7 @@ const AddCarScreen = () => {
           },
         });
         if (response) {
-          toast.show('User car successfully added', { type: "success", animationType: "zoom-in" });
+          toast.show('User car successfully added', { type: "success", animationType: "zoom-in" ,duration: 2000 });
           setCarName('');
           setCarPlate('');
           setCars('');

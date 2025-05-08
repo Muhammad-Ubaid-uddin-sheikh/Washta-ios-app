@@ -39,7 +39,7 @@ const ButtonClick = async () => {
     catch (error) {
       console.log(JSON.stringify(error.response));
         const errorMessage = error.response?.data?.error || "An error occurred. Please try again.";
-        toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+        toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
     }finally{
       setLoading(false);
   }

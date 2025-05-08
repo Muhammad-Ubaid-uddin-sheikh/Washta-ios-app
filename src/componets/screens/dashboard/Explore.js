@@ -135,11 +135,8 @@ const Explore = ({ navigation }) => {
         });
       }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-      toast.show(errorMessage, {
-        type: 'danger',
-        animationType: 'zoom-in',
-      });
+      
+      console.log('errpr',error.response?.data)
     } finally {
       setLoading(false);
     }
@@ -168,7 +165,7 @@ const Explore = ({ navigation }) => {
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+      toast.show("Nodata", { type: 'danger', animationType: 'zoom-in' });
     } finally {
       setLoading(false); // Stop loading after the API call completes
     }
@@ -220,7 +217,22 @@ const Explore = ({ navigation }) => {
   );
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => navigation.navigate('ParticularCarScreen', { item })}>
+    <TouchableOpacity onPress={() => navigation.navigate('ParticularCarScreen', { item ,notlocation:""})}>
+      <DetailSlider
+        rating={item.reviewsSummary?.averageRating || 0}
+        imageUrl={item.coverImage && item.coverImage.includes('/media/image/cover-image.jpeg')
+          ? 'https://centralca.cdn-anvilcms.net/media/images/2022/03/15/images/Car_wash_pix_3-16-22.max-1200x675.jpg'
+          : item.coverImage || 'https://centralca.cdn-anvilcms.net/media/images/2022/03/15/images/Car_wash_pix_3-16-22.max-1200x675.jpg'}
+        name={item.shopName}
+        time={item.estimatedServiceTime || "N/A"}
+        reviews={item.cost || "N/A"}
+        km={item.location?.text || "Unknown"}
+        margin={false}
+      />
+    </TouchableOpacity>
+  );
+  const renderItemNotLocation = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('ParticularCarScreen', { item ,notlocation:"notlocation"})}>
       <DetailSlider
         rating={item.reviewsSummary?.averageRating || 0}
         imageUrl={item.coverImage && item.coverImage.includes('/media/image/cover-image.jpeg')
@@ -294,7 +306,7 @@ const Explore = ({ navigation }) => {
       ))}
       </>
   );
-
+console.log('location',location)
   return (
     <ScrollView 
       showsVerticalScrollIndicator={false} 
@@ -352,7 +364,7 @@ const Explore = ({ navigation }) => {
       ) : (
         <FlatList
           data={Array.isArray(filteredData) ? filteredData : [filteredData]}
-          renderItem={renderItem}
+          renderItem={renderItemNotLocation}
           keyExtractor={(item, index) => index.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -391,7 +403,7 @@ const Explore = ({ navigation }) => {
         {loading ? renderSkeleton() : (
           <FlatList
             data={allshop}
-            renderItem={renderItem}
+            renderItem={renderItemNotLocation}
             keyExtractor={(item, index) => index.toString()}
             horizontal
             showsHorizontalScrollIndicator={false}

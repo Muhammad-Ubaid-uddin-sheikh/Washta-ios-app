@@ -53,11 +53,12 @@ const SignUp = ({ navigation }) => {
     carType: '',
     number: '',
     carPlateNumber: '',
-    CarManufacturer: ''
+    CarManufacturer: '',
+   username :""
   });
 
   const paylod = {
-    username: formData?.fullName,
+    username: formData?.username,
     fullName: formData?.fullName,
     password: formData?.password,
     name: formData?.fullName,
@@ -75,7 +76,7 @@ const SignUp = ({ navigation }) => {
 
   const ButtonClick = async () => {
   
-    if (!formData.fullName || !formData.email || !formData.carName || !formData.password || !formData.carType || !formData.number || !formData.carPlateNumber) {
+    if (!formData.fullName || !formData.username || !formData.email || !formData.carName || !formData.password || !formData.carType || !formData.number || !formData.carPlateNumber) {
       toast.show('Incomplete Details. Please fill all details.', { type: 'danger', animationType: 'zoom-in' });
     } 
     if (!isChecked) {
@@ -117,6 +118,13 @@ const SignUp = ({ navigation }) => {
               labelName="Full Name"
               value={formData.fullName}
               onChangeText={(value) => setFormData({ ...formData, fullName: value })}
+            />
+            <InputFeilds
+              keyboardType="default"
+              labelName="Username"
+              textTransform='lowercase'
+              value={formData.username}
+              onChangeText={(value) => setFormData({ ...formData, username:  value.toLowerCase() })}
             />
             <InputFeilds
             textTransform='lowercase'

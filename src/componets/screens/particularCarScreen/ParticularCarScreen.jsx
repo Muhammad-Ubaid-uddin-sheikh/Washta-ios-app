@@ -8,7 +8,8 @@ import { Fonts, FontsGeneral } from '../style';
 import { useToast } from 'react-native-toast-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const ParticularCarScreen = ({ route }) => {
-  const { item } = route.params;
+  const { item,notlocation } = route.params;
+  console.log('notlocation',notlocation)
   const navigation = useNavigation();
   const [isExpanded, setIsExpanded] = useState(false); // State to manage expanded/collapsed state
 const toast = useToast()
@@ -24,26 +25,56 @@ const toast = useToast()
         num);
     }
   }
-  const handleNavigationWithAuthCheck = async (item) => {
-    console.log('hire',item.item)
+  // const handleNavigationWithAuthCheck = async (item) => {
+  //   console.log('hire',item.item)
 
+  //   try {
+  //     const token = await AsyncStorage.getItem('accessToken');
+  //     if (token) {
+  //       // Navigate to the StepOne screen with item data if authenticated
+  //       navigation.navigate('StepOne', { item:item?.item });
+  //     } else {
+  //       // Show a toast message if not authenticated
+  //       toast.show(
+  //         'Please Register. You need to sign in to access this feature.'
+  //       ); // Pass the message as a string directly
+  //       // Navigate to the Home screen
+  //       navigation.navigate('Home');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error retrieving access token:', error);
+  //   }
+  // };
+  const handleNavigationWithAuthCheck = async (item) => {
+  
     try {
       const token = await AsyncStorage.getItem('accessToken');
+  
+      if (notlocation === 'notlocation') {
+        toast.show('The selected car wash is not at your location', {
+          type: 'danger',
+          animationType: 'zoom-in',
+        });
+        navigation.goBack(); // Go back to the previous screen
+        return;
+      }
+  
       if (token) {
-        // Navigate to the StepOne screen with item data if authenticated
-        navigation.navigate('StepOne', { item:item?.item });
+        // Navigate to StepOne if authenticated
+        navigation.navigate('StepOne', { item: item.item });
       } else {
         // Show a toast message if not authenticated
-        toast.show(
-          'Please Register. You need to sign in to access this feature.'
-        ); // Pass the message as a string directly
-        // Navigate to the Home screen
+        toast.show('Please Register. You need to sign in to access this feature.', {
+          type: 'danger',
+          animationType: 'zoom-in',
+        });
         navigation.navigate('Home');
       }
     } catch (error) {
       console.error('Error retrieving access token:', error);
     }
   };
+  
   const handleNavigationWithAuthCheckReviewId = async (item) => {
     console.log('itemads',item.item._id)
     try {

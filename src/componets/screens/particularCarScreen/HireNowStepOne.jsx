@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPromoCode, clearPromoCode } from '../../../redux/promoCodeSlice';
 import Geolocation from '@react-native-community/geolocation';
 import { addLocation } from '../../../redux/locationSlice';
+import { getDistance } from 'geolib';
 
 const ApiUrl = 'https://backend.washta.com/api/customer/Selectcar';
 const GOOGLE_MAPS_API_KEY = "AIzaSyB_nNvYWSCB2haI7DCgR6chQmsg-T4oj8s"
@@ -27,11 +28,18 @@ const HireNowStepOne = ({ navigation, route }) => {
     const [promocode, setPromocode] = useState('');
     const [discountedCost, setDiscountedCost] = useState(item?.cost);
     const [discountAmount, setDiscountAmount] = useState(0);
+    const [distance, setDistance] = useState(null)
+    console.log('distane',distance)
     const dispatch = useDispatch();
     const toast = useToast();
+    
+    console.log('itemaaa',item)
+    console.log('itemaaalocation',item.location?.text
+    )
     const appliedPromo = useSelector((state) => state.promoCode.appliedPromo);
     useEffect(() => {
         checkAndRequestLocation();
+        
     }, []);
     const checkAndRequestLocation = async () => {
         try {
@@ -51,23 +59,74 @@ const HireNowStepOne = ({ navigation, route }) => {
     };
 
     // Fetch user's current location
+    // const getCurrentLocation = () => {
+    //     Geolocation.getCurrentPosition(
+    //         async position => {
+    //             const { latitude, longitude } = position.coords;
+    //             // setLatitude(latitude);
+    //             // setLongitude(longitude);
+    //             // setCurrentLocation({ latitude, longitude })
+    //             console.log(`User's Location: Latitude: ${latitude}, Longitude: ${longitude}`);
+    //             const locationData = { latitude, longitude };
+    //             await AsyncStorage.setItem('currentlocationlat', JSON.stringify(locationData));
+    //             // Fetch the address using Google Maps API
+    //             await fetchAddress(latitude, longitude);
+    //             setLoading(false);
+    //         },
+    //         error => {
+    //             console.error('Error getting location:', error.message);
+    //             showEnableLocationAlert();
+    //         },
+    //         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    //     );
+    // };
     const getCurrentLocation = () => {
         Geolocation.getCurrentPosition(
             async position => {
                 const { latitude, longitude } = position.coords;
-                // setLatitude(latitude);
-                // setLongitude(longitude);
-                // setCurrentLocation({ latitude, longitude })
                 console.log(`User's Location: Latitude: ${latitude}, Longitude: ${longitude}`);
+        
                 const locationData = { latitude, longitude };
                 await AsyncStorage.setItem('currentlocationlat', JSON.stringify(locationData));
-                // Fetch the address using Google Maps API
+        
+                // Convert coordinates from [lng, lat] to object
+                const destinationCoordinates = {
+                    latitude: item?.location?.coordinates[1], // lat
+                    longitude: item?.location?.coordinates[0]  // lng
+                };
+        
+                // Calculate distance (in meters)
+                const distanceInMeters = getDistance(
+                    { latitude, longitude },
+                    destinationCoordinates
+                );
+        
+                // Convert to kilometers
+                const distanceInKm = (distanceInMeters / 1000).toFixed(2);
+                 // Update state with distance
+        
+                // OPTIONAL: Calculate time based on speed (e.g., 60 km/h)
+                const speedInKmPerHour = 60; // e.g., 60 km/h
+                const timeInHours = distanceInKm / speedInKmPerHour;
+                let timeInMinutes = (timeInHours * 60).toFixed(2); // Convert to minutes
+        
+                // Convert time to hours if it's more than 60 minutes
+                if (timeInMinutes >= 60) {
+                    const hours = Math.floor(timeInMinutes / 60); // Whole hours
+                    const minutes = (timeInMinutes % 60).toFixed(0); // Remaining minutes
+                    timeInMinutes = `${hours} hours and ${minutes} mins`;
+                } else {
+                    timeInMinutes = `${timeInMinutes} minutes`;
+                }
+        
+                console.log(`Time to cover the distance: ${timeInMinutes}`);
+                setDistance(timeInMinutes);
                 await fetchAddress(latitude, longitude);
-                setLoading(false);
+                setLoading(false); // Optional: stop loading spinner or indicator
             },
             error => {
                 console.error('Error getting location:', error.message);
-                showEnableLocationAlert();
+                showEnableLocationAlert(); // Show alert if location access fails
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         );
@@ -231,15 +290,15 @@ const HireNowStepOne = ({ navigation, route }) => {
                 <View style={{ paddingHorizontal: 10, paddingRight: 15, paddingBottom: 30 }}>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Estimated Service Time</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {item.serviceTime || '30 minutes'}</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16}]}> {item.estimatedServiceTime || '30 minutes'} mins</Text>
                     </View>
-                    <View style={styles.RowMainParticular}>
+                    {/* <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Distance from you</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {item.time || "5 mins away"}</Text>
-                    </View>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {distance || "5 mins away"}</Text>
+                    </View> */}
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Location</Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {item.Location || 'Dubai Mall Parking B1'}</Text>
+                        <Text numberOfLines={1}  ellipsizeMode="tail" style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16,flexShrink:1,paddingLeft:20}]}> {item?.location?.text || 'Dubai Mall Parking B1'}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Price</Text>
@@ -397,7 +456,9 @@ fontSize:12
         fontFamily: Fonts.REGULAR,
         color: 'black',
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+         // Important for truncation
+  // Align to right for space-between effect
     },
     buttonContainer: {
         position: 'absolute',

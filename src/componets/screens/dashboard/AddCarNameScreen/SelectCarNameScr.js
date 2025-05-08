@@ -43,11 +43,11 @@ const SelectCarScreen = ({ route, navigation }) => {
           handleSelectItem(fetchedData[0]); // Automatically call the API to set it as selected
         }
       } else {
-        toast.show("Failed to fetch vehicles", { type: "danger", animationType: "zoom-in" });
+        toast.show("Failed to fetch vehicles", { type: "danger", animationType: "zoom-in",duration: 2000 });
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
-      toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+      toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
     } finally {
       setLoading(false);
       setRefreshing(false); // Reset refreshing state
@@ -65,13 +65,13 @@ const SelectCarScreen = ({ route, navigation }) => {
       });
 
       if (response.data.status) {
-        toast.show("Vehicle selected successfully", { type: "success", animationType: "zoom-in" });
+        toast.show("Vehicle selected successfully", { type: "success", animationType: "zoom-in" ,duration: 2000 });
       } else {
-        toast.show("Failed to update selected vehicle", { type: "danger", animationType: "zoom-in" });
+        toast.show("Failed to update selected vehicle", { type: "danger", animationType: "zoom-in",duration: 2000 });
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
-      toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+      toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
     }
   };
 
@@ -87,13 +87,13 @@ const SelectCarScreen = ({ route, navigation }) => {
 
       if (response.data.status) {
         setData(prevData => prevData.filter(vehicle => vehicle._id !== item._id));
-        toast.show("Vehicle deleted successfully", { type: "success", animationType: "zoom-in" });
+        toast.show("Vehicle deleted successfully", { type: "success", animationType: "zoom-in" ,duration: 2000 });
       } else {
-        toast.show("Failed to delete vehicle", { type: "danger", animationType: "zoom-in" });
+        toast.show("Failed to delete vehicle", { type: "danger", animationType: "zoom-in",duration: 2000 });
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
-      toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+      toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
     } finally {
       setDeletingItemId(null); // Reset the item being deleted
     }

@@ -43,7 +43,7 @@ const Password = () => {
             });
 
             if (response.data.status) {
-                toast.show("Password Updated Successfully", { type: "success", animationType: "zoom-in" });
+                toast.show("Password Updated Successfully", { type: "success", animationType: "zoom-in",duration: 2000 });
                 navigation.navigate('Setting');
             } else {
                 Alert.alert('Failed to update profile');
@@ -52,7 +52,7 @@ const Password = () => {
             if (error.response?.status === 401) {
                 toast.show('Error', 'Please enter the correct current password.');
             } else {
-                toast.show('Please enter the correct current password.', { type: "danger", animationType: "zoom-in" });
+                toast.show('Please enter the correct current password.', { type: "danger", animationType: "zoom-in",duration: 2000 });
             }
         } finally {
             setLoading(false);

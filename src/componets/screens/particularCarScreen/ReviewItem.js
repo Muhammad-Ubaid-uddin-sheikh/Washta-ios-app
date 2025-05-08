@@ -32,7 +32,7 @@ const ReviewItem = ({ user, rating, reviewText, showDelete, showEdit, onDelete, 
           </View>
         </View>
       </View>
-      <Text style={styles.reviewText}>{reviewText}</Text>
+      {/* <Text style={styles.reviewText}>{reviewText}</Text> */}
     </View>
   );
 };

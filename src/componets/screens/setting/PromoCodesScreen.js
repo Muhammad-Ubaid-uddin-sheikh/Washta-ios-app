@@ -34,10 +34,10 @@ const PromoCodesScreen = ({ navigation }) => {
       if (response && response.data) {
         setPromoCodes(response.data.data.reverse()); // Assuming the response contains an array of promo codes
       } else {
-        toast.show("Error fetching promo codes", { type: "danger", animationType: "zoom-in" });
+        toast.show("Error fetching promo codes", { type: "danger", animationType: "zoom-in",duration: 2000 });
       }
     } catch (error) {
-      toast.show(error.message, { type: "danger", animationType: "zoom-in" });
+      toast.show(error.message, { type: "danger", animationType: "zoom-in",duration: 2000 });
     } finally {
       setLoading(false);
     }
@@ -75,12 +75,12 @@ const PromoCodesScreen = ({ navigation }) => {
         console.log('responsePromo code', response.data)
         dispatch(setPromoCode(response.data.data));
         bottomSheet.current.close();
-        toast.show("Promo code applied successfully!", { type: "success", animationType: "zoom-in" });
+        toast.show("Promo code applied successfully!", { type: "success", animationType: "zoom-in" ,duration: 2000 });
       } else {
-        toast.show("Error applying promo code", { type: "danger", animationType: "zoom-in" });
+        toast.show("Error applying promo code", { type: "danger", animationType: "zoom-in",duration: 2000 });
       }
     } catch (error) {
-      toast.show(error.message, { type: "danger", animationType: "zoom-in" });
+      toast.show(error.message, { type: "danger", animationType: "zoom-in",duration: 2000 });
     }
   };
 

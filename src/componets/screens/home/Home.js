@@ -30,11 +30,7 @@ const Home = ({ navigation }) => {
        
               <TouchableOpacity style={{paddingBottom:20}} onPress={() => navigation.navigate('Asaguest')}>
                 <Text style={{fontFamily:Fonts.MEDIUM,fontSize:15,color:'#747EEF'}}>Continue As Guest</Text>
-              </TouchableOpacity>
-              
-       
-        
-        
+              </TouchableOpacity> 
       </View>
     </ScrollView>
   );

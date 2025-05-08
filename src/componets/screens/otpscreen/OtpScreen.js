@@ -34,7 +34,7 @@ const OtpScreen = ({navigation, route}) => {
 
   const ButtonClick = async () => {
     if (!otp) {
-      toast.show("Incomplete Details. Please fill OTP details", { type: "danger", animationType: "zoom-in" });
+      toast.show("Incomplete Details. Please fill OTP details", { type: "danger", animationType: "zoom-in",duration: 2000 });
     } else {
       setLoading(true);
       try {
@@ -51,10 +51,10 @@ const OtpScreen = ({navigation, route}) => {
         const errorMessage = error.response?.data?.error || "An error occurred. Please try again.";
         if (error.response?.status === 400) {
           // Customize message for incorrect OTP
-          toast.show("Incorrect OTP. Please enter the correct OTP.", { type: "danger", animationType: "zoom-in" });
+          toast.show("Incorrect OTP. Please enter the correct OTP.", { type: "danger", animationType: "zoom-in",duration: 2000 });
         } else {
           // For other errors
-          toast.show("An unexpected error occurred. Please try again.", { type: "danger", animationType: "zoom-in" });
+          toast.show("An unexpected error occurred. Please try again.", { type: "danger", animationType: "zoom-in",duration: 2000 });
         }
       } finally {
         setLoading(false);

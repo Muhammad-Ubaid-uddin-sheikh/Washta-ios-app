@@ -50,10 +50,10 @@ console.log('formData',formData)
         });
         console.log(JSON.stringify(response.data.data));
       } else {
-        toast.show("error", { type: "danger", animationType: "zoom-in" });
+        toast.show("error", { type: "danger", animationType: "zoom-in",duration: 2000,});
       }
     } catch (error) {
-      toast.show(error.message, { type: "danger", animationType: "zoom-in" });
+      toast.show(error.message, { type: "danger", animationType: "zoom-in",duration: 2000 });
 
     } finally {
       setLoading(false);
@@ -70,9 +70,8 @@ console.log('formData',formData)
       });
 // console.log(formData,'response.data',response.data.data)
 // await AsyncStorage.setItem('user', JSON.stringify(user));
-  console.log('user edit profile', user);
       if (response.data.status) {
-        toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" });
+        toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" ,duration: 2000});
         const { user } = response.data.data;
         await AsyncStorage.setItem('user', JSON.stringify(user));
         // console.log('user edit profile',user)
@@ -82,7 +81,7 @@ console.log('formData',formData)
       }
     } catch (error) {
       navigation.navigate('Setting');
-      toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" });
+      
 
     }
   };

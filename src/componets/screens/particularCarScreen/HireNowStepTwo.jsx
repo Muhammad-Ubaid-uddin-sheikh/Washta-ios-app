@@ -251,7 +251,7 @@ const HireNowStepThree = ({ navigation ,route}) => {
   const [discountAmount, setDiscountAmount] = useState(0); // Total di
   const locations = useSelector((state) => state.locations.location);
   const appliedPromo = useSelector((state) => state.promoCode.appliedPromo); // Get applied promo from Redux
-  console.log('redux',appliedPromo)
+  console.log('redux',item)
   useEffect(() => {
     if (appliedPromo) {
         const { Discounttype, discount } = appliedPromo; // Destructure discount data
@@ -336,7 +336,7 @@ const payload = {
       catch (error) {
         console.log(payload,"asdasdaaaaa",error.response);
           const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
-          toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+          toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
       }finally{
         setLoading(false);
     
@@ -384,13 +384,13 @@ const payload = {
             <Text style={styles.textLocation}> Car Type</Text>
             <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {carId?.vehicleType} </Text>
           </View>
-          <View style={styles.RowMainParticular}>
+          {/* <View style={styles.RowMainParticular}>
             <Text style={styles.textLocation}> Service</Text>
             <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> Car Wash & Full Cleaning </Text>
-          </View>
+          </View> */}
           <View style={styles.RowMainParticular}>
-            <Text style={styles.textLocation}> Estimated Duration</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> 1hr</Text>
+            <Text style={styles.textLocation}> Estimated Service Time</Text>
+            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {item?.estimatedServiceTime} mins</Text>
           </View>
           <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Price</Text>

@@ -18,7 +18,7 @@ const SliderItem = ({ imageUrl, name, km, rating, reviews,time,margin }) => {
     textOverflow: 'ellipsis', 
     whiteSpace: 'nowrap',fontSize:13}]} numberOfLines={1}>{km} </Text>
             <Ionicons name="stopwatch-outline" size={13} color={'#747EEF'} />
-            <Text style={styles.time}> {time} </Text>
+            <Text style={styles.time}> {time}min </Text>
         </View>
       </View>
       <View style={styles.ratingContainer}>

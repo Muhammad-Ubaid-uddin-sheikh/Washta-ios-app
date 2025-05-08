@@ -19,6 +19,7 @@ const Profile = ({ navigation }) => {
   const [seletedata, setseletedata] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const toast = useToast();
+  console.log('name',name)
   const [data, setData] = useState([]);
   const fetchUserDataa = async () => {
     setLoading(true);
@@ -54,7 +55,7 @@ const Profile = ({ navigation }) => {
   );
   const getUserFromStorage = async () => {
     try {
-      const userString = await AsyncStorage.getItem('user');
+      const userString = await AsyncStorage.getItem('FullName');
       if (userString) {
         const user = JSON.parse(userString);
         setName(user);

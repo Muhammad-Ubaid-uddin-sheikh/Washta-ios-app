@@ -20,44 +20,60 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   const [name, setName] = useState('');
-  const fetchUserData = async () => {
-    try {
-      const accessToken = await AsyncStorage.getItem('accessToken');
-      const response = await axios.get(ApiUrl, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-console.log('response.data.data',response.data.data)
-      if (response.data.status) {
-        setName(response.data.data || {});
-      } else {
-        Alert.alert('Failed to fetch user data');
-      }
-    } catch (error) {
-      console.log('Error fetching user data:', error);
+//   const fetchUserData = async () => {
+//     try {
+//       const accessToken = await AsyncStorage.getItem('accessToken');
+//       const response = await axios.get(ApiUrl, {
+//         headers: {
+//           Authorization: `Bearer ${accessToken}`,
+//         },
+//       });
+// console.log('response.data.data',response.data.data)
+//       if (response.data.status) {
+//         setName(response.data.data || {});
+//       } else {
+//         Alert.alert('Failed to fetch user data');
+//       }
+//     } catch (error) {
+//       console.log('Error fetching user data:', error);
   
-      if (error.response) {
-        if (error.response.status === 401) {
-          // Token is invalid or expired
-          await AsyncStorage.clear(); // Clear all AsyncStorage data
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Home' }], // Reset navigation stack and navigate to Home
-          });
-        } else if (error.response.status === 500) {
-          // Server error
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Home' }], // Navigate to Home page
-          });
-        }
-      }
+//       if (error.response) {
+//         if (error.response.status === 401) {
+//           // Token is invalid or expired
+//           await AsyncStorage.clear(); // Clear all AsyncStorage data
+//           navigation.reset({
+//             index: 0,
+//             routes: [{ name: 'Home' }], // Reset navigation stack and navigate to Home
+//           });
+//         } else if (error.response.status === 500) {
+//           // Server error
+//           navigation.reset({
+//             index: 0,
+//             routes: [{ name: 'Home' }], // Navigate to Home page
+//           });
+//         }
+//       }
+//     }
+//   };
+const getUserFromStorage = async () => {
+  try {
+    const userString = await AsyncStorage.getItem('FullName');
+    if (userString) {
+      const user = JSON.parse(userString);
+      setName(user);
+      return user;
+    } else {
+      console.log('No user data found');
+      return null;
     }
-  };
+  } catch (error) {
+    console.error('Error parsing user data:', error);
+    return null;
+  }
+};
 
   useEffect(() => {
-    fetchUserData();
+    getUserFromStorage();
   }, []);
 
   const navigation = useNavigation();

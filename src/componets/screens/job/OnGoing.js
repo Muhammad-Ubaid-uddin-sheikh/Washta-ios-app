@@ -87,7 +87,6 @@ console.log('ongoingData',onProgressData)
   const onRefresh = () => {
     fetchUserData();
   };
-
   return (
     <View style={styles.MainContainer}>
       {loading ? (

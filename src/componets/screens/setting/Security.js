@@ -35,9 +35,9 @@ const Security = () => {
                 />
             </View>
 
-            <View style={styles.buttonContainer}>
-                <Button text="Save" Link={() => navigation.navigate('StepTwo')} />
-            </View>
+            {/* <View style={styles.buttonContainer}>
+                <Button text="Save" Link={() => navigation.goBack()} />
+            </View> */}
         </View>
     );
 };

@@ -64,7 +64,7 @@ const ParticularReview = ({ route }) => {
 
   // Handle adding new reviews
   const AddReviews = async () => {
-    if (rating === 0 || feedback.trim() === '') {
+    if (rating === 0) {
       toast.show('Please provide a rating and feedback', { 
         type: "danger", 
         position: 'top',  // Set the toast position to top
@@ -82,7 +82,7 @@ const ParticularReview = ({ route }) => {
         orderId: user.id,
         shopId: item,
         comment: {
-          text: feedback,
+          text: '',
         },
       };
       const response = await axios.post(ApiUrl, payload, {
@@ -91,15 +91,15 @@ const ParticularReview = ({ route }) => {
         },
       });
       if (response.data.status) {
-        toast.show('Your review has been submitted', { type: "success", animationType: "zoom-in" });
+        toast.show('Your review has been submitted', { type: "success", animationType: "zoom-in" ,duration: 2000 });
         setRating(0);
-        setFeedback('');
+        // setFeedback('');
         fetchData();
       }
     } catch (error) {
-      console.log(error);
+      console.log("erroasdreview",error);
       const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
-      toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+      toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
     } finally {
       setLoading(false);
       bottomSheet.current.close();
@@ -123,14 +123,14 @@ const ParticularReview = ({ route }) => {
       console.log('padylaasd',payload)
       if (response.data.status) {
         
-        toast.show('Review updated successfully', { type: "success", animationType: "zoom-in" });
+        toast.show('Review updated successfully', { type: "success", animationType: "zoom-in" ,duration: 2000 });
         fetchData(); // Refresh the reviews
         setEditReview(null); // Clear the edit state
       }
     } catch (error) {
       console.log(error);
       const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
-      toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+      toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
     } finally {
       setLoading(false);
       bottomSheet.current.close();
@@ -148,13 +148,13 @@ const ParticularReview = ({ route }) => {
         },
       });
       if (response.data.status) {
-        toast.show('Review deleted successfully', { type: "success", animationType: "zoom-in" });
+        toast.show('Review deleted successfully', { type: "success", animationType: "zoom-in" ,duration: 2000 });
         fetchData(); // Refresh reviews after deletion
       }
     } catch (error) {
       console.log(error);
       const errorMessage = error.response?.data || "An error occurred. Please try again.";
-      toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+      toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
     } finally {
       setLoading(false);
     }
@@ -194,7 +194,7 @@ const ParticularReview = ({ route }) => {
                   <ReviewItem
                     user={item.customerId?.username}
                     rating={item.rating}
-                    reviewText={item.comment?.text || 'No review text available'}
+                    // reviewText={item.comment?.text || 'No review text available'}
                     showDelete={user.id === item.customerId._id}
                     showEdit={user.id === item.customerId._id}
                     onDelete={() => handleDeleteReview(item._id)}
@@ -212,20 +212,20 @@ const ParticularReview = ({ route }) => {
           </View>
 
           {/* Bottom Sheet for Edit Review */}
-          <BottomSheet style={styles.bottomSheet} hasDraggableIcon ref={bottomSheet} height={350}>
+          <BottomSheet style={styles.bottomSheet} hasDraggableIcon ref={bottomSheet} height={270}>
             <View style={styles.sheetContainer}>
               <Text style={styles.sheetTitle}>{editReview ? 'Edit Review' : 'Give Feedback'}</Text>
               <Text style={styles.sheetSubtitle}>How was your Experience?</Text>
               <StarRating color="#F39D00" rating={editReview ? editRating : rating} onChange={editReview ? setEditRating : setRating} />
-              <TextInput
+              {/* <TextInput
                 style={styles.feedbackInput}
                 placeholder="Enter Your Review"
                 value={editReview ? editFeedback : feedback}
                 onChangeText={editReview ? setEditFeedback : setFeedback}
                 placeholderTextColor={'black'}
                 multiline
-              />
-              <View style={{ width: '100%', marginTop: 30 }}>
+              /> */}
+              <View style={{ width: '100%', marginTop: 10 }}>
                 <TouchableOpacity style={[styles.cancelButton,{ margin: 0, padding: 0,backgroundColor:'#747EEF',borderWidth:0}]} onPress={editReview ? handleEditReview : AddReviews}>
                   <Text style={[styles.cancelButtonText,{color:'white'}]}>Submit</Text>
                 </TouchableOpacity>

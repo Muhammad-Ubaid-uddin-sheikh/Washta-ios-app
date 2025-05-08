@@ -38,7 +38,7 @@ const SetPassword = ({navigation}) => {
 }
 const ButtonClick = async () => {
     if (!Feildpassword) {
-      toast.show("Please enter the password", { type: "danger", animationType: "zoom-in" });
+      toast.show("Please enter the password", { type: "danger", animationType: "zoom-in",duration: 2000 });
     } else {
       setLoading(true);
       try {
@@ -48,15 +48,15 @@ const ButtonClick = async () => {
         //   await AsyncStorage.setItem('accessToken', token);
         //   await AsyncStorage.setItem('Token', token);
         console.log(response.data)
-          toast.show("Password Successfully Changed", { type: "success", animationType: "zoom-in" });
+          toast.show("Password Successfully Changed", { type: "success", animationType: "zoom-in" ,duration: 2000 });
           navigation.navigate('Login')
         } else {
-          toast.show("An error occurred. Please try again.", { type: "danger", animationType: "zoom-in" });
+          toast.show("An error occurred. Please try again.", { type: "danger", animationType: "zoom-in",duration: 2000 });
         }
       } catch (error) {
         console.log(JSON.stringify(error.response));
         const errorMessage = error.response?.data?.error?.name || "An error occurred. Please try again.";
-        toast.show(errorMessage, { type: "danger", animationType: "zoom-in" });
+        toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
       } finally {
         setLoading(false);
       }

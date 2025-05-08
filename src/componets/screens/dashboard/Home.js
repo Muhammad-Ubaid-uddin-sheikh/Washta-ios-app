@@ -76,7 +76,7 @@ const Home = ({ navigation }) => {
   const [mapReady, setMapReady] = useState(false);
 
  
-console.log('selectd  data das',data)
+console.log('areaname',areaName)
   const dispatch = useDispatch();
   useEffect(() => {
     if (areaName) {
@@ -137,6 +137,13 @@ console.log('selectd  data das',data)
 console.log('response.data.data',response.data.data)
       if (response.data.status) {
         setName(response.data.data || {});
+        const userInfo = {
+          fullName: response.data.data.fullName,
+          email: response.data.data.email,
+          username: response.data.data.username,
+        };
+      
+        await AsyncStorage.setItem('FullName', JSON.stringify(userInfo));
       } else {
         Alert.alert('Failed to fetch user data');
       }
@@ -149,14 +156,17 @@ console.log('response.data.data',response.data.data)
           await AsyncStorage.clear(); // Clear all AsyncStorage data
           navigation.reset({
             index: 0,
-            routes: [{ name: 'Home' }], // Reset navigation stack and navigate to Home
+            routes: [{ name: 'Home' }],
           });
+          
         } else if (error.response.status === 500) {
           // Server error
           navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }], // Navigate to Home page
+           
           });
+          
         }
       }
     }
@@ -238,13 +248,14 @@ console.log('response.data.data',response.data.data)
       console.log('Error fetching user data:', error);
   
       if (error.response) {
-        if (error.response.status === 401 || error.response.status === 500) {
+        if (error.response.status === 401) {
           await AsyncStorage.clear();
           navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }],
           });
         }
+
       }
     } finally {
       setLoading(false);
