@@ -29,11 +29,11 @@ console.log('ongoingData',onProgressData)
         toast.show('Booking canceled successfully', { type: 'success', animationType: 'zoom-in' });
         fetchUserData(); // Refresh the data after successful cancellation
       } else {
-        toast.show('Failed to cancel booking', { type: 'danger', animationType: 'zoom-in' });
+        toast.show('Failed to cancel booking', { type: 'danger', animationType: 'zoom-in', duration:1000});
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in', duration:1000});
     }
   };
 
@@ -70,7 +70,7 @@ console.log('ongoingData',onProgressData)
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in', duration:1000});
     } finally {
       setLoading(false);
       setRefreshing(false);

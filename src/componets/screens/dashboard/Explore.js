@@ -100,11 +100,11 @@ const Explore = ({ navigation }) => {
   //       setData(response.data.data);
         
   //     } else {
-  //       toast.show('Failed to fetch nearby shops', { type: 'danger', animationType: 'zoom-in' });
+  //       toast.show('Failed to fetch nearby shops', { type: 'danger', animationType: 'zoom-in', duration:1000});
   //     }
   //   } catch (error) {
   //     const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-  //     toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+  //     toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in', duration:1000});
   //   } finally {
   //     setLoading(false);
   //   }
@@ -132,6 +132,7 @@ const Explore = ({ navigation }) => {
         toast.show('Failed to fetch nearby shops', {
           type: 'danger',
           animationType: 'zoom-in',
+          duration:1000
         });
       }
     } catch (error) {
@@ -158,14 +159,14 @@ const Explore = ({ navigation }) => {
           setallShop(response.data.data); // Set the received data
           setFilteredData(response.data.data);
         } else {
-          toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in' });
+          toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in', duration:1000});
         }
       } else {
-        toast.show('No access token found', { type: 'danger', animationType: 'zoom-in' });
+        toast.show('No access token found', { type: 'danger', animationType: 'zoom-in', duration:1000});
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-      toast.show("Nodata", { type: 'danger', animationType: 'zoom-in' });
+      toast.show("Nodata", { type: 'danger', animationType: 'zoom-in', duration:1000});
     } finally {
       setLoading(false); // Stop loading after the API call completes
     }

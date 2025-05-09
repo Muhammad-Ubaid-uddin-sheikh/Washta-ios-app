@@ -77,10 +77,10 @@ const SignUp = ({ navigation }) => {
   const ButtonClick = async () => {
   
     if (!formData.fullName || !formData.username || !formData.email || !formData.carName || !formData.password || !formData.carType || !formData.number || !formData.carPlateNumber) {
-      toast.show('Incomplete Details. Please fill all details.', { type: 'danger', animationType: 'zoom-in' });
+      toast.show('Incomplete Details. Please fill all details.', { type: 'danger', animationType: 'zoom-in', duration:1000});
     } 
     if (!isChecked) {
-      toast.show('You must agree to the terms of service and privacy policy.', { type: 'danger', animationType: 'zoom-in' });
+      toast.show('You must agree to the terms of service and privacy policy.', { type: 'danger', animationType: 'zoom-in', duration:1000});
       return; // Stop the function if the checkbox is not checked
   }
     else {
@@ -92,7 +92,7 @@ const SignUp = ({ navigation }) => {
           navigation.navigate('OtpScreen', { paylod });
         }
       } catch (error) {
-        toast.show(error.response.data.error, { type: 'danger', animationType: 'zoom-in' });
+        toast.show(error.response.data.error, { type: 'danger', animationType: 'zoom-in', duration:1000});
       } finally {
         setLoading(false);
       }

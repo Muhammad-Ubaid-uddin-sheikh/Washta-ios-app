@@ -53,6 +53,7 @@ console.log('formData',formData)
         toast.show("error", { type: "danger", animationType: "zoom-in",duration: 2000,});
       }
     } catch (error) {
+     
       toast.show(error.message, { type: "danger", animationType: "zoom-in",duration: 2000 });
 
     } finally {
@@ -71,7 +72,7 @@ console.log('formData',formData)
 // console.log(formData,'response.data',response.data.data)
 // await AsyncStorage.setItem('user', JSON.stringify(user));
       if (response.data.status) {
-        toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" ,duration: 2000});
+        toast.show("Profile updated successfully", { type: "success", animationType: "zoom-in" ,duration: 1000});
         const { user } = response.data.data;
         await AsyncStorage.setItem('user', JSON.stringify(user));
         // console.log('user edit profile',user)

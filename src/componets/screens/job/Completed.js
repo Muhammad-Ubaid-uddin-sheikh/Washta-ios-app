@@ -28,12 +28,12 @@ console.log('data check',data.length)
       if (response.data.status) {
         setData(response.data.data.reverse());
       } else {
-        toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in' });
+        toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in', duration:1000});
         setData([]);
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in', duration:1000});
     } finally {
       setLoading(false);
       setRefreshing(false);

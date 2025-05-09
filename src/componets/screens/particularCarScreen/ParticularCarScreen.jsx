@@ -54,6 +54,7 @@ const toast = useToast()
         toast.show('The selected car wash is not at your location', {
           type: 'danger',
           animationType: 'zoom-in',
+          duration:1000
         });
         navigation.goBack(); // Go back to the previous screen
         return;
@@ -67,6 +68,7 @@ const toast = useToast()
         toast.show('Please Register. You need to sign in to access this feature.', {
           type: 'danger',
           animationType: 'zoom-in',
+          duration:1000
         });
         navigation.navigate('Home');
       }

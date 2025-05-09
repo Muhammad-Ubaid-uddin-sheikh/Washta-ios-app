@@ -22,7 +22,7 @@
 //   const toast = useToast();
 //   const ButtonClick = async () => {
 //     if (!email || !Feildpassword) {
-//       toast.show('Incomplete Details. Please fill all details', { type: 'danger', animationType: 'zoom-in' });
+//       toast.show('Incomplete Details. Please fill all details', { type: 'danger', animationType: 'zoom-in', duration:1000});
 //       return;
 //     }
     
@@ -47,7 +47,7 @@
 //     } catch (error) {
 //       console.log(JSON.stringify(error.response));
 //       const errorMessage = error.response?.data?.error || 'An error occurred. Please try again.';
-//       toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+//       toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in', duration:1000});
 //     } finally {
 //       setLoading(false);
 //     }
@@ -176,7 +176,7 @@ const LoginScreen = ({ navigation }) => {
 console.log('deviceid',deviceid)
   const ButtonClick = async () => {
     if (!email || !Feildpassword) {
-      toast.show('Incomplete Details. Please fill all details', { type: 'danger', animationType: 'zoom-in' });
+      toast.show('Incomplete Details. Please fill all details', { type: 'danger', animationType: 'zoom-in', duration:1000});
       return;
     }
 
@@ -196,13 +196,14 @@ console.log('deviceid',deviceid)
         await AsyncStorage.setItem('user', JSON.stringify(user));
         const notificationStatus = user.notification ? 'true' : 'false'; 
         await AsyncStorage.setItem('notification', notificationStatus);
+        await AsyncStorage.setItem('FullName', JSON.stringify(user));
         navigation.navigate('Dashbaord');
         console.log('accessToken, user',accessToken, user)
       }
     } catch (error) {
       console.log(JSON.stringify(error.response));
       const errorMessage = error.response?.data?.error || 'An error occurred. Please try again.';
-      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in', duration:1000});
     } finally {
       setLoading(false);
     }

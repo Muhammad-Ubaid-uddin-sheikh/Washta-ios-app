@@ -59,14 +59,25 @@ const ImageUpload = () => {
         setImageUri(uploadedImagePath);
         fetchImagesFromServer(); // Fetch images again to update the state
         toast.show('Image uploaded successfully', {
-          type: 'success',
+          type: 'success',duration: 1000
         });
       }
-    } catch (error) {
+    }catch (error) {
+      console.log('sadasdrmessage', error.response.data);
       console.log("Error uploading image:", error.response);
-      toast.show('Error uploading image', {
-        type: 'error',
-      });
+    
+      // Check if error is a 413 (Request Entity Too Large)
+      if (error.response && error.response.status === 413) {
+        toast.show('File too large. Please select a file smaller than 1MB.', {
+          type: 'error',
+         duration: 1000
+        });
+      } else {
+        toast.show('Error uploading image. Please try again later.', {
+          type: 'error',
+          duration: 1000
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -87,6 +98,7 @@ const ImageUpload = () => {
         console.log('Fetched avatar:', fetchedImages);
       }
     } catch (error) {
+      
       console.log("Error fetching images:", error.response);
     }finally{
       setLoading(false);

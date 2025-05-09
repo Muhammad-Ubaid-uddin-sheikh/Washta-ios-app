@@ -204,10 +204,10 @@ const HireNowStepOne = ({ navigation, route }) => {
             if (response.data.status) {
                 setseletedata(response.data.data);
             } else {
-                toast.show('Failed to fetch data', { type: 'danger' });
+                toast.show('Failed to fetch data', { type: 'danger',duration:1000});
             }
         } catch (error) {
-            toast.show('An error occurred. Please try again.', { type: 'danger' });
+            toast.show('An error occurred. Please try again.', { type: 'danger',duration:1000 });
         } finally {
             setLoading(false);
         }
@@ -215,7 +215,7 @@ const HireNowStepOne = ({ navigation, route }) => {
 
     const applyPromoCode = async () => {
         if (!promocode || promocode === '0') {
-            toast.show('Please add a promo code', { type: 'danger' });
+            toast.show('Please add a promo code', { type: 'danger',duration:1000 });
             return;
         }
 
@@ -226,13 +226,17 @@ const HireNowStepOne = ({ navigation, route }) => {
             });
 
             if (response.data?.status) {
-                toast.show('Promo code applied successfully!', { type: 'success' });
+                toast.show('Promo code applied successfully!', { type: 'success',duration:1000 });
                 dispatch(setPromoCode(response.data.data));
             } else {
-                toast.show('Invalid promo code', { type: 'danger' });
+                toast.show('Invalid promo code', { type: 'danger',duration:1000 });
             }
         } catch (error) {
-            toast.show('Network error: Please check your internet connection.', { type: 'danger' });
+            if (error.response?.data?.error === "couldn't find Promo Code") {
+                toast.show('This promo code does not exist', { type: 'danger',duration:1000});
+            } else {
+                toast.show(error.response?.data.error, { type: 'danger',duration:1000});
+            }
         }
     };
 
@@ -318,7 +322,7 @@ const HireNowStepOne = ({ navigation, route }) => {
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Estimated Discount </Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {" AED " + discountAmount + ".00"}</Text>
+                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {" AED " + parseFloat(discountAmount.toFixed(2)) + ".00"}</Text>
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Total Price</Text>

@@ -36,12 +36,12 @@ const Profile = ({ navigation }) => {
         setData(response.data.data.reverse());
         console.log('asdasd',response.data.data)
       } else {
-        toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in' });
+        toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in', duration:1000});
         setData([]);
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in', duration:1000});
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -106,11 +106,11 @@ const Profile = ({ navigation }) => {
         setseletedata(response.data.data);
         console.log(response.data.data)
       } else {
-        toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in' });
+        toast.show('Failed to fetch data', { type: 'danger', animationType: 'zoom-in', duration:1000});
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
-      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in' });
+      toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in', duration:1000});
     } finally {
       setLoading(false);
     }

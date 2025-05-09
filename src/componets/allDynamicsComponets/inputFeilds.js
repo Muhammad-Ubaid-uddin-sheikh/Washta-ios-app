@@ -172,6 +172,7 @@ const InputField = ({ labelName, value, onChangeText, focus, maxLength, keyboard
           secureTextEntry={secureTextEntry}
           editable={focus}
           maxLength={maxLength}
+          autoCapitalize='none'
         />
 
         {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}

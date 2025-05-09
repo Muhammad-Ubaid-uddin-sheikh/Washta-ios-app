@@ -1,232 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import { View, Text, StyleSheet, Image, FlatList, TextInput, TouchableOpacity } from 'react-native';
-// import { Fonts, FontsGeneral } from '../style';
-// import Button from '../../allDynamicsComponets/Button';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import Icon from 'react-native-vector-icons/Octicons';
-// import Feather from 'react-native-vector-icons/Feather';
-
-// const HireNowStepTwo = ({ navigation,route }) => {
-//   const [cards, setCards] = useState([]);
-//   const [selectedCard, setSelectedCard] = useState(null);
-//   const { item,carId,location } = route.params;
-//   useEffect(() => {
-//     const fetchCards = async () => {
-//       try {
-//         const storedCards = await AsyncStorage.getItem('cards');
-//         if (storedCards) {
-//           const parsedCards = JSON.parse(storedCards);
-//           setCards(parsedCards);
-//           setSelectedCard(parsedCards[0]); // Set the first card as the default selected card
-//         }
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-//     fetchCards();
-//   }, []);
-
-//   const handleSelectCard = (card) => {
-//     setSelectedCard(card);
-//     console.log(card); // Log the selected card's data
-//   };
-
-//   const handleDeleteCard = async (cardNumber) => {
-//     const updatedCards = cards.filter(card => card.cardNumber !== cardNumber);
-//     setCards(updatedCards);
-//     await AsyncStorage.setItem('cards', JSON.stringify(updatedCards));
-//   };
-
-//   const getCardImage = (cardNumber) => {
-//     if (cardNumber.startsWith('4')) {
-//       return require('../../../assets/visa.png');
-//     } else if (cardNumber.startsWith('5')) {
-//       return require('../../../assets/mastercard.png');
-//     } else if (cardNumber.startsWith('3')) {
-//       return require('../../../assets/american-express.png');
-//     } else {
-//       return null;
-//     }
-//   };
-
-//   const renderItem = ({ item }) => (
-//     <View style={[styles.card, selectedCard === item && styles.selectedCard , ]}>
-//       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-//         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-//           <TouchableOpacity onPress={() => handleDeleteCard(item.cardNumber)}>
-//             <Feather name="trash-2" style={{ color: 'red', fontSize: 20 }} />
-//           </TouchableOpacity>
-//           <Image source={getCardImage(item.cardNumber)} style={{ width: 45, height: 22, marginLeft: 10, objectFit: 'contain' }} />
-//           <Text style={{ fontFamily: FontsGeneral.MEDIUMSANS, color: 'black', fontSize: 15, }}>
-//             Ending with <Text style={{ fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 18 }}> {item.cardNumber.slice(-4)}</Text>
-//           </Text>
-//         </View>
-//         <TouchableOpacity
-//           style={styles.radioButton}
-//           onPress={() => handleSelectCard(item)}
-//         >
-//           {selectedCard === item && <View style={styles.radioButtonSelected} />}
-//         </TouchableOpacity>
-//       </View>
-//       <TextInput
-//         style={styles.cvvInput}
-//         placeholder="CVV"
-//         keyboardType="numeric"
-//         maxLength={3}
-//         secureTextEntry
-//         value={item.cvv}
-//         editable={false}
-//       />
-//     </View>
-//   );
-
-//   const renderHeader = () => (
-//     <View>
-//       <View style={[styles.progressContainer, { paddingHorizontal: 10 }]}>
-//         <View style={styles.completedStep}>
-//           <Text style={styles.stepText}>1</Text>
-//         </View>
-//         <View style={[styles.line, { backgroundColor: '#747EEF' }]} />
-//         <View style={[styles.step, { backgroundColor: '#747EEF', borderColor: '#747EEF', borderWidth: 1 }]}>
-//           <Text style={[styles.stepText, { color: 'white' }]}>2</Text>
-//         </View>
-//         <View style={[styles.line]} />
-//         <View style={[styles.step, { backgroundColor: 'white', borderColor: '#a6a6a6', borderWidth: 1 }]}>
-//           <Text style={[styles.stepText, { color: '#a6a6a6' }]}>3</Text>
-//         </View>
-//       </View>
-//       <Text style={{ fontFamily: FontsGeneral.MEDIUMSANS, color: 'black', fontSize: 18, textAlign: 'left', paddingTop: 20 }}>Please select a payment method</Text>
-//       <View style={{ flexDirection: 'row', justifyContent: 'space-between',paddingRight:10}}>
-//            <Text style={{ color: 'black', fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 13, width: '50%' }}>Credit/Debit Card</Text>
-//          <View style={{ width: '50%' }}>
-//             <Image source={require('../../../assets/cardimg.png')} style={{ width: '100%', height: 20 }} />
-//           </View>
-//         </View>
-//         <Text style={{ color: 'black', fontFamily: FontsGeneral.REGULARSANS, fontSize: 12, paddingTop: 5,paddingBottom:10 }}>We accept Visa, MasterCard and American Express</Text>
-//       </View> 
-//     // </View>
-//   );
-
-//   const renderFooter = () => (
-//     <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 20 }}>
-//       <TouchableOpacity style={{ flexDirection: 'row', width: 250, backgroundColor: '#747EEF', padding: 10, justifyContent: 'center', gap: 10, borderRadius: 50, paddingVertical: 14, alignItems: 'center' }} onPress={() => navigation.navigate('AddCard')}>
-//         <Icon name='diff-added' style={{ color: 'white', fontSize: 18 }} />
-//         <Text style={{ color: 'white', fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 15 }}>Add New Card</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-
-//   return (
-//     <View style={styles.container}>
-//       <FlatList
-//         data={cards}
-//         keyExtractor={(item, index) => index.toString()}
-//         renderItem={renderItem}
-//         ListHeaderComponent={renderHeader}
-//         ListFooterComponent={renderFooter}
-//       />
-//       <View style={styles.buttonContainer}>
-//         <Button text="Review Summary" Link={() => navigation.navigate('StepThree',{item,carId,location})} />
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   buttonContainer: {
-//     position: 'absolute',
-//     bottom: 20,
-//     left: 0,
-//     right: 0,
-//     paddingHorizontal: 15,
-//   },
-//   container: {
-//     flex: 1,
-//     textAlign: 'left',
-//     paddingHorizontal: 20,
-//   },
-//   progressContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     marginTop: 20,
-//   },
-//   step: {
-//     width: 30,
-//     height: 30,
-//     borderRadius: 15,
-//     backgroundColor: '#a6a6a6',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   completedStep: {
-//     width: 30,
-//     height: 30,
-//     borderRadius: 15,
-//     backgroundColor: '#747EEF',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   line: {
-//     width: '28%',
-//     height: 1.5,
-//     marginHorizontal: 10,
-//     backgroundColor: '#a6a6a6',
-//   },
-//   stepText: {
-//     color: '#fff',
-//     fontFamily: FontsGeneral.MEDIUMSANS,
-//     fontSize: 16,
-//   },
-//   card: {
-//     borderRadius: 8,
-//     marginVertical: 8,
-//     backgroundColor: '#F2F2F2',
-//     paddingHorizontal: 20,
-//     borderColor: '#747FE8',
-//     borderWidth: 0.5,
-//     paddingVertical: 10,
-//     elevation: 2,
-//   },
-//   selectedCard: {
-//     borderColor: '#747FE8',
-//     borderWidth: 1,
-//     backgroundColor:'white'
-//   },
-//   cvvInput: {
-//     borderWidth: 1,
-//     borderBottomColor: '#ccc',
-//     width: 90,
-//     padding: 0,
-//     borderColor: '#747FE8',
-//     backgroundColor: 'white',
-//     borderRadius: 5,
-//     paddingHorizontal: 10,
-//     marginLeft: 50,
-//     color: '#212121',
-//     fontFamily: FontsGeneral.REGULARSANS,
-//     fontSize: 12,
-//     paddingVertical: 0,
-//     marginTop: 10
-//   },
-//   radioButton: {
-//     height: 20,
-//     width: 20,
-//     borderRadius: 10,
-//     borderWidth: 2,
-//     borderColor: '#747FE8',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     marginRight: 10,
-//   },
-//   radioButtonSelected: {
-//     height: 10,
-//     width: 10,
-//     borderRadius: 5,
-//     backgroundColor: '#747FE8',
-//   },
-// });
-
-// export default HireNowStepTwo;
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, } from 'react-native';
 import { Fonts, FontsGeneral } from '../style';
@@ -236,13 +7,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const ApiUrl = 'https://backend.washta.com/api/customer/booking';
 import axios from 'react-native-axios';
 import { useToast } from 'react-native-toast-notifications';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { formatDate, formatTimeInTimezone } from '../../../../DaterightFunction';
 import moment from 'moment-timezone';
+import { setPromoCode, clearPromoCode } from '../../../redux/promoCodeSlice';
 
 const HireNowStepThree = ({ navigation ,route}) => {
   const toast = useToast();
-
+  const dispatch = useDispatch();
   const [popupVisible, setPopupVisible] = useState(false);
   const [userid,setuserid] = useState('')
   const { item,carId,location } = route.params;
@@ -251,7 +23,6 @@ const HireNowStepThree = ({ navigation ,route}) => {
   const [discountAmount, setDiscountAmount] = useState(0); // Total di
   const locations = useSelector((state) => state.locations.location);
   const appliedPromo = useSelector((state) => state.promoCode.appliedPromo); // Get applied promo from Redux
-  console.log('redux',item)
   useEffect(() => {
     if (appliedPromo) {
         const { Discounttype, discount } = appliedPromo; // Destructure discount data
@@ -329,14 +100,35 @@ const payload = {
         setLoading(true);
         console.log(payload,'asdasdasdasd',response.data.data.paymentLink)
         navigation.navigate('StepThree',{payload:payload,Link:response.data.data.paymentLink,})
+        dispatch(clearPromoCode());
         // if (response) {
         //   setPopupVisible(true);
         // }
       } 
       catch (error) {
-        console.log(payload,"asdasdaaaaa",error.response);
-          const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
-          toast.show(errorMessage, { type: "danger", animationType: "zoom-in",duration: 2000 });
+          console.log('Error response:', error.response.data);
+          console.log('Error message:', error.message);
+  
+          // Custom error handling for different cases
+          let errorMessage = 'Network error: Please check your internet connection.';
+  
+          if (error.response?.data?.error) {
+              const errorText = error.response.data.error;
+  
+              // Handling specific promo code errors
+              if (errorText.includes("couldn't find Promo Code")) {
+                  errorMessage = 'This promo code does not exist.';
+                  dispatch(clearPromoCode());
+              } else if (errorText.includes('Invalid promo Code')) {
+                  errorMessage = 'This promo code has expired.';
+                  dispatch(clearPromoCode());
+              } else {
+                  errorMessage = errorText; // Show the error message returned from the API
+              }
+          }
+  
+          toast.show(errorMessage, { type: 'danger', animationType: 'zoom-in', duration: 1000 });
+        
       }finally{
         setLoading(false);
     
@@ -390,7 +182,7 @@ const payload = {
           </View> */}
           <View style={styles.RowMainParticular}>
             <Text style={styles.textLocation}> Estimated Service Time</Text>
-            <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {item?.estimatedServiceTime} mins</Text>
+            <Text  style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16}]}> {item?.estimatedServiceTime} mins</Text>
           </View>
           <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Price</Text>
@@ -410,7 +202,7 @@ const payload = {
                     </View>
                     <View style={styles.RowMainParticular}>
                         <Text style={styles.textLocation}> Estimated Discount </Text>
-                        <Text style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16 }]}> {" AED " + discountAmount + ".00"}</Text>
+                        <Text numberOfLines={1} ellipsizeMode="tail" style={[styles.textLocation, { fontFamily: FontsGeneral.MEDIUMSANS, fontSize: 16}]}> {" AED " + parseFloat(discountAmount.toFixed(2))  + ".00"}</Text>
                     </View>
                  
         </View>
