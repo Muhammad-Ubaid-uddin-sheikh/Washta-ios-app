@@ -9,7 +9,6 @@ import { useToast } from 'react-native-toast-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const ParticularCarScreen = ({ route }) => {
   const { item,notlocation } = route.params;
-  console.log('notlocation',notlocation)
   const navigation = useNavigation();
   const [isExpanded, setIsExpanded] = useState(false); // State to manage expanded/collapsed state
 const toast = useToast()
@@ -25,26 +24,6 @@ const toast = useToast()
         num);
     }
   }
-  // const handleNavigationWithAuthCheck = async (item) => {
-  //   console.log('hire',item.item)
-
-  //   try {
-  //     const token = await AsyncStorage.getItem('accessToken');
-  //     if (token) {
-  //       // Navigate to the StepOne screen with item data if authenticated
-  //       navigation.navigate('StepOne', { item:item?.item });
-  //     } else {
-  //       // Show a toast message if not authenticated
-  //       toast.show(
-  //         'Please Register. You need to sign in to access this feature.'
-  //       ); // Pass the message as a string directly
-  //       // Navigate to the Home screen
-  //       navigation.navigate('Home');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error retrieving access token:', error);
-  //   }
-  // };
   const handleNavigationWithAuthCheck = async (item) => {
   
     try {
@@ -115,7 +94,7 @@ const toast = useToast()
           </TouchableOpacity>
         </View>
         <View style={styles.TitleGroundDiv}>
-          <Text style={styles.textGroundTitle}>{item?.shopName}</Text>
+          <Text numberOfLines={1} style={[styles.textGroundTitle,{width:'84%'}]}>{item?.shopName}</Text>
           <TouchableOpacity  onPress={()=>navigation.navigate('ParticularReview',{item:item._id})}>
           <Text style={[styles.buttonText, { color: 'black', flexDirection: 'row', alignItems: 'center' }]}>
            

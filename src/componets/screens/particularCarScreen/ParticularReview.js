@@ -240,7 +240,7 @@ const ParticularReview = ({ route }) => {
           </BottomSheet>
                  
           <View style={styles.buttonContainer}>
-            <Button text="Write a review" Link={() => bottomSheet.current.show()} />
+            <Button text="Give a review" Link={() => bottomSheet.current.show()} />
           </View>
         </>
       )}

@@ -28,14 +28,11 @@ const HireNowStepOne = ({ navigation, route }) => {
     const [promocode, setPromocode] = useState('');
     const [discountedCost, setDiscountedCost] = useState(item?.cost);
     const [discountAmount, setDiscountAmount] = useState(0);
+    const [error,setError] = useState('')
     const [distance, setDistance] = useState(null)
-    console.log('distane',distance)
     const dispatch = useDispatch();
     const toast = useToast();
-    
-    console.log('itemaaa',item)
-    console.log('itemaaalocation',item.location?.text
-    )
+
     const appliedPromo = useSelector((state) => state.promoCode.appliedPromo);
     useEffect(() => {
         checkAndRequestLocation();
@@ -58,28 +55,7 @@ const HireNowStepOne = ({ navigation, route }) => {
         }
     };
 
-    // Fetch user's current location
-    // const getCurrentLocation = () => {
-    //     Geolocation.getCurrentPosition(
-    //         async position => {
-    //             const { latitude, longitude } = position.coords;
-    //             // setLatitude(latitude);
-    //             // setLongitude(longitude);
-    //             // setCurrentLocation({ latitude, longitude })
-    //             console.log(`User's Location: Latitude: ${latitude}, Longitude: ${longitude}`);
-    //             const locationData = { latitude, longitude };
-    //             await AsyncStorage.setItem('currentlocationlat', JSON.stringify(locationData));
-    //             // Fetch the address using Google Maps API
-    //             await fetchAddress(latitude, longitude);
-    //             setLoading(false);
-    //         },
-    //         error => {
-    //             console.error('Error getting location:', error.message);
-    //             showEnableLocationAlert();
-    //         },
-    //         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    //     );
-    // };
+    
     const getCurrentLocation = () => {
         Geolocation.getCurrentPosition(
             async position => {
@@ -287,7 +263,8 @@ const HireNowStepOne = ({ navigation, route }) => {
                        <InputFeild keyboardType='default' focus={false} labelName='Car Name*' value={seletedata?.vehicleName} onChangeText={(value) => setFormData({ ...formData, carname: value })} />
                        <InputFeild keyboardType='numeric' focus={false} labelName='Car Plate Number' value={seletedata?.vehiclePlateNumber} onChangeText={(value) => setFormData({ ...formData, carPlateNo: value })} />
                        <InputFeild keyboardType='default' focus={false} labelName='Car Type' value={seletedata?.vehicleType} onChangeText={(value) => setFormData({ ...formData, carType: value })} />
-                       <InputFeild keyboardType='default'  labelName='Car Parked Location ' value={location} onChangeText={(text) => setlocation(text)}  />
+                       <InputFeild keyboardType='default'  labelName='Car Parked Location' value={location} onChangeText={(text) => setlocation(text)}  />
+                       <Text style={{fontFamily:Fonts.MEDIUM,color:'red',paddingHorizontal:10,fontSize:10,paddingTop:5}}>{error}</Text>
                    </View>
                 </View>
                 <Text style={styles.textGroundTitle}> Summary</Text>
@@ -360,12 +337,22 @@ const HireNowStepOne = ({ navigation, route }) => {
                 </View>
             </ScrollView>
                         <View style={styles.buttonContainer}>
-                 <Button
-                    text="Select Payment Method"
-                    Link={() => navigation.navigate('StepTwo', { item, carId: seletedata, location })}
-                />
+                        <Button
+  text="Select Payment Method"
+  Link={() => {
+    setError('')
+    if (!location || location.trim() === '') {
+      // Show toast if location is empty
+      setError('Please provide the car parked location of your car. This is required for booking the car wash')
+    } else {
+      // If location is filled, navigate to StepTwo
+      navigation.navigate('StepTwo', { item, carId: seletedata, location  });
+    }
+  }}
+/>
             </View>
         </View>
+        
         </KeyboardAvoidingView>
     );
 };

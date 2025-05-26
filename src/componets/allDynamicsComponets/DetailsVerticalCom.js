@@ -12,7 +12,7 @@ const SliderItem = ({ imageUrl, name, km, rating, reviews,time,margin }) => {
       <Text style={styles.rating}>{rating}</Text>
       </View>
       <View style={styles.detailsContainer}>
-        <Text style={styles.name}>{name}</Text>
+        <Text numberOfLines={1}  style={styles.name}>{name}</Text>
         <View style={{flexDirection:"row",alignItems:'center'}}>
             <Text style={[styles.time,{ overflow: 'hidden',width:'80%', padding:0,marginLeft:0,
     textOverflow: 'ellipsis', 

@@ -23,6 +23,7 @@ const HireNowStepThree = ({ navigation ,route}) => {
   const [discountAmount, setDiscountAmount] = useState(0); // Total di
   const locations = useSelector((state) => state.locations.location);
   const appliedPromo = useSelector((state) => state.promoCode.appliedPromo); // Get applied promo from Redux
+  console.log('dtails shob',location)
   useEffect(() => {
     if (appliedPromo) {
         const { Discounttype, discount } = appliedPromo; // Destructure discount data
@@ -68,6 +69,7 @@ const HireNowStepThree = ({ navigation ,route}) => {
   };
 
 const payload = {
+  carParkedAt:location,
   vehicleId: carId?._id,
   shopId: item._id,
   cost: item?.cost,

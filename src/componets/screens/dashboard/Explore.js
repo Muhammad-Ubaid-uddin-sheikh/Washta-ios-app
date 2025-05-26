@@ -239,7 +239,7 @@ const Explore = ({ navigation }) => {
         imageUrl={item.coverImage && item.coverImage.includes('/media/image/cover-image.jpeg')
           ? 'https://centralca.cdn-anvilcms.net/media/images/2022/03/15/images/Car_wash_pix_3-16-22.max-1200x675.jpg'
           : item.coverImage || 'https://centralca.cdn-anvilcms.net/media/images/2022/03/15/images/Car_wash_pix_3-16-22.max-1200x675.jpg'}
-        name={item.shopName}
+        name={item.shopName  }
         time={item.estimatedServiceTime || "N/A"}
         reviews={item.cost || "N/A"}
         km={item.location?.text || "Unknown"}

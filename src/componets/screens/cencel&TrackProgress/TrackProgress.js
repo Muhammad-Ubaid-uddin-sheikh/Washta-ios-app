@@ -44,14 +44,38 @@ const TrackProgress = ({ route }) => {
         <View style={styles.divider} />
 
         <Text style={[styles.textStyle, styles.orderDetailsTitle]}>Order Details</Text>
-        <View style={styles.row}>
-          <Text style={[styles.textStyle, styles.orderDetailItem]}>Shop Name</Text>
-          <Text style={[styles.textStyle, styles.orderDetailPrice]}>{item?.shopId?.shopName}</Text>
-        </View>
-        <View style={[styles.row,{paddingTop:0}]}>
-          <Text style={[styles.textStyle, styles.orderDetailItem]}>Location</Text>
-          <Text style={[styles.textStyle, styles.orderDetailPrice,item?.location?.text ? {  textOverflow: 'ellipsis', whiteSpace: 'nowrap',width:'70%'} : ""]} numberOfLines={1}>{item?.shopId?.location?.text || 'No address mention'}</Text>
-        </View>
+        
+        <View style={[styles.row, { paddingTop: 0 }]}>
+  <Text style={[styles.textStyle, styles.orderDetailItem]}>Shop Name</Text>
+  <Text
+    style={[
+      styles.textStyle,
+      styles.orderDetailPrice,
+      { flex: 1, marginLeft: 10,textAlign:'right' } // allow it to shrink if needed
+    ]}
+    numberOfLines={1}
+    ellipsizeMode="tail"
+  >
+    {item?.shopId?.shopName || 'Washta Seller Shop'}
+  </Text>
+</View>
+
+        
+        <View style={[styles.row, { paddingTop: 0 }]}>
+  <Text style={[styles.textStyle, styles.orderDetailItem]}>Location</Text>
+  <Text
+    style={[
+      styles.textStyle,
+      styles.orderDetailPrice,
+      { flex: 1, marginLeft: 10,textAlign:'right' } // allow it to shrink if needed
+    ]}
+    numberOfLines={1}
+    ellipsizeMode="tail"
+  >
+    {item?.shopId?.location?.text || 'No address mention'}
+  </Text>
+</View>
+
         <View style={styles.row}>
           <Text style={[styles.textStyle, styles.orderDetailItem]}>Payment Status</Text>
           <Text style={[styles.textStyle, styles.orderDetailPrice]}>{item?.billingStatus}</Text>

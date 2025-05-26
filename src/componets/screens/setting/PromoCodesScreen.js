@@ -11,7 +11,7 @@ import { useToast } from 'react-native-toast-notifications';
 import { formatDate } from '../../../../DaterightFunction';
 import { useDispatch } from 'react-redux';
 import { setPromoCode } from '../../../redux/promoCodeSlice';
-import DefaultImage from '../../../assets/noNotification.jpg'
+import DefaultImage from '../../../assets/noPromoCode.png'
 const ApiUrl = 'https://backend.washta.com/api/customer/promoCode';
 const PromoCodesScreen = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState('All');
@@ -95,7 +95,8 @@ const PromoCodesScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.tabs}>
-        {['All', 'Amount', 'Percentage'].map((tab) => (
+        {/* {['All', 'Amount', 'Percentage'].map((tab) => ( */}
+        {['All'].map((tab) => (
           <TouchableOpacity
             key={tab}
             onPress={() => setActiveTab(tab)}
@@ -136,7 +137,7 @@ const PromoCodesScreen = ({ navigation }) => {
           </View>
         )}
       />)}
-      <Button text="Save" Link={() => navigation.goBack()} />
+      {/* <Button text="Save" Link={() => navigation.goBack()} /> */}
 
       <BottomSheet style={styles.bottomSheet} hasDraggableIcon ref={bottomSheet} height={390}>
         {selectedPromo && (
