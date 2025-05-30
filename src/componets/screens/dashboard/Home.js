@@ -235,7 +235,7 @@ console.log('response.data.data',response.data.data)
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
       const response = await axios.get(
-        `https://backend.washta.com/api/customer/NearShop?long=${location.latitude}&lat=${location.longitude}&radius=50`
+        `https://backend.washta.com/api/customer/NearShop?long=${location.longitude}&lat=${location.latitude}&radius=50`
       );
   
       if (response.data.status) {

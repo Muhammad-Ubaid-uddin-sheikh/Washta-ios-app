@@ -118,7 +118,7 @@ const Explore = ({ navigation }) => {
       const radius = 50;
   
       const response = await axios.get(
-        `${NearbyApiUrl}long=${lat}&lat=${long}&radius=${radius}`,
+        `${NearbyApiUrl}long=${long}&lat=${lat}&radius=${radius}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
