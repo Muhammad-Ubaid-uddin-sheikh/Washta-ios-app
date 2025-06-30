@@ -67,8 +67,8 @@ const ButtonClick = async () => {
 
     <View style={styles.container}>
       <View style={styles.topContent}>
-        <Text style={styles.heading}>Forget Passowrd</Text>
-        <Text style={styles.paragraph}>Enter your email address below, and we'll send you instructions to reset your password.</Text>
+      <Text style={styles.heading}>New Passowrd</Text>
+      <Text style={styles.paragraph}>Create a new password that's strong & unique to regain access to your account.</Text>
         <View style={styles.inputContainer}>
       <INputPasword focus={true} labelName='Password' value={Feildpassword} onChangeText={(text) => setFeildpassword(text)} />
 

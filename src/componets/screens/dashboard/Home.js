@@ -14,6 +14,7 @@ import Skeleton from "@thevsstech/react-native-skeleton";
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { addLocation } from '../../../redux/locationSlice';
+import ParkingIcon from '../../../assets/image 2.png'
 
 Geocoder.init('AIzaSyB_nNvYWSCB2haI7DCgR6chQmsg-T4oj8s');
 // const ApiUrl = 'https://backend.washta.com/api/customer/shop';
@@ -492,13 +493,15 @@ console.log('response.data.data',response.data.data)
             </>
           )}
         </MapView> */}
-        <MapView
+       <MapView
+        // provider={PROVIDER_GOOGLE}
+        mapType="mutedStandard"
   style={styles.map}
   region={currentLocation ? {
     latitude: currentLocation.latitude,
     longitude: currentLocation.longitude,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
+    latitudeDelta: 0.02,
+    longitudeDelta: 0.02,
   } : {
     latitude: 37.78825,
     longitude: -122.4324,
@@ -510,37 +513,7 @@ console.log('response.data.data',response.data.data)
   followsUserLocation={true}
   onMapReady={() => setMapReady(true)}
 >
-  {/* {mapReady && currentLocation && (
-    <>
-      <Circle
-        center={{
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-        }}
-        radius={1000}
-        strokeWidth={2}
-        strokeColor="rgba(74,144,226,1)"
-        fillColor="rgba(74,144,226,0.2)"
-      />
-      <Marker
-        coordinate={currentLocation}
-        title={'Current Location'}
-        description={areaName}
-      >
-        <Ionicons name="location-sharp" size={50} color="#0080FF" />
-      </Marker>
-      {ParkingData.map(parking => (
-        <Marker
-          key={parking.id}
-          coordinate={{ latitude: parking.latitude, longitude: parking.longitude }}
-          title={parking.title}
-          
-        >
-          <Parking name="parking" size={22} style={{backgroundColor:'white',padding:7 ,borderRadius:100}} color="#747EEF" />
-        </Marker>
-      ))}
-    </>
-  )} */}
+  
   {mapReady && currentLocation && (
   <>
     <Circle
@@ -558,16 +531,14 @@ console.log('response.data.data',response.data.data)
       title={'Current Location'}
       description={areaName}
     >
-      <Ionicons name="location-sharp" size={50} color="#0080FF" />
+      {/* <Ionicons name="location-sharp" size={50} color="#0080FF" /> */}
     </Marker>
-    {/* Render parking markers */}
     {ParkingData.map(parking => (
       <Marker
         key={parking.id}
         coordinate={{ latitude: parking.latitude, longitude: parking.longitude }}
         title={parking.title}
       >
-        {/* Custom parking marker */}
         <View
           style={{
             width: 30,
@@ -581,12 +552,8 @@ console.log('response.data.data',response.data.data)
             padding: 1, // To create padding for the inner content
           }}
         >
-          <Parking
-            name="parking"
-            size={16}
-            color="white"
-            style={{ color:'white' ,padding: 3, borderRadius: 20}}
-          />
+         
+          <Image source={ParkingIcon} style={{objectFit:'contain',width:20,height:40,justifyContent:'center',textAlign:'center',padding: 3,}}/>
         </View>
       </Marker>
     ))}
