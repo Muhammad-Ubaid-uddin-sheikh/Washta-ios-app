@@ -288,3 +288,160 @@ const styles = StyleSheet.create({
 });
 
 export default Profile;
+
+
+
+
+
+
+// import React from 'react';
+// import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+// import Arrow from 'react-native-vector-icons/MaterialIcons';
+// import { FontsGeneral } from '../screens/style';
+// const Profile = ({ order, showButton, ReviewBtn, TrackBtn, colorBtntext, transparentBtn }) => {
+//     const formatDate = (dateString) => {
+//       const date = new Date(dateString);
+//       const day = date.getDate();
+//       const month = date.toLocaleString('en-US', { month: 'short' });
+//       return `${day} ${month}`;
+//     };
+//   console.log('order',order)
+//     return (
+//       <View style={styles.secondDivTitle}>
+//         <View style={styles.mainBoxCarNameSelect}>
+//           <View>
+//           <View>
+//   <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+//     <Text style={styles.carName}>
+//       {order?.shopId?.shopName || 'John Doe Car Hub'}
+//     </Text>
+    
+//     {order?.isExpired && (
+//       <Text style={{
+//         color: 'red',
+//         fontWeight: '600',
+//         fontSize: 12,
+//         backgroundColor: '#ffe5e5',
+//         paddingHorizontal: 8,
+//         paddingVertical: 2,
+//         borderRadius: 5,
+//         overflow: 'hidden'
+//       }}>
+//         Order Expired
+//       </Text>
+//     )}
+//   </View>
+// </View>
+            
+//             <View style={styles.orderDetails}>
+//               <View style={styles.orderDetail}>
+//                 <Text style={styles.detailLabel}>Order ID:</Text>
+//                 <Text style={styles.detailValue}>
+//                   WS-{order?._id.slice(20)}
+//                 </Text>
+//               </View>
+//               <View style={styles.orderDetail}>
+//                 <Text style={styles.detailLabel}>Order Date:</Text>
+//                 <Text style={styles.detailValue}>
+//                   {formatDate(order?.date)}
+//                 </Text>
+//               </View>
+//               <View style={styles.orderDetail}>
+//                 <Text style={styles.detailLabel}>Price:</Text>
+//                 <Text style={styles.detailValue}>
+//                   AED {order?.cost}
+//                 </Text>
+//               </View>
+//             </View>
+//           </View>
+//         </View>
+//         {showButton && (
+//           <View style={styles.buttonContainer}>
+//             <TouchableOpacity onPress={TrackBtn} style={styles.trackButton}>
+//               <View style={styles.trackButtonContent}>
+//                 <Text style={styles.trackButtonText}>{colorBtntext}</Text>
+//                 <Arrow name='keyboard-arrow-right' size={24} color={'white'} />
+//               </View>
+//             </TouchableOpacity>
+//           </View>
+//         )}
+//       </View>
+//     );
+//   };
+  
+
+// const styles = StyleSheet.create({
+//     MainContainer: {
+//         backgroundColor: 'white',
+//         flex: 1,
+//         // marginTop: 10,
+//     },
+//     mainBoxCarNameSelect: {
+//         flexDirection: 'row',
+//         justifyContent: 'space-between',
+//         alignItems: 'center',
+//         width: '100%',
+//     },
+//     carName: {
+//         fontFamily: FontsGeneral.MEDIUMSANS,
+//         fontSize: 15,
+//         color: 'black',
+//     },
+//     orderDetails: {
+//         flexDirection: 'row',
+//         justifyContent: 'space-between',
+//         alignItems: 'center',
+//         width: '100%',
+//     },
+//     orderDetail: {
+//         paddingTop: 10,
+//     },
+//     detailLabel: {
+//         fontFamily: FontsGeneral.REGULARSANS,
+//         fontSize: 14,
+//         color: 'black',
+//     },
+//     detailValue: {
+//         fontFamily: FontsGeneral.MEDIUMSANS,
+//         fontSize: 14,
+//         color: 'black',
+//         paddingTop: 3,
+//     },
+//     secondDivTitle: {
+//         backgroundColor: '#F2F2F2',
+//         width: '100%',
+//         borderRadius: 10,
+//         padding: 15,
+//         marginBottom: 10, // Equal bottom margin of 10 pixels
+//     },
+//     buttonContainer: {
+//         flexDirection: 'row',
+//         justifyContent: 'space-between',
+//         paddingTop: 15,
+//     },
+    
+ 
+//     trackButton: {
+//         flexDirection: 'row',
+//         width: '100%',
+//         alignItems: "center",
+//         backgroundColor: '#747EEF',
+//         paddingHorizontal: 6,
+//         paddingVertical: 8,
+//         borderRadius: 8,
+//     },
+//     trackButtonContent: {
+//         width: '100%',
+//         flexDirection: 'row',
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//     },
+//     trackButtonText: {
+//         fontFamily: FontsGeneral.MEDIUMSANS,
+//         fontSize: 14,
+//         color: 'white',
+//         textAlign: 'center',
+//     },
+// });
+
+// export default Profile;
